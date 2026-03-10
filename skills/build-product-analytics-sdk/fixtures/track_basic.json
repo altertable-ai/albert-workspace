@@ -1,0 +1,29 @@
+{
+  "description": "Basic track call with properties",
+  "input": {
+    "event": "Button Clicked",
+    "properties": {
+      "color": "blue",
+      "size": "large"
+    },
+    "userId": "user_123"
+  },
+  "output": {
+    "payload": {
+      "event": "Button Clicked",
+      "properties": {
+        "color": "blue",
+        "size": "large"
+      },
+      "userId": "user_123",
+      "anonymousId": "anon_abc123",
+      "timestamp": "2023-01-01T12:00:00.000Z",
+      "context": {
+        "library": {
+          "name": "altertable-sdk",
+          "version": "1.0.0"
+        }
+      }
+    }
+  }
+}

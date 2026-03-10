@@ -1,0 +1,27 @@
+{
+  "description": "Standard identify call with traits and no active session",
+  "input": {
+    "userId": "user_123",
+    "traits": {
+      "email": "user@example.com",
+      "plan": "pro"
+    }
+  },
+  "output": {
+    "payload": {
+      "userId": "user_123",
+      "traits": {
+        "email": "user@example.com",
+        "plan": "pro"
+      },
+      "anonymousId": "anon_abc123",
+      "context": {
+        "library": {
+          "name": "altertable-sdk",
+          "version": "1.0.0"
+        }
+      },
+      "timestamp": "2023-01-01T12:00:00.000Z"
+    }
+  }
+}
