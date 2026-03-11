@@ -60,7 +60,7 @@ git submodule add https://github.com/altertable-ai/altertable-client-specs.git s
 git -C specs checkout <spec-tag>
 git add .gitmodules specs
 git commit -m "chore: add altertable-client-specs submodule at <spec-tag>"
-```text
+```
 
 **Spec update** (submodule already exists):
 
@@ -71,14 +71,14 @@ git commit -m "chore: add altertable-client-specs submodule at <spec-tag>"
 git -C specs fetch --tags
 git -C specs checkout <new-spec-tag>
 git -C specs diff <old-tag>..<new-spec-tag> -- .
-```text
+```
 
 1. Stage and commit the submodule pointer update:
 
 ```bash
 git add specs
 git commit -m "chore: update altertable-client-specs submodule to <new-spec-tag>"
-```text
+```
 
 ### Phase 4: Populate community files (initial bootstrap only)
 

@@ -9,7 +9,7 @@
 ```bash
 git config user.name "Albert"
 git config user.email "albert20260301@gmail.com"
-```text
+```
 
 ## SDK Tooling
 

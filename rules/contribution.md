@@ -14,7 +14,7 @@ All work in `code/` (`.gitignored`, ephemeral). One branch per change, never mix
 ```bash
 git fetch upstream
 git checkout -b <new-branch> upstream/main
-```text
+```
 
 ## Stacked PRs on contributor branches
 

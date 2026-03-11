@@ -45,7 +45,7 @@ Follow [Keep a Changelog](https://keepachangelog.com/) format:
 
 ### Removed
 - Removed feature description.
-```text
+```
 
 Rules:
 
