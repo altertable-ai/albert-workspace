@@ -9,4 +9,6 @@ All workspace changes go through PRs in [altertable-ai/albert-workspace](https:/
 | `rules/`, `skills/` | PR required. |
 | `memory/` | Local only. Never committed or pushed. |
 
+If a PR for a local configuration change is closed without merge, revert the corresponding local change immediately so local state stays aligned with accepted GitHub state.
+
 Don't add files outside the defined structure without explaining the purpose in the PR.
