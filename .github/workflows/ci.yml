@@ -7,21 +7,31 @@ on:
       - main
 
 jobs:
-  markdown-lint:
-    name: Markdown lint
+  check:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Lint markdown
-        uses: DavidAnson/markdownlint-cli2-action@v16
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          globs: '**/*.md'
-          config: .markdownlint.yml
+          bun-version: "1.3.0"
+
+      - name: Cache Bun
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-1.3.0
+          restore-keys: bun-${{ runner.os }}-
+
+      - name: Lint
+        run: make lint
 
   link-check:
     name: Check links
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +42,6 @@ jobs:
         with:
           args: >-
             --exclude-loopback
-            --exclude 'https://github.com/altertable-ai/.*'
             '**/*.md'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

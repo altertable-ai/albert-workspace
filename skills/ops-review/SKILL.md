@@ -133,6 +133,7 @@ Use GitHub suggestion blocks for concrete fixes:
 ```suggestion
 corrected code here
 ```
+````
 
 Categorize feedback:
 
@@ -144,7 +145,7 @@ Categorize feedback:
 
 Add a welcome message:
 
-```
+```text
 Thanks for your first contribution to {repo}! 🎉
 
 [review feedback here]
@@ -152,7 +153,7 @@ Thanks for your first contribution to {repo}! 🎉
 
 ### Approving
 
-```
+```text
 Looks great — thanks for the contribution!
 ```
 
@@ -160,7 +161,7 @@ Keep it short. Don't over-explain when approving.
 
 ### Requesting changes
 
-```
+```text
 Thanks for working on this! A few things to address before we can merge:
 
 1. [Specific, actionable item]
@@ -171,7 +172,7 @@ Let me know if you have questions.
 
 ### Closing
 
-```
+```text
 Thanks for the PR. [Reason for closing — duplicate/out of scope/etc.]
 
 [If applicable: pointer to the right approach or issue to discuss first]

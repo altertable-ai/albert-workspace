@@ -4,7 +4,8 @@
 
 - No PR without tests verifying the change
 - All CI must pass before requesting review
-- Run local checks before pushing
+- Markdown must pass the linter (`make lint`) — config in `.markdownlint.yml`
+- No broken links (`make check-links`) — mirrors CI link check
 
 ## Checklist (before every PR)
 

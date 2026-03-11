@@ -13,6 +13,23 @@ Changes here affect how Albert behaves across all Altertable SDK repositories.
 - **Scripts**: Verify they handle missing data, API errors, and edge cases without crashing silently.
 - **CI workflows**: Require a passing run before review.
 
+## Local checks
+
+The CI runs a markdown linter and a link checker. Run them locally before pushing:
+
+**Prerequisites**:
+
+- Node.js (for `npx`)
+- [Lychee](https://github.com/lycheeverse/lychee):
+  - macOS: `brew install lychee`
+  - Linux: `cargo install lychee` (or `snap install lychee` on Ubuntu/Debian)
+
+**Commands**:
+
+- `make lint` — lint all Markdown files
+- `make check-links` — check for broken links
+- `make ci` — run both
+
 ## What not to add
 
 - Files outside the defined workspace structure

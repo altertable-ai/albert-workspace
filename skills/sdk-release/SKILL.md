@@ -35,15 +35,19 @@ Follow [Keep a Changelog](https://keepachangelog.com/) format:
 ## [Unreleased]
 
 ### Added
+
 - New feature description.
 
 ### Changed
+
 - Changed behavior description.
 
 ### Fixed
+
 - Bug fix description.
 
 ### Removed
+
 - Removed feature description.
 ```
 

@@ -62,14 +62,17 @@ Produce a markdown document using this template:
 ## PRs This Week
 
 ### Opened
+
 | Repo | PR | State |
 |------|----|-------|
 | ... | [#N title](url) | open / merged / closed |
 
 ### Merged
+
 - ...
 
 ### Closed Without Merge
+
 - ...
 
 ## Issues Triaged
