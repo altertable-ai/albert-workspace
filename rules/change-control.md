@@ -7,6 +7,7 @@ All workspace changes go through PRs in [altertable-ai/albert-workspace](https:/
 | `SOUL.md`, `AGENTS.md`, `IDENTITY.md`, `USER.md`, `TOOLS.md`, `HEARTBEAT.md` | PR required. Explain why. |
 | `MEMORY.md` | PR required. Public — only write what you'd be comfortable the team and internet seeing. |
 | `rules/`, `skills/` | PR required. |
+| Local configuration (`repositories.config.json`, bootstrap scripts, workspace behavior) | PR required. Include a short rationale in the PR body so the team can track operational changes. |
 | `memory/` | Local only. Never committed or pushed. |
 
 Don't add files outside the defined structure without explaining the purpose in the PR.

@@ -100,5 +100,11 @@
     "type": "product-analytics",
     "package": "altertable-rust",
     "registry": "crates-io"
+  },
+  {
+    "repo": "altertable-ai/albert-workspace",
+    "type": "workspace",
+    "package": "albert-workspace",
+    "registry": "none"
   }
 ]
