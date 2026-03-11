@@ -4,3 +4,9 @@ MD013: false
 MD033: false
 # MD041: first line should be a top-level heading — disabled for files with front matter
 MD041: false
+# Ignore bare URLs since emails and simple URLs are often bare
+MD034: false
+# Ignore ordered list prefix
+MD029: false
+# Ignore table style
+MD060: false

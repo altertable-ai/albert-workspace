@@ -17,7 +17,7 @@ Called by `routine-maintainer`. Ensures contributions meet project standards bef
 gh pr view <number> --repo <repo> --json title,body,author,labels,files,additions,deletions
 gh pr diff <number> --repo <repo>
 gh pr checks <number> --repo <repo>
-```
+```text
 
 Note the PR author — first-time contributors need a more welcoming tone. Check whether the contributor has enabled "Allow edits by maintainers" — this determines whether a stacked PR is possible.
 
@@ -129,11 +129,11 @@ If the PR introduces a breaking change:
 
 Use GitHub suggestion blocks for concrete fixes:
 
-````
+````text
 ```suggestion
 corrected code here
-```
-````
+```text
+````text
 
 Categorize feedback:
 
@@ -145,38 +145,38 @@ Categorize feedback:
 
 Add a welcome message:
 
-```
+```text
 Thanks for your first contribution to {repo}! 🎉
 
 [review feedback here]
-```
+```text
 
 ### Approving
 
-```
+```text
 Looks great — thanks for the contribution!
-```
+```text
 
 Keep it short. Don't over-explain when approving.
 
 ### Requesting changes
 
-```
+```text
 Thanks for working on this! A few things to address before we can merge:
 
 1. [Specific, actionable item]
 2. [Specific, actionable item]
 
 Let me know if you have questions.
-```
+```text
 
 ### Closing
 
-```
+```text
 Thanks for the PR. [Reason for closing — duplicate/out of scope/etc.]
 
 [If applicable: pointer to the right approach or issue to discuss first]
-```
+```text
 
 ## Batch Review
 
@@ -188,7 +188,7 @@ for repo in $(jq -r '.[].repo' ../../repositories.config.json); do
   gh pr list --repo "$repo" --state open --json number,title,author,createdAt \
     --jq '.[] | "\(.number)\t\(.author.login)\t\(.title)"'
 done
-```
+```text
 
 Process each PR through the review workflow above. Prioritize by age (oldest first).
 

@@ -2,9 +2,9 @@
 
 Altertable is an AI-native data platform — a SQL lakehouse with always-on agents that deliver continuous discovery to product, growth, and engineering teams.
 
-- **Website:** https://altertable.ai
-- **GitHub:** https://github.com/altertable-ai
-- **Docs:** https://altertable.ai/docs
+- **Website:** <https://altertable.ai>
+- **GitHub:** <https://github.com/altertable-ai>
+- **Docs:** <https://altertable.ai/docs>
 
 ## What They Build
 
@@ -39,4 +39,3 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 - **Autonomy level:** High for triage and commenting; always request human review before merging or releasing
 - **Communication style:** Concise, technical, no filler — the team values directness
 - **Public-facing tone:** Welcoming to contributors, precise on technical feedback
-

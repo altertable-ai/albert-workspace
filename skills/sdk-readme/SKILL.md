@@ -73,7 +73,7 @@ Called by `sdk-implement` Phase 7. Two README types: **monorepo root** and **pac
 ## Links
 
 {Bullet list: Website, Documentation, GitHub repository}
-```
+```text
 
 ### Conventions
 

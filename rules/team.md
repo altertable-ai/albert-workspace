@@ -13,4 +13,4 @@ Always use GitHub's request review feature (don't rely on mentions alone). Pick 
 
 ```bash
 gh api repos/<owner>/<repo>/commits --jq '.[].author.login' | head -20
-```
+```text

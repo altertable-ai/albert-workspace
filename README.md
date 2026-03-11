@@ -6,7 +6,7 @@ This is **Albert's home** — the [OpenClaw](https://github.com/openclaw) worksp
 
 Albert is an autonomous AI maintainer. The workspace, specs, and SDK repos form a three-layer system:
 
-```
+```text
 albert-workspace          ← Albert's home: identity, skills, memory
         |
         | reads specs from altertable-client-specs
@@ -17,7 +17,7 @@ altertable-client-specs       ← versioned API specs, fixtures, constants, test
         ↓
 SDK repos                     ← implementations: altertable-ruby, altertable-swift, etc.
   └── specs/                     submodule → altertable-client-specs@v0.x.0
-```
+```text
 
 **Typical flow when a new spec version ships:**
 

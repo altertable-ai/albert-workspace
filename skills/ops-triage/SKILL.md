@@ -46,7 +46,7 @@ Search open and recently closed issues in the same repo for similar titles and d
 
 ```bash
 gh issue list --repo <repo> --state all --search "<keywords>" --limit 20
-```
+```text
 
 If a duplicate is found:
 
@@ -67,13 +67,13 @@ If any are missing, apply `needs-info` and comment requesting the missing detail
 
 If steps to reproduce are vague or involve a large codebase, apply `needs-repro` and comment:
 
-```
+```text
 Thanks for reporting this! A minimal reproduction would help us investigate faster.
 
 Could you provide a short, self-contained script or test that demonstrates the issue?
 
 **What happens next**: Once you add a repro, I'll run it locally and either confirm the bug or follow up with questions.
-```
+```text
 
 ### Step 4: Attempt reproduction (bugs only)
 
@@ -104,18 +104,18 @@ Issues with no activity for 30 days:
 ```bash
 gh issue list --repo <repo> --state open --label "needs-repro,needs-info" \
   --json number,updatedAt --jq '.[] | select(.updatedAt < (now - 2592000 | todate))'
-```
+```text
 
 For each stale issue:
 
 1. Apply `stale` label
 2. Comment with teammate structure:
 
-```
+```text
 No updates in 30 days. Marking as stale.
 
 **What happens next**: This will be closed in 7 days if no further activity. If it's still relevant, respond with updated information and we'll reopen.
-```
+```text
 
 ### Closing stale
 
@@ -134,7 +134,7 @@ for repo in $(jq -r '.[].repo' ../../repositories.config.json); do
   gh issue list --repo "$repo" --state open --json number,title,labels \
     --jq '.[] | select(.labels | length == 0) | "\(.number)\t\(.title)"'
 done
-```
+```text
 
 Process each unlabeled issue through the workflow above.
 
@@ -148,17 +148,17 @@ Every triage response must follow a teammate-style structure so the reporter kno
 
 ### Not a bug (usage question)
 
-```
+```text
 Thanks for reaching out! This looks like a usage question rather than a bug.
 
 [Provide brief answer or link to relevant docs]
 
 **What happens next**: If this resolves your question, we can close the issue. If you believe this is actually a bug, please reopen with a minimal reproduction case and I'll triage it as a bug.
-```
+```text
 
 ### Insufficient information
 
-```
+```text
 Thanks for reporting this. To investigate, I need:
 
 - SDK version: `<package-name> --version`
@@ -167,7 +167,7 @@ Thanks for reporting this. To investigate, I need:
 - Expected vs actual behavior
 
 **What happens next**: Once you add these details, I'll revisit and either reproduce locally or follow up with more questions.
-```
+```text
 
 ## Acceptance Checklist
 

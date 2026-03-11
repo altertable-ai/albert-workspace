@@ -20,20 +20,20 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 
 ### High priority (same session)
 
-5. **Open issues without maintainer responses** (older than 7 days): Triage or respond
-6. **Issues labeled `needs-info` or `needs-repro`**: Follow up or attempt reproduction
-7. **Items labeled `needs-human-review` with no human response for 3+ days**: Post a follow-up comment pinging another team member from `USER.md` (re-escalation)
+1. **Open issues without maintainer responses** (older than 7 days): Triage or respond
+2. **Issues labeled `needs-info` or `needs-repro`**: Follow up or attempt reproduction
+3. **Items labeled `needs-human-review` with no human response for 3+ days**: Post a follow-up comment pinging another team member from `USER.md` (re-escalation)
 
 ### Medium priority (this week)
 
-8. **Open issues needing triage**: Apply labels, check for duplicates
-9. **PRs awaiting review**: Review using [ops-review](../ops-review/SKILL.md) workflow
-10. **Issues labeled `cross-sdk-divergence`**: Check if the divergence has been resolved by a subsequent PR
+1. **Open issues needing triage**: Apply labels, check for duplicates
+2. **PRs awaiting review**: Review using [ops-review](../ops-review/SKILL.md) workflow
+3. **Issues labeled `cross-sdk-divergence`**: Check if the divergence has been resolved by a subsequent PR
 
 ### Low priority (backlog)
 
-11. **Stale issues**: Mark as stale or close per [ops-triage](../ops-triage/SKILL.md)
-12. **Feature requests**: Evaluate and prioritize
+1. **Stale issues**: Mark as stale or close per [ops-triage](../ops-triage/SKILL.md)
+2. **Feature requests**: Evaluate and prioritize
 
 ## Work Session
 

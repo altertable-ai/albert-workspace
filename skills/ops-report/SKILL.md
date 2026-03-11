@@ -30,7 +30,7 @@ gh search prs \
   --updated ">=$(date -u -d '7 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-7d +%Y-%m-%d)" \
   --json title,url,state,repository,createdAt,mergedAt \
   --limit 100
-```
+```text
 
 ```bash
 # Issues commented or labeled by Albert
@@ -39,18 +39,18 @@ gh search issues \
   --updated ">=$(date -u -d '7 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-7d +%Y-%m-%d)" \
   --json title,url,state,repository,labels \
   --limit 100
-```
+```text
 
 ```bash
 # Spec alignment
 bash scripts/spec-status.sh --markdown
-```
+```text
 
 ```bash
 # Full ecosystem health (supplementary to spec-status.sh)
 # Reports: spec alignment, open PR count, open issue count, CI status per repo
 bash scripts/ecosystem-status.sh --markdown
-```
+```text
 
 ### Step 2: Compile the report
 
@@ -91,7 +91,7 @@ Produce a markdown document using this template:
 
 - Run `sdk-sync` for repos still missing `SECURITY.md`.
 - Open submodule bump PRs for outdated SDKs once spec v0.X.Y is tagged.
-```
+```text
 
 ## Acceptance Checklist
 
