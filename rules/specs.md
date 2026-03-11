@@ -4,7 +4,7 @@
 
 [`altertable-ai/altertable-client-specs`](https://github.com/altertable-ai/altertable-client-specs), tagged with semver. Each SDK pins it as a git submodule. Skills read from `specs/<type>/SPEC.md` in the SDK repo — never from the workspace or internet. The submodule is read-only.
 
-```
+```text
 altertable-client-specs/
 ├── http/SPEC.md               # HTTP transport (shared by all SDKs)
 ├── lakehouse/SPEC.md
@@ -17,7 +17,7 @@ altertable-client-specs/
 
 ## Update event chain
 
-```
+```text
 new tag pushed → heartbeat runs spec-status.sh → outdated SDKs detected
 → tracking issue created → sdk-bootstrap opens update PRs → sdk-implement implements diff
 ```

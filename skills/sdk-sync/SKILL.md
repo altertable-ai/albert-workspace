@@ -40,7 +40,7 @@ Templated files contain `{variable}` placeholders. Render them with repo-specifi
 2. For each managed file, compare the repo's version against the source of truth.
 3. Report drift:
 
-```
+```text
 DRIFT REPORT
 ============
 altertable-lakehouse-ruby:

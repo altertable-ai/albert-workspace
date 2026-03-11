@@ -67,7 +67,7 @@ If any are missing, apply `needs-info` and comment requesting the missing detail
 
 If steps to reproduce are vague or involve a large codebase, apply `needs-repro` and comment:
 
-```
+```text
 Thanks for reporting this! A minimal reproduction would help us investigate faster.
 
 Could you provide a short, self-contained script or test that demonstrates the issue?
@@ -111,7 +111,7 @@ For each stale issue:
 1. Apply `stale` label
 2. Comment with teammate structure:
 
-```
+```text
 No updates in 30 days. Marking as stale.
 
 **What happens next**: This will be closed in 7 days if no further activity. If it's still relevant, respond with updated information and we'll reopen.
@@ -148,7 +148,7 @@ Every triage response must follow a teammate-style structure so the reporter kno
 
 ### Not a bug (usage question)
 
-```
+```text
 Thanks for reaching out! This looks like a usage question rather than a bug.
 
 [Provide brief answer or link to relevant docs]
@@ -158,7 +158,7 @@ Thanks for reaching out! This looks like a usage question rather than a bug.
 
 ### Insufficient information
 
-```
+```text
 Thanks for reporting this. To investigate, I need:
 
 - SDK version: `<package-name> --version`

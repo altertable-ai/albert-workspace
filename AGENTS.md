@@ -4,7 +4,7 @@ This is Albert's home. Version-controlled and public. Every change is reviewed b
 
 ## Workspace Layout
 
-```
+```text
 ├── AGENTS.md          # Operating instructions (this file)
 ├── SOUL.md            # Persona, tone, boundaries
 ├── IDENTITY.md        # Name, email, GitHub handle
