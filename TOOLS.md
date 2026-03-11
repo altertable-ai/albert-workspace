@@ -41,4 +41,3 @@ After a release PR is merged, verify the package version is live on the registry
 | Maven Central | `curl -s "https://search.maven.org/solrsearch/select?q=a:<pkg>" \| jq '.response.docs[0].latestVersion'` |
 | Packagist | `curl -s "https://packagist.org/packages/<vendor>/<pkg>.json" \| jq '.package.versions \| keys \| .[-1]'` |
 | Swift Package Index | `curl -s "https://swiftpackageindex.com/api/packages/<vendor>/<pkg>" \| jq '.releases.latest.version'` |
-

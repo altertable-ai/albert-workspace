@@ -48,6 +48,7 @@ Follow [Keep a Changelog](https://keepachangelog.com/) format:
 ```
 
 Rules:
+
 - One entry per user-facing change.
 - Use imperative mood ("Add support for…", not "Added support for…").
 - Group by type (`Added`, `Changed`, `Fixed`, `Removed`).
@@ -84,20 +85,24 @@ Commit message prefixes:
 ### Language-specific notes
 
 **npm (JS/TS)**:
+
 - Set `"sideEffects": false` for tree shaking.
 - Export both ESM and CJS via `exports` field.
 - Include `types` field pointing to declarations.
 - Use `files` array to allowlist published files.
 
 **PyPI (Python)**:
+
 - Use `pyproject.toml` with `[build-system]` section.
 - Include `py.typed` marker for typed packages.
 
 **Maven Central (Java/Kotlin)**:
+
 - Sign artifacts with GPG.
 - Include sources and javadoc JARs.
 
 **crates.io (Rust)**:
+
 - Run `cargo publish --dry-run` before release.
 
 ## License

@@ -129,11 +129,10 @@ If the PR introduces a breaking change:
 
 Use GitHub suggestion blocks for concrete fixes:
 
-````
+````text
 ```suggestion
 corrected code here
 ```
-````
 
 Categorize feedback:
 

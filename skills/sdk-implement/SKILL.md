@@ -75,6 +75,7 @@ Flag any divergence as a follow-up issue with the `cross-sdk-divergence` label â
 ### 7. Package
 
 Run in this order:
+
 1. Apply release conventions per [sdk-release](../sdk-release/SKILL.md) (versioning, changelog, registry metadata)
 2. Generate README per [sdk-readme](../sdk-readme/SKILL.md)
 

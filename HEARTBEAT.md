@@ -41,6 +41,7 @@ Every cycle must produce at least one visible artifact:
 - **Work done**: Comment on relevant issues/PRs summarizing what happened. Post a brief Slack summary for significant work.
 - **Nothing actionable**: Emit the no-op artifact:
   1. If an open `spec-outdated`/`spec-update` tracking issue exists, add a comment to it:
+
      ```bash
      bash scripts/upsert-github-issue.sh \
        --title "Spec drift tracking" \
@@ -48,10 +49,13 @@ Every cycle must produce at least one visible artifact:
        --label "spec-update" \
        --search-by-label
      ```
+
   2. Otherwise, upsert a heartbeat-status issue (creates on first run, comments on subsequent runs):
+
      ```bash
      bash scripts/upsert-github-issue.sh \
        --title "Heartbeat status" \
        --body "Heartbeat ran at $(date -u). Spec drift: clean. Notifications: reviewed, no actionable items."
      ```
+
 - **Blocked**: Comment explaining the blocker, apply `needs-human-review`, mention a team member.

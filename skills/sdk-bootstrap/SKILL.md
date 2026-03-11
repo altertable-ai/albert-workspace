@@ -73,7 +73,7 @@ git -C specs checkout <new-spec-tag>
 git -C specs diff <old-tag>..<new-spec-tag> -- .
 ```
 
-3. Stage and commit the submodule pointer update:
+1. Stage and commit the submodule pointer update:
 
 ```bash
 git add specs
