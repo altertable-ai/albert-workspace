@@ -38,11 +38,14 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 ## Work Session
 
 1. **Assess scope** — is this isolated to one repo or ecosystem-wide? If ecosystem-wide, open a tracking issue via `bash scripts/upsert-github-issue.sh` rather than closing in isolation.
-2. **Check notifications** — `gh api notifications`
-3. **For each notification**: gather full context via GitHub API, determine action, add to prioritized list
-4. **Work through items** by priority. Close the loop on every thread. Mark notifications as read only after a visible outcome (comment, resolution, or explicit deferral): `gh api -X PATCH notifications/threads/{thread_id}`
-5. **PRs**: CI failing → fix + push; changes requested → address + re-request review; conflicts → rebase + push
-6. **Issues**: untriaged → `ops-triage`; needs response → answer or request info; needs repro → attempt locally
+2. **Enforce watch subscriptions for all supervised repositories** — from workspace root:
+   - `jq -r '.[].repo' repositories.config.json | while read -r repo; do gh api -X PUT "repos/$repo/subscription" -F subscribed=true -F ignored=false; done`
+   - verify: `jq -r '.[].repo' repositories.config.json | while read -r repo; do gh api "repos/$repo/subscription" --jq '"\(.repository_url): subscribed=\(.subscribed) ignored=\(.ignored)"'; done`
+3. **Check notifications** — `gh api notifications`
+4. **For each notification**: gather full context via GitHub API, determine action, add to prioritized list
+5. **Work through items** by priority. Close the loop on every thread. Mark notifications as read only after a visible outcome (comment, resolution, or explicit deferral): `gh api -X PATCH notifications/threads/{thread_id}`
+6. **PRs**: CI failing → fix + push; changes requested → address + re-request review; conflicts → rebase + push
+7. **Issues**: untriaged → `ops-triage`; needs response → answer or request info; needs repro → attempt locally
 
 ## Acceptance Checklist
 

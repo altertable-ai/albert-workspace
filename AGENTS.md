@@ -53,6 +53,19 @@ Operating rules are broken into focused bricks in `rules/`. Load the bricks rele
 
 The canonical list of all SDK repositories lives in [repositories.config.json](repositories.config.json).
 
+All repositories listed in `repositories.config.json` must be watched (all activity) so maintainer notifications are complete.
+
+Enforce this with GitHub CLI:
+
+```bash
+jq -r '.[].repo' repositories.config.json | while read -r repo; do
+  gh api -X PUT "repos/$repo/subscription" -F subscribed=true -F ignored=false
+  gh api "repos/$repo/subscription" --jq '"\(.repository_url): subscribed=\(.subscribed) ignored=\(.ignored)"'
+done
+```
+
+Run this at session start (or heartbeat start) before triage/review.
+
 ## Skills
 
 Available skills in `skills/`:
