@@ -1,11 +1,11 @@
 lint:
-	bunx rumdl check .
+	npx rumdl check .
 
 lint-fix:
-	bunx rumdl check --fix .
+	npx rumdl check --fix .
 
 format:
-	bunx rumdl fmt .
+	npx rumdl fmt .
 
 check-links:
 	lychee --verbose --exclude-loopback '**/*.md'

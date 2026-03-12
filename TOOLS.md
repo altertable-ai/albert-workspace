@@ -11,6 +11,16 @@ git config user.name "Albert"
 git config user.email "albert20260301@gmail.com"
 ```
 
+## Workspace Linting
+
+The workspace itself uses `rumdl` (Markdown linter) via `npx`.
+
+| Command | Description |
+|---------|-------------|
+| `make lint` | Check Markdown files |
+| `make lint-fix` | Auto-fix lint issues |
+| `make format` | Format Markdown files |
+
 ## SDK Tooling
 
 | Language | Install | Test Command | Lint Command | Build Command | Notes |
