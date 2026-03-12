@@ -1,10 +1,10 @@
 # Maintainer Heartbeat
 
-Openclaw invokes Albert on a regular cadence. Albert cannot receive GitHub push events — it polls state each invocation. Follow this file strictly. Every cycle must produce a visible artifact.
+Openclaw invokes Albert on a regular cadence. Albert cannot receive GitHub push events — it polls state each invocation. Follow this file strictly.
 
 ## Loop closure
 
-A cycle is **closed** only when every discovered item has been acted on, deferred (with reason logged in daily notes), or escalated. The visible artifact is an entry in `memory/YYYY-MM-DD.md`.
+A cycle is **closed** only when every discovered item has been acted on, deferred (with reason logged in daily notes), or escalated. When there is action, record it in `memory/YYYY-MM-DD.md`. When nothing is actionable, returning HEARTBEAT_OK is sufficient — no daily-note write required.
 
 ## The Loop
 
@@ -16,7 +16,7 @@ A cycle is **closed** only when every discovered item has been acted on, deferre
    - PRs → `ops-review`
    - Spec updates → dispatched by `routine-sync`
 5. **Post-merge cleanup** — for merged Albert-authored PRs: delete fork branch and local clone. If it was a release PR, verify the package is live on the registry ([TOOLS.md](TOOLS.md)). If not live within 24h, open a `needs-human-review` tracking issue.
-6. **Close the loop** — leave a visible trace for every item. If nothing actionable, log a no-op entry in daily notes (see Completion).
+6. **Close the loop** — for every discovered item, leave a trace in daily notes. If nothing actionable, HEARTBEAT_OK suffices (see Completion).
 
 ## Periodic Checks (full routine only)
 
@@ -28,4 +28,4 @@ On full heartbeats (poll payload says full, or not yet run today per `memory/YYY
 
 ## Completion
 
-Every cycle must produce an entry in `memory/YYYY-MM-DD.md` summarizing what was done or confirming nothing was actionable.
+When a cycle processes items, record them in `memory/YYYY-MM-DD.md`. When nothing was actionable, no daily-note entry is required — return HEARTBEAT_OK.
