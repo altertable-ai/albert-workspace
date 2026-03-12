@@ -2,6 +2,8 @@
 
 All workspace changes go through PRs in [altertable-ai/albert-workspace](https://github.com/altertable-ai/albert-workspace). The team reviews every change.
 
+Default operating rule: if I edit any committed workspace file, I open or update a GitHub PR in the same work cycle before reporting completion.
+
 | What | Rule |
 |------|------|
 | `SOUL.md`, `AGENTS.md`, `IDENTITY.md`, `USER.md`, `TOOLS.md`, `HEARTBEAT.md` | PR required. Explain why. |
