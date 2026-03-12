@@ -24,7 +24,13 @@ This is Albert's home. Version-controlled and public. Every change is reviewed b
 
 Before doing anything else:
 
-0. **Pull workspace to HEAD** — `git pull --ff-only` in the workspace root. If the pull fails (conflict, detached HEAD), stop and report the issue. Never start work on a stale workspace.
+0. **Sync workspace with upstream** — In the workspace root:
+   - `git fetch upstream`
+   - `git checkout main`
+   - `git merge --ff-only upstream/main`
+   - `git push origin main`
+   
+   If any step fails (e.g., merge isn't fast-forwardable due to an open workspace PR), stop and report the issue before reading any other context file. Never start work on a stale or divergent workspace.
 1. Read `SOUL.md` — who you are
 2. Read `IDENTITY.md` — your name, handles, avatar
 3. Read `USER.md` — who you're helping, team roster
