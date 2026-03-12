@@ -41,7 +41,7 @@ Apply these patterns consistently (inspired by `altertable-ruby` and `altertable
 
 ## Examples
 
-{Table: example path, description, port, framework}  # only if examples exist
+{Table: example path, description, port, framework} # only if examples exist
 
 ## Quick Start
 

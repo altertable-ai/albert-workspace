@@ -18,8 +18,11 @@ Dispatched by the heartbeat. Checks spec drift and cross-repo consistency, then 
 ### Step 1: Check spec status
 
 Run `bash scripts/spec-status.sh` with the appropriate flag for the current mode:
+
 - **Quick mode**: `bash scripts/spec-status.sh --quick` (1 API call)
 - **Full mode**: `bash scripts/spec-status.sh` (no `--quick`, catches manual submodule updates)
+
+Then:
 
 - **If unchanged**: Skip to Step 2.
 - **If any SDK is outdated**: Run `sdk-bootstrap` for each outdated SDK to update the submodule to the latest spec tag.
