@@ -5,7 +5,7 @@ description: Defines how to write README files for Altertable open-source SDK re
 
 # SDK README
 
-Use this skill when writing or refactoring README files for Altertable SDK repositories.
+Use this skill when writing or refactoring README files for Altertable SDK repositories. Also called by `sdk-implement` Phase 7. Two README types: **monorepo root** and **package**.
 
 **Rules:** [quality](../../rules/quality.md) · [change-control](../../rules/change-control.md)
 
