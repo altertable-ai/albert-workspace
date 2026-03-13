@@ -15,7 +15,7 @@ A cycle is **closed** only when every discovered item has been acted on, deferre
    - Issues → `ops-triage`
    - PRs → `ops-review`
    - Spec updates → dispatched by `routine-sync`
-5. **Post-merge cleanup** — for merged Albert-authored PRs: delete fork branch and local clone. If it was a release PR, verify the package is live on the registry ([TOOLS.md](TOOLS.md)). If not live within 24h, open a `needs-human-review` tracking issue.
+5. **Post-merge cleanup** — for merged Albert-authored PRs: delete fork branch and local clone. If it was a release PR, verify the package is live on the registry ([TOOLS.md](TOOLS.md)). If not live within 24h, open a `needs-human-review` tracking issue. If the merged PR changed `repositories.config.json`, run `bash scripts/subscribe-repos.sh` to reconcile subscriptions.
 6. **Close the loop** — for every discovered item, leave a trace in daily notes. If nothing actionable, HEARTBEAT_OK suffices (see Completion).
 7. **Sync workspace** — After all work for the cycle is done:
    - Check for any open Albert-authored workspace PRs: `gh pr list --repo altertable-ai/albert-workspace --author albert20260301`
