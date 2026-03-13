@@ -19,15 +19,15 @@ gh pr diff <number> --repo <repo>
 gh pr checks <number> --repo <repo>
 ```
 
-Note the PR author — first-time contributors need a more welcoming tone. Check whether the contributor has enabled "Allow edits by maintainers" — this determines whether a stacked PR is possible.
+Note the PR author — first-time contributors need a more welcoming tone, core team members do not (defined in [USER.md](../../USER.md)).
 
 ### Step 2: Check CI status
 
 All CI checks must pass before approving. If checks fail:
 
 1. Identify the failing job (lint, typecheck, test, integration)
-2. If the fix is obvious and small (e.g., a missing changelog entry, a formatting issue, a trivial lint error): push a fix directly to the contributor's branch (if they've allowed maintainer edits) or open a stacked PR per [rules/contribution.md](../../rules/contribution.md)
-3. Otherwise, comment with the failure and a clear suggestion to fix
+2. If the fix is obvious and small (e.g., a missing changelog entry, a formatting issue, a trivial lint error): open a stacked PR per [rules/contribution.md](../../rules/contribution.md)
+3. Otherwise: open a stacked PR with the fix, and for external contributors, comment with the failure and explain that you've opened a stacked PR to fix it — once merged, it'll automatically fix the contributor PR.
 
 ### Step 3: Review against standards
 
@@ -110,7 +110,7 @@ If the PR introduces a breaking change:
 |-----------|--------|
 | CI green, standards met, tests included | **Approve** |
 | Minor issues (typo, missing changelog entry, small style nit) | **Approve** with comments |
-| CI failing or minor issue with an obvious fix | **Push fix** to contributor's branch or open a stacked PR (see [rules/contribution.md](../../rules/contribution.md)) |
+| CI failing or minor issue with an obvious fix | **Open a stacked PR** (see [rules/contribution.md](../../rules/contribution.md)) |
 | Missing tests or incomplete implementation | **Request changes** |
 | Breaks public API without justification | **Request changes** |
 | Spam, off-topic, or fundamentally misguided approach | **Close** with explanation |

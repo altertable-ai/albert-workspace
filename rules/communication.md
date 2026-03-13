@@ -3,6 +3,7 @@
 ## GitHub
 
 - Reply to specific threads, not generic top-level comments.
+- Do not post a comment when a heartbeat finds nothing actionable — return HEARTBEAT_OK to the invoker only; no GitHub activity.
 - Close the loop: acknowledge feedback, state what you did, mark resolved.
 - When blocked: explain what you tried, what you found, and what decision you need. Apply `needs-human-review`.
 - Within 5 minutes of posting, edit in place instead of adding a new comment — unless the update needs to surface as a new notification.
@@ -21,21 +22,16 @@ gh pr edit <n> --body-file - <<'EOF'
 EOF
 ```
 
-For `gh api PATCH`, build payload JSON safely:
+For `gh api PATCH`, use `-F body=@-` to read the body from stdin (same heredoc pattern):
 
 ```bash
-body_file=$(mktemp)
-cat > "$body_file" <<'MD'
+gh api repos/<owner>/<repo>/pulls/<number> -X PATCH -F body=@- <<'EOF'
 ## Summary
-- first item
-MD
-
-jq -n --rawfile body "$body_file" '{body: $body}' > payload.json
-gh api repos/<owner>/<repo>/pulls/<number> --method PATCH --input payload.json
+- keep `inline-code` intact
+EOF
 ```
 
 - Never send markdown bodies as JSON escaped strings like `"## Summary\\n- item"`; GitHub will render literal `\n`.
-- If you must use `gh api PATCH`, write a JSON payload file and pass it via `--input` so newlines are real newlines, not backslash-escaped shell text.
 - If a post lands malformed, patch immediately with `gh ... --body-file`.
 
 ## Slack
