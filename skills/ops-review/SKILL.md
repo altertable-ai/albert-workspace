@@ -183,7 +183,7 @@ Thanks for the PR. [Reason for closing — duplicate/out of scope/etc.]
 To find PRs awaiting review across all repos:
 
 ```bash
-for repo in $(jq -r '.[].repo' ../../repositories.config.json); do
+for repo in $(jq -r '.sdks[].repo' ../../repositories.config.json); do
   echo "=== $repo ==="
   gh pr list --repo "$repo" --state open --json number,title,author,createdAt \
     --jq '.[] | "\(.number)\t\(.author.login)\t\(.title)"'

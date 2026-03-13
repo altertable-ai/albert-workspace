@@ -5,7 +5,7 @@ description: Keep shared configuration, community files, and CI templates consis
 
 # SDK Sync
 
-Audit and synchronize shared files across all Altertable SDK repositories. Repository inventory: [`repositories.config.json`](../../repositories.config.json) (each entry has `repo`, `type`, `package`, `registry`). Edit that file to add/remove repos — all scripts pick it up automatically.
+Audit and synchronize shared files across all Altertable SDK repositories. Repository inventory: [`repositories.config.json`](../../repositories.config.json). Edit that file to add/remove repos — all scripts pick it up automatically.
 
 **Rules:** [change-control](../../rules/change-control.md) · [contribution](../../rules/contribution.md) · [safety](../../rules/safety.md)
 
@@ -36,9 +36,10 @@ Templated files contain `{variable}` placeholders. Render them with repo-specifi
 
 ### Phase 1: Audit
 
-1. Clone or fetch all repos from `repositories.config.json`.
-2. For each managed file, compare the repo's version against the source of truth.
-3. Report drift:
+1. Read `repositories.config.json` and iterate over the `sdks` array (do not include the `workspace` entry).
+2. Clone or fetch all SDK repos from the `sdks` array.
+3. For each managed file, compare the repo's version against the source of truth.
+4. Report drift:
 
 ```text
 DRIFT REPORT
@@ -71,7 +72,7 @@ For each repo with changes:
 
 ## Adding a New Managed File
 
-When a new file should be consistent across all repos:
+When a new file should be consistent across all SDK repos:
 
 1. Add the file to the `templates/` folder at the path it should occupy in the target repo.
 2. If it needs per-repo values, use `{variable}` placeholders and add a row to the **Template variables** table above.
@@ -79,9 +80,9 @@ When a new file should be consistent across all repos:
 
 ## Acceptance Checklist
 
-- [ ] All repos in the inventory have been audited
+- [ ] All SDK repos in the inventory have been audited
 - [ ] Drift report generated for all managed files
 - [ ] Verbatim files are byte-identical across repos
 - [ ] Templated files use correct repo-specific values
-- [ ] PRs opened for all repos with drift
+- [ ] PRs opened for all SDK repos with drift
 - [ ] No files outside the managed list were modified

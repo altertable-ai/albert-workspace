@@ -16,7 +16,7 @@ WORKSPACE_ROOT="${SCRIPT_DIR}/.."
 CACHE_FILE="${WORKSPACE_ROOT}/code/.last-spec-tag"
 
 SDK_REPOS=()
-while IFS= read -r line; do SDK_REPOS+=("$line"); done < <(jq -r '.[].repo' "${WORKSPACE_ROOT}/repositories.config.json")
+while IFS= read -r line; do SDK_REPOS+=("$line"); done < <(jq -r '.sdks[].repo' "${WORKSPACE_ROOT}/repositories.config.json")
 
 SPECS_REPO="altertable-ai/altertable-client-specs"
 MARKDOWN=false

@@ -57,7 +57,7 @@ Operating rules are broken into focused bricks in `rules/`. Load the bricks rele
 
 ## Repositories Under Supervision
 
-The canonical list of all SDK repositories lives in [repositories.config.json](repositories.config.json).
+The canonical list of all repositories lives in [repositories.config.json](repositories.config.json).
 
 ## Skills
 

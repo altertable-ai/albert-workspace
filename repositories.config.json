@@ -1,110 +1,110 @@
-[
-  {
+{
+  "workspace": {
     "repo": "altertable-ai/albert-workspace",
-    "type": "workspace",
-    "package": "albert-workspace",
-    "registry": "none"
+    "package": "albert-workspace"
   },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-ruby",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-ruby",
-    "registry": "rubygems"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-python",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-python",
-    "registry": "pypi"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-go",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-go",
-    "registry": "go-modules"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-java",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-java",
-    "registry": "maven-central"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-kotlin",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-kotlin",
-    "registry": "maven-central"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-rust",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-rust",
-    "registry": "crates-io"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-php",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-php",
-    "registry": "packagist"
-  },
-  {
-    "repo": "altertable-ai/altertable-lakehouse-cli",
-    "type": "lakehouse",
-    "package": "altertable-lakehouse-cli",
-    "registry": "github-releases"
-  },
-  {
-    "repo": "altertable-ai/altertable-js",
-    "type": "product-analytics",
-    "package": ["altertable-js", "altertable-react"],
-    "registry": "npm"
-  },
-  {
-    "repo": "altertable-ai/altertable-python",
-    "type": "product-analytics",
-    "package": "altertable-python",
-    "registry": "pypi"
-  },
-  {
-    "repo": "altertable-ai/altertable-swift",
-    "type": "product-analytics",
-    "package": "altertable-swift",
-    "registry": "swift-package-index"
-  },
-  {
-    "repo": "altertable-ai/altertable-kotlin",
-    "type": "product-analytics",
-    "package": "altertable-kotlin",
-    "registry": "maven-central"
-  },
-  {
-    "repo": "altertable-ai/altertable-ruby",
-    "type": "product-analytics",
-    "package": "altertable-ruby",
-    "registry": "rubygems"
-  },
-  {
-    "repo": "altertable-ai/altertable-java",
-    "type": "product-analytics",
-    "package": "altertable-java",
-    "registry": "maven-central"
-  },
-  {
-    "repo": "altertable-ai/altertable-go",
-    "type": "product-analytics",
-    "package": "altertable-go",
-    "registry": "go-modules"
-  },
-  {
-    "repo": "altertable-ai/altertable-php",
-    "type": "product-analytics",
-    "package": "altertable-php",
-    "registry": "packagist"
-  },
-  {
-    "repo": "altertable-ai/altertable-rust",
-    "type": "product-analytics",
-    "package": "altertable-rust",
-    "registry": "crates-io"
-  }
-]
+  "sdks": [
+    {
+      "repo": "altertable-ai/altertable-lakehouse-ruby",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-ruby",
+      "registry": "rubygems"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-python",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-python",
+      "registry": "pypi"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-go",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-go",
+      "registry": "go-modules"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-java",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-java",
+      "registry": "maven-central"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-kotlin",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-kotlin",
+      "registry": "maven-central"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-rust",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-rust",
+      "registry": "crates-io"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-php",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-php",
+      "registry": "packagist"
+    },
+    {
+      "repo": "altertable-ai/altertable-lakehouse-cli",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-cli",
+      "registry": "github-releases"
+    },
+    {
+      "repo": "altertable-ai/altertable-js",
+      "kind": "product-analytics",
+      "package": ["altertable-js", "altertable-react"],
+      "registry": "npm"
+    },
+    {
+      "repo": "altertable-ai/altertable-python",
+      "kind": "product-analytics",
+      "package": "altertable-python",
+      "registry": "pypi"
+    },
+    {
+      "repo": "altertable-ai/altertable-swift",
+      "kind": "product-analytics",
+      "package": "altertable-swift",
+      "registry": "swift-package-index"
+    },
+    {
+      "repo": "altertable-ai/altertable-kotlin",
+      "kind": "product-analytics",
+      "package": "altertable-kotlin",
+      "registry": "maven-central"
+    },
+    {
+      "repo": "altertable-ai/altertable-ruby",
+      "kind": "product-analytics",
+      "package": "altertable-ruby",
+      "registry": "rubygems"
+    },
+    {
+      "repo": "altertable-ai/altertable-java",
+      "kind": "product-analytics",
+      "package": "altertable-java",
+      "registry": "maven-central"
+    },
+    {
+      "repo": "altertable-ai/altertable-go",
+      "kind": "product-analytics",
+      "package": "altertable-go",
+      "registry": "go-modules"
+    },
+    {
+      "repo": "altertable-ai/altertable-php",
+      "kind": "product-analytics",
+      "package": "altertable-php",
+      "registry": "packagist"
+    },
+    {
+      "repo": "altertable-ai/altertable-rust",
+      "kind": "product-analytics",
+      "package": "altertable-rust",
+      "registry": "crates-io"
+    }
+  ]
+}

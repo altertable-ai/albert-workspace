@@ -129,7 +129,7 @@ Issues with `stale` label and no activity for 7 more days:
 To triage all open unlabeled issues across repos:
 
 ```bash
-for repo in $(jq -r '.[].repo' ../../repositories.config.json); do
+for repo in $(jq -r '.sdks[].repo' ../../repositories.config.json); do
   echo "=== $repo ==="
   gh issue list --repo "$repo" --state open --json number,title,labels \
     --jq '.[] | select(.labels | length == 0) | "\(.number)\t\(.title)"'
