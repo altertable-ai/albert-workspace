@@ -1,5 +1,11 @@
 [
   {
+    "repo": "altertable-ai/albert-workspace",
+    "type": "workspace",
+    "package": "albert-workspace",
+    "registry": "none"
+  },
+  {
     "repo": "altertable-ai/altertable-lakehouse-ruby",
     "type": "lakehouse",
     "package": "altertable-lakehouse-ruby",
@@ -100,11 +106,5 @@
     "type": "product-analytics",
     "package": "altertable-rust",
     "registry": "crates-io"
-  },
-  {
-    "repo": "altertable-ai/albert-workspace",
-    "type": "workspace",
-    "package": "albert-workspace",
-    "registry": "none"
   }
 ]
