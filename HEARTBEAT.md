@@ -4,7 +4,7 @@ Openclaw invokes Albert on a regular cadence. Albert cannot receive GitHub push 
 
 ## Loop closure
 
-A cycle is **closed** only when every discovered item has been acted on, deferred (with reason logged in daily notes), or escalated. When there is action, record it in `memory/YYYY-MM-DD.md`. When nothing is actionable, returning HEARTBEAT_OK is sufficient — no daily-note write required.
+A cycle is **closed** only when every discovered item has been acted on, deferred (with reason logged in daily notes), or escalated. When there is action, record it in `memory/YYYY-MM-DD.md`. GitHub comments/issues are required only for actionable triage/review/escalation work. When nothing is actionable, returning HEARTBEAT_OK is sufficient — no daily-note write required.
 
 ## The Loop
 
@@ -32,4 +32,4 @@ On full heartbeats (poll payload says full, or not yet run today per `memory/YYY
 
 ## Completion
 
-When a cycle processes items, record them in `memory/YYYY-MM-DD.md`. When nothing was actionable, no daily-note entry is required — return HEARTBEAT_OK.
+When a cycle processes items, record them in `memory/YYYY-MM-DD.md`. Only post to GitHub when action is required (triage/review/escalation). When nothing was actionable, no daily-note entry is required — return HEARTBEAT_OK and stay silent on GitHub.
