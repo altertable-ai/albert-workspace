@@ -34,7 +34,7 @@ fi
 
 CONFIG_REPOS=()
 while IFS= read -r line; do CONFIG_REPOS+=("$line"); done \
-  < <(jq -r '.[].repo' "$CONFIG_FILE")
+  < <(jq -r '.sdks[].repo, .workspace.repo' "$CONFIG_FILE")
 
 # ── Load currently watched altertable-ai/* repos ──────────────────────────────
 # GitHub paginates at 100; loop pages until the response is empty.

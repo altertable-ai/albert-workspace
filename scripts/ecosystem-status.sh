@@ -13,7 +13,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SDK_REPOS=()
-while IFS= read -r line; do SDK_REPOS+=("$line"); done < <(jq -r '.[].repo' "${SCRIPT_DIR}/../repositories.config.json")
+while IFS= read -r line; do SDK_REPOS+=("$line"); done < <(jq -r '.sdks[].repo' "${SCRIPT_DIR}/../repositories.config.json")
 
 MARKDOWN=false
 JSON=false
