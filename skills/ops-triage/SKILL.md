@@ -138,9 +138,15 @@ done
 
 Process each unlabeled issue through the workflow above.
 
+## When to Comment
+
+- **Comment**: When the reporter needs to take action (e.g. add repro, provide info), when closing, or when you need to explain a decision (label, duplicate, etc.).
+- **Label only**: When adding a label is self-explanatory and no action is needed from the reporter (e.g. `enhancement` on a clear feature request).
+- **Don't comment**: When simply applying a label that's obvious from the issue content (e.g. labeling a clear bug report as `bug`), or when the label itself communicates everything needed.
+
 ## Response Templates
 
-Every triage response must follow a teammate-style structure so the reporter knows what happened and what to expect:
+Every non-empty triage action must store an entry in `memory/YYYY-MM-DD.md` with the following structure:
 
 1. **What I checked**: Brief summary of what you looked at (e.g. "Checked for duplicates", "Reviewed the repro steps")
 2. **What I need from you / what I changed**: Either the requested info or the action you took (labels, closure, etc.)

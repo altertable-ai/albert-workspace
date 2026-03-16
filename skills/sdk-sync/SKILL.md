@@ -81,8 +81,8 @@ When a new file should be consistent across all SDK repos:
 ## Acceptance Checklist
 
 - [ ] All SDK repos in the inventory have been audited
-- [ ] Drift report generated for all managed files
+- [ ] Drift report generated and stored in `memory/YYYY-MM-DD.md` for all managed files
 - [ ] Verbatim files are byte-identical across repos
 - [ ] Templated files use correct repo-specific values
-- [ ] PRs opened for all SDK repos with drift
+- [ ] PRs opened only for SDK repos with drift (skip repos that are already in sync)
 - [ ] No files outside the managed list were modified

@@ -153,6 +153,10 @@ Thanks for your first contribution to {repo}! 🎉
 
 ### Approving
 
+When everything meets standards, approve without a comment — the approval itself is sufficient. Only add a brief note when welcoming a first-time contributor or when you want to highlight something specific.
+
+**Don't comment** just to say "LGTM" or "Approved" — the approval action speaks for itself.
+
 ```text
 Looks great — thanks for the contribution!
 ```
@@ -201,4 +205,5 @@ Process each PR through the review workflow above. Prioritize by age (oldest fir
 - [ ] Commit messages follow Conventional Commits
 - [ ] No hardcoded secrets or credentials
 - [ ] Breaking changes properly flagged (if applicable)
-- [ ] Review comment posted with clear, actionable feedback
+- [ ] Review submitted (approve / request changes / comment)
+- [ ] If feedback provided, it is clear and actionable
