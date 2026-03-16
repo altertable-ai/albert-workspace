@@ -40,7 +40,14 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 1. **Assess scope** — is this isolated to one repo or ecosystem-wide? If ecosystem-wide, open a tracking issue via `bash scripts/upsert-github-issue.sh` rather than closing in isolation.
 2. **Check notifications** — `gh api notifications`
 3. **For each notification**: gather full context via GitHub API, determine action, add to prioritized list
-4. **Work through items** by priority. Close the loop on every thread. Mark notifications as read only after a visible outcome (comment, resolution, or explicit deferral): `gh api -X PATCH notifications/threads/{thread_id}`
+4. **Work through items** by priority. Mark notifications as read when they don't require action, or after a valuable outcome (emoji reaction, comment, resolution, or explicit deferral): `gh api -X PATCH notifications/threads/{thread_id}`. If no visible action needed, store in `memory/YYYY-MM-DD.md`, no GitHub activity.
+
+   **Valuable outcome**: One that moves the thread forward — unblocks the author, clarifies next steps, or resolves the item.
+
+   **Avoid low-value comments**:
+   - Restating what the UI already shows (e.g. "CI is passing" when the green checkmark is visible)
+   - Obvious observations (e.g. "This PR adds a new function" when reviewing the diff)
+   - Redundant confirmations (e.g. "Approved!" when the approval badge is sufficient)
 5. **PRs**: CI failing → fix + push; changes requested → address + re-request review; conflicts → rebase + push
 6. **Issues**: untriaged → `ops-triage`; needs response → answer or request info; needs repro → attempt locally
 
@@ -49,6 +56,6 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 - [ ] Notifications checked and processed
 - [ ] PRs with failing CI identified and addressed
 - [ ] Issues triaged or responded to
-- [ ] Every acted-on notification has a visible response
+- [ ] Every notification is acted
 - [ ] Every processed notification marked as read
 - [ ] Blocked items have `needs-human-review` + team member tagged
