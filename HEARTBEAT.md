@@ -17,10 +17,11 @@ A cycle is **closed** only when every discovered item has been acted on, deferre
    - Spec updates → dispatched by `routine-sync`
 5. **Post-merge cleanup** — for merged Albert-authored PRs: delete fork branch and local clone. If it was a release PR, verify the package is live on the registry ([TOOLS.md](TOOLS.md)). If not live within 24h, open a `needs-human-review` tracking issue. If the merged PR changed `repositories.config.json`, run `bash scripts/subscribe-repos.sh` to reconcile subscriptions.
 6. **Close the loop** — for every discovered item, leave a trace in daily notes. If nothing actionable, HEARTBEAT_OK suffices (see Completion).
-7. **Sync workspace** — After all work for the cycle is done:
-   - Check for any open Albert-authored workspace PRs: `gh pr list --repo altertable-ai/albert-workspace --author albert20260301`
-   - If none are open: `git fetch upstream && git checkout main && git merge --ff-only upstream/main && git push origin main`
-   - If an open workspace PR exists: skip the merge, log it in daily notes (`workspace PR #N still open — skipping sync`), and proceed.
+7. **Sync workspace (always attempt, safely)** — After all work for the cycle is done:
+   - Check for any open Albert-authored workspace PRs (for logging/context): `gh pr list --repo altertable-ai/albert-workspace --author albert20260301`
+   - Always attempt a safe upstream sync on every heartbeat: `git fetch upstream && git checkout main && git merge --ff-only upstream/main && git push origin main`
+   - Safety rules: never force-push, never rebase here, and only accept fast-forward merges.
+   - If sync fails (non-fast-forward, local state, remote rejection, etc.), log the exact error in daily notes and escalate for human review.
 
 ## Periodic Checks (full routine only)
 
