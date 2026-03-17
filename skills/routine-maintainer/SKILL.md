@@ -37,7 +37,7 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 
 ## Work Session
 
-1. **Assess scope** — is this isolated to one repo or ecosystem-wide? If ecosystem-wide, open a tracking issue via `bash scripts/upsert-github-issue.sh` rather than closing in isolation.
+1. **Assess scope** — is this isolated to one repo or ecosystem-wide? If ecosystem-wide, note it in `memory/YYYY-MM-DD.md` and flag it for a human by tagging a team member from `USER.md` in the relevant thread rather than closing in isolation.
 2. **Check notifications** — `gh api notifications`
 3. **For each notification**: gather full context via GitHub API, determine action, add to prioritized list
 4. **Work through items** by priority. Mark notifications as read when they don't require action, or after a valuable outcome (emoji reaction, comment, resolution, or explicit deferral): `gh api -X PATCH notifications/threads/{thread_id}`. If no visible action needed, store in `memory/YYYY-MM-DD.md`, no GitHub activity.
