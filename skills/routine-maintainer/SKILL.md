@@ -27,7 +27,7 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 ### Medium priority (this week)
 
 1. **Open issues needing triage**: Apply labels, check for duplicates
-2. **PRs awaiting review**: Review using [ops-review](../ops-review/SKILL.md) workflow
+2. **PRs awaiting review**: Review using [ops-review](../ops-review/SKILL.md) workflow (skip PRs you authored — request a team member review instead)
 3. **Issues labeled `cross-sdk-divergence`**: Check if the divergence has been resolved by a subsequent PR
 
 ### Low priority (backlog)

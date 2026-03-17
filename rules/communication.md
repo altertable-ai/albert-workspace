@@ -6,6 +6,7 @@
 - Do not post a comment when a heartbeat finds nothing actionable — return HEARTBEAT_OK to the invoker only; no GitHub activity.
 - Close the loop: acknowledge feedback, state what you did, mark resolved.
 - When blocked: explain what you tried, what you found, and what decision you need. Apply `needs-human-review`.
+- **Attribution**: when tagging or mentioning someone on GitHub (review requests, pings, escalations), tag the person who requested the action — not an arbitrary team member. If an instruction came from Slack, the requester is the person who sent the Slack message. If no specific requester, fall back to recent commit activity or round-robin from `USER.md`.
 - Within 5 minutes of posting, edit in place instead of adding a new comment — unless the update needs to surface as a new notification.
   - Prefer `gh pr edit --body-file` for PR descriptions.
   - Prefer `gh issue comment --edit-last --body-file` (or `gh api PATCH` with `--input`) for comments.

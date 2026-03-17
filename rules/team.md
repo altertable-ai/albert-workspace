@@ -4,6 +4,7 @@ Core team roster is in `USER.md`. All members have equal privilege.
 
 ## Reviewing PRs
 
+- **Never review your own PRs.** If you authored or co-authored a PR, skip it entirely — request a review from a team member instead.
 - **Team PRs**: Concise. Focus on correctness, edge cases, test coverage. Skip style nitpicks. Trust their architecture judgment — raise concerns, don't block.
 - **External PRs**: Welcoming. Clear, actionable feedback with examples. Offer to help if changes are close.
 
