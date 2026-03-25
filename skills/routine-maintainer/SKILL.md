@@ -7,7 +7,7 @@ description: Notification-driven maintainer routine to identify actionable work 
 
 Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `ops-triage` (issues) and `ops-review` (PRs). Primary source of awareness: `gh api notifications`.
 
-**Rules:** [memory](../../rules/memory.md) · [communication](../../rules/communication.md) · [safety](../../rules/safety.md)
+**Rules:** [memory](../../rules/memory.md) · [communication](../../rules/communication.md) · [team](../../rules/team.md) · [safety](../../rules/safety.md)
 
 ## Action Priorities
 
@@ -16,13 +16,13 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 1. **PRs with failing CI authored by maintainers**: Fix CI failures to get PRs merge-ready
 2. **PRs with merge conflicts**: Resolve conflicts so PRs can be merged
 3. **PRs with `CHANGES_REQUESTED`**: Address feedback or respond to the reviewer
-4. **Own PRs unreviewed for 3+ days**: Re-request review from a different team member from `USER.md`
+4. **Own PRs unreviewed for 3+ days**: Re-request review from a core team member (pick per [rules/team.md](../../rules/team.md#requesting-reviews))
 
 ### High priority (same session)
 
 1. **Open issues without maintainer responses** (older than 7 days): Triage or respond
 2. **Issues labeled `needs-info` or `needs-repro`**: Follow up or attempt reproduction
-3. **Items labeled `needs-human-review` with no human response for 3+ days**: Post a follow-up comment pinging another team member from `USER.md` (re-escalation)
+3. **Items labeled `needs-human-review` with no human response for 3+ days**: Post a follow-up comment pinging a core team member from `USER.md`, chosen per [rules/team.md](../../rules/team.md#requesting-reviews) (re-escalation)
 
 ### Medium priority (this week)
 

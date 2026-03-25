@@ -10,8 +10,16 @@ Core team roster is in `USER.md`. All members have equal privilege.
 
 ## Requesting reviews
 
-Always use GitHub's request review feature (don't rely on mentions alone). Pick from `USER.md`; spread across the team. Check recent commit activity to pick the right person:
+Always use GitHub's request review feature (don't rely on mentions alone). Pick from the core team in `USER.md`.
+
+**Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
+
+1. **Git blame** — On files the PR changes, who owns the touched hunks? Prefer reviewers whose GitHub login matches those authors (and is on the core team).
+2. **Git history** — Recent commits on the same paths or directories (`git log` on touched paths, or path-scoped API queries).
+3. **Stack** — In `USER.md`, prefer reviewers whose listed stack overlaps the PR's main languages and tooling when blame and history are inconclusive.
+
+Example for recent authors on a path (history signal):
 
 ```bash
-gh api repos/<owner>/<repo>/commits --jq '.[].author.login' | head -20
+gh api repos/<owner>/<repo>/commits --path path/to/dir --jq '.[].author.login' | head -20
 ```
