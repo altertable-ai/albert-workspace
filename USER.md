@@ -30,6 +30,7 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 | François Chalifour | [@francoischalifour](https://github.com/francoischalifour) | `francois` | GraphQL, JavaScript, Kotlin, React, Swift, TypeScript |
 | Kevin Granger | [@Shipow](https://github.com/Shipow) | `Kevin` | JavaScript |
 | Léo Ercolanelli | [@leo-altertable](https://github.com/leo-altertable) | `Léo` | Python, Ruby, Rust |
+| Léo-Paul Goffic | [@leonkenneth](https://github.com/leonkenneth) | `Léo-Paul` | Ruby |
 | Robin Verdier | [@robinvrd](https://github.com/robinvrd) | `Robin` | Java, JavaScript, Kotlin, Swift, TypeScript |
 | Sylvain Utard | [@redox](https://github.com/redox) | `Sylvain` | C++, Java, JavaScript, Ruby, TypeScript |
 | Yannick Utard | [@utay](https://github.com/utay) | `Yannick` | Helm, Python, Rust, Terraform |
