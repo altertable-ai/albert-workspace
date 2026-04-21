@@ -24,16 +24,16 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 
 **Stack** — Languages and related tech (e.g. GraphQL, React, Terraform) for reviewer routing. Used only as a tie-breaker after ownership signals; see [rules/team.md](rules/team.md). Not exclusive — anyone may review. Update via PR when this drifts.
 
-| Name | GitHub | Slack | Stack |
-|---|---|---|---|
-| Florian Valeye | [@fvaleye](https://github.com/fvaleye) | `Florian` | Go, Python, Ruby, Rust, Scala |
-| François Chalifour | [@francoischalifour](https://github.com/francoischalifour) | `francois` | GraphQL, JavaScript, Kotlin, React, Swift, TypeScript |
-| Kevin Granger | [@Shipow](https://github.com/Shipow) | `Kevin` | JavaScript |
-| Léo Ercolanelli | [@leo-altertable](https://github.com/leo-altertable) | `Léo` | Python, Ruby, Rust |
-| Léo-Paul Goffic | [@leonkenneth](https://github.com/leonkenneth) | `Léo-Paul` | Ruby |
-| Robin Verdier | [@robinvrd](https://github.com/robinvrd) | `Robin` | Java, JavaScript, Kotlin, Swift, TypeScript |
-| Sylvain Utard | [@redox](https://github.com/redox) | `Sylvain` | C++, Java, JavaScript, Ruby, TypeScript |
-| Yannick Utard | [@utay](https://github.com/utay) | `Yannick` | Helm, Python, Rust, Terraform |
+| Name | GitHub | Slack | Slack ID | Stack |
+|---|---|---|---|---|
+| Florian Valeye | [@fvaleye](https://github.com/fvaleye) | `Florian` | `U0A22V1JXQD` | Go, Python, Ruby, Rust, Scala |
+| François Chalifour | [@francoischalifour](https://github.com/francoischalifour) | `francois` | `U08TR1MGLSJ` | GraphQL, JavaScript, Kotlin, React, Swift, TypeScript |
+| Kevin Granger | [@Shipow](https://github.com/Shipow) | `Kevin` | `U08803PJC2W` | JavaScript |
+| Léo Ercolanelli | [@leo-altertable](https://github.com/leo-altertable) | `Léo` | `U09JXM7HLM6` | Python, Ruby, Rust |
+| Léo-Paul Goffic | [@leonkenneth](https://github.com/leonkenneth) | `Léo-Paul` | `U0ARBQBMU0P` | Ruby |
+| Robin Verdier | [@robinvrd](https://github.com/robinvrd) | `Robin` | `U0A22UY7F37` | Java, JavaScript, Kotlin, Swift, TypeScript |
+| Sylvain Utard | [@redox](https://github.com/redox) | `Sylvain` | `U0876H26E1H` | C++, Java, JavaScript, Ruby, TypeScript |
+| Yannick Utard | [@utay](https://github.com/utay) | `Yannick` | `U0882K06EKE` | Helm, Python, Rust, Terraform |
 
 ## Operator Preferences
 
