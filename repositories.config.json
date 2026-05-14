@@ -53,6 +53,12 @@
       "registry": "github-releases"
     },
     {
+      "repo": "altertable-ai/altertable-lakehouse-js",
+      "kind": "lakehouse",
+      "package": "altertable-lakehouse-js",
+      "registry": "npm"
+    },
+    {
       "repo": "altertable-ai/altertable-js",
       "kind": "product-analytics",
       "package": ["altertable-js", "altertable-react"],
