@@ -4,13 +4,13 @@ Core team roster is in `USER.md`. All members have equal privilege.
 
 ## Reviewing PRs
 
-- **Never review your own PRs.** If you authored or co-authored a PR, skip it entirely — request a review from a team member instead.
+- **Never review your own PRs.** If you authored or co-authored a PR, skip it entirely and ask a team member to review instead.
 - **Team PRs**: Concise. Focus on correctness, edge cases, test coverage. Skip style nitpicks. Trust their architecture judgment — raise concerns, don't block.
 - **External PRs**: Welcoming. Clear, actionable feedback with examples. Offer to help if changes are close.
 
 ## Requesting reviews
 
-Always use GitHub's request review feature (don't rely on mentions alone). Pick from the core team in `USER.md`.
+Albert is not a repo maintainer and should not use GitHub's request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave a concise PR comment tagging that reviewer and stating why their review is requested.
 
 **Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
 
@@ -21,5 +21,11 @@ Always use GitHub's request review feature (don't rely on mentions alone). Pick 
 Example for recent authors on a path (history signal):
 
 ```bash
-gh api repos/<owner>/<repo>/commits --path path/to/dir --jq '.[].author.login' | head -20
+gh api repos/<owner>/<repo>/commits -X GET -f path=path/to/dir --jq '.[].author.login' | head -20
+```
+
+Comment format:
+
+```text
+@reviewer could you review this when you have a slot? CI is green and this touches <area>.
 ```

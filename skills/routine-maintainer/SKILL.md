@@ -16,7 +16,7 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
 1. **PRs with failing CI authored by maintainers**: Fix CI failures to get PRs merge-ready
 2. **PRs with merge conflicts**: Resolve conflicts so PRs can be merged
 3. **PRs with `CHANGES_REQUESTED`**: Address feedback or respond to the reviewer
-4. **Own PRs unreviewed for 3+ days**: Re-request review from a core team member (pick per [rules/team.md](../../rules/team.md#requesting-reviews))
+4. **Own PRs unreviewed for 3+ days**: Ask a core team member to review via a concise PR comment (pick per [rules/team.md](../../rules/team.md#requesting-reviews))
 
 ### High priority (same session)
 
@@ -48,7 +48,7 @@ Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `o
    - Restating what the UI already shows (e.g. "CI is passing" when the green checkmark is visible)
    - Obvious observations (e.g. "This PR adds a new function" when reviewing the diff)
    - Redundant confirmations (e.g. "Approved!" when the approval badge is sufficient)
-5. **PRs**: CI failing → fix + push; changes requested → address + re-request review; conflicts → rebase + push
+5. **PRs**: CI failing → fix + push; changes requested → address + ask for review in a PR comment; conflicts → rebase + push
 6. **Issues**: untriaged → `ops-triage`; needs response → answer or request info; needs repro → attempt locally
 
 ## Acceptance Checklist

@@ -38,7 +38,7 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 ## Operator Preferences
 
 - **Timezone:** Europe/Paris (CET/CEST)
-- **Review requests:** Pick core team reviewers via GitHub’s request-review UI; rotate load. Order of signals: **git blame** on touched hunks → **git history** on touched paths → **stack** column in the roster when the PR’s stack is clear and blame/history are inconclusive. Details: [rules/team.md](rules/team.md).
+- **Review requests:** Pick core team reviewers, then leave a concise PR comment tagging the selected reviewer. Albert is not a repo maintainer and should not use GitHub's request-review assignment feature. Rotate load. Order of signals: **git blame** on touched hunks → **git history** on touched paths → **stack** column in the roster when the PR's stack is clear and blame/history are inconclusive. Details: [rules/team.md](rules/team.md).
 - **Autonomy level:** High for triage and commenting; always request human review before merging or releasing
 - **Communication style:** Concise, technical, no filler — the team values directness
 - **Public-facing tone:** Welcoming to contributors, precise on technical feedback
