@@ -116,13 +116,13 @@ if [[ "$MARKDOWN" == true ]]; then
     echo ""
     echo "| Repository | Pinned | Status |"
     echo "|------------|--------|--------|"
-    for entry in "${OUTDATED[@]:-}"; do
+    for entry in "${OUTDATED[@]}"; do
       echo "| \`${entry%%|*}\` | \`${entry##*|}\` | OUTDATED |"
     done
-    for repo in "${MISSING[@]:-}"; do
+    for repo in "${MISSING[@]}"; do
       echo "| \`${repo}\` | — | MISSING |"
     done
-    for entry in "${UNKNOWN[@]:-}"; do
+    for entry in "${UNKNOWN[@]}"; do
       echo "| \`${entry%%|*}\` | \`${entry##*|}\` | UNKNOWN |"
     done
     echo ""
@@ -133,7 +133,7 @@ if [[ "$MARKDOWN" == true ]]; then
     echo ""
     echo "| Repository | Pinned SHA | Status |"
     echo "|------------|------------|--------|"
-    for entry in "${UNKNOWN[@]:-}"; do
+    for entry in "${UNKNOWN[@]}"; do
       echo "| \`${entry%%|*}\` | \`${entry##*|}\` | UNKNOWN |"
     done
     echo ""
@@ -144,7 +144,7 @@ if [[ "$MARKDOWN" == true ]]; then
     echo ""
     echo "| Repository | Status |"
     echo "|------------|--------|"
-    for repo in "${NOT_FOUND[@]:-}"; do
+    for repo in "${NOT_FOUND[@]}"; do
       echo "| \`${repo}\` | NOT_FOUND (repo doesn't exist yet) |"
     done
     echo ""
@@ -153,7 +153,7 @@ if [[ "$MARKDOWN" == true ]]; then
   if [[ ${#OK[@]} -gt 0 ]]; then
     echo "### Up to date (${#OK[@]}/${#REPOS[@]})"
     echo ""
-    for repo in "${OK[@]:-}"; do
+    for repo in "${OK[@]}"; do
       echo "- \`${repo}\`"
     done
   fi
