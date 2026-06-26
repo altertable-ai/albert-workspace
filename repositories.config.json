@@ -117,6 +117,12 @@
       "kind": "tooling",
       "package": "dbt-altertable",
       "registry": "github-releases"
+    },
+    {
+      "repo": "altertable-ai/altertable-cli",
+      "kind": "tooling",
+      "package": "@altertable/cli",
+      "registry": "npm"
     }
   ]
 }
