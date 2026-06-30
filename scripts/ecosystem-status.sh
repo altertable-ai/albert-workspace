@@ -47,6 +47,54 @@ gh_api() {
   fi
 }
 
+gh_count_pages() {
+  local endpoint="$1"
+  local filter="$2"
+  local page=1
+  local total=0
+  local count
+
+  while true; do
+    if [[ "$endpoint" == *\?* ]]; then
+      count=$(gh_api "${endpoint}&per_page=100&page=${page}" "$filter" "-")
+    else
+      count=$(gh_api "${endpoint}?per_page=100&page=${page}" "$filter" "-")
+    fi
+
+    [[ "$count" == "-" ]] && echo "-" && return 0
+    [[ "$count" == "0" ]] && break
+
+    total=$((total + count))
+    page=$((page + 1))
+  done
+
+  echo "$total"
+}
+
+gh_ci_state() {
+  local repo="$1"
+  local ref="$2"
+  local sha
+  local checks_state
+
+  sha=$(gh_api "repos/${repo}/commits/${ref}" '.sha' "")
+  if [[ -z "$sha" ]]; then
+    echo "unknown"
+    return 0
+  fi
+
+  checks_state=$(gh_api "repos/${repo}/commits/${sha}/check-runs" \
+    'if (.total_count // 0) == 0 then "none" elif ([.check_runs[] | select(.status != "completed")] | length) > 0 then "pending" elif ([.check_runs[] | select(.conclusion as $c | ($c != "success" and $c != "skipped" and $c != "neutral"))] | length) > 0 then "failure" else "success" end' \
+    "unknown")
+
+  if [[ "$checks_state" != "none" && "$checks_state" != "unknown" ]]; then
+    echo "$checks_state"
+    return 0
+  fi
+
+  gh_api "repos/${repo}/commits/${ref}/status" '.state' "unknown"
+}
+
 # Collect data per repo
 declare -a REPO_NAMES
 declare -a SPEC_STATUSES
@@ -88,17 +136,17 @@ for repo in "${REPOS[@]}"; do
   fi
 
   # Open PRs
-  pr_count=$(gh_api "repos/${repo}/pulls?state=open&per_page=100" 'length' "-")
+  pr_count=$(gh_count_pages "repos/${repo}/pulls?state=open" 'length')
   OPEN_PRS+=("$pr_count")
 
   # Open issues (excluding PRs, which GitHub counts as issues)
-  issue_count=$(gh_api "repos/${repo}/issues?state=open&per_page=100" \
-    '[.[] | select(.pull_request == null)] | length' "-")
+  issue_count=$(gh_count_pages "repos/${repo}/issues?state=open" \
+    '[.[] | select(.pull_request == null)] | length')
   OPEN_ISSUES+=("$issue_count")
 
-  # CI status of default branch
+  # CI status of default branch. Prefer GitHub Checks, fall back to legacy statuses.
   default_branch=$(gh_api "repos/${repo}" '.default_branch' "main")
-  ci_state=$(gh_api "repos/${repo}/commits/${default_branch}/status" '.state' "unknown")
+  ci_state=$(gh_ci_state "$repo" "$default_branch")
   CI_STATUSES+=("$ci_state")
 done
 

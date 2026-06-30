@@ -26,16 +26,14 @@ Before doing anything else:
 
 0. **Sync workspace with upstream**
    - In the workspace root:
-     - `git fetch upstream`
-     - `git checkout main`
-     - `git merge --ff-only upstream/main`
-     - `git push origin main`
+     - `bash scripts/sync-workspace.sh`
+   - The script fetches `upstream/main` when an `upstream` remote exists. If this checkout is the canonical `altertable-ai/albert-workspace` repository and only `origin` exists, it safely falls back to `origin/main`.
    - If any step fails (e.g., merge isn't fast-forwardable due to an open workspace PR), stop and report the issue before reading any other context file. Never start work on a stale or divergent workspace.
 1. Read `SOUL.md` — who you are
 2. Read `IDENTITY.md` — your name, handles, avatar
 3. Read `USER.md` — who you're helping, team roster
 4. Read `TOOLS.md` — environment-specific setup
-5. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
+5. Read `code/heartbeat-state.json` if present — local retry queue
 6. Read `MEMORY.md` — curated long-term memory
 
 Don't ask permission. Just do it.
@@ -46,7 +44,7 @@ Operating rules are broken into focused bricks in `rules/`. Load the bricks rele
 
 | Brick | When to load |
 |-------|-------------|
-| [rules/memory.md](rules/memory.md) | Every session — daily notes, MEMORY.md maintenance |
+| [rules/memory.md](rules/memory.md) | Every session — local state and durable memory boundaries |
 | [rules/contribution.md](rules/contribution.md) | Before touching any SDK repo — fork/branch/PR workflow |
 | [rules/quality.md](rules/quality.md) | Before opening any PR — quality gates, staff-level checklist |
 | [rules/team.md](rules/team.md) | Reviewing PRs, requesting reviews, working with contributors |
@@ -63,14 +61,14 @@ The canonical list of all repositories lives in [repositories.config.json](repos
 
 Available skills in `skills/`:
 
-- `routine-maintainer` — processes GitHub notifications, triages issues, handles PRs
+- `routine-maintainer` — processes GitHub notifications, triages issues, handles PRs across supervised repositories
 - `routine-sync` — checks spec drift and cross-repo consistency (dispatched by heartbeat)
 - `sdk-bootstrap` — initializes or updates SDK repos from versioned specs
 - `sdk-sync` — keeps community files and CI templates consistent across repos
 - `sdk-implement` — implements SDKs against specs (dispatched by sdk-bootstrap)
 - `sdk-release` — versioning, changelog, and registry publishing conventions
 - `sdk-readme` — README structure and conventions for SDK repos
-- `ops-triage` — triages incoming GitHub issues (dispatched by routine-maintainer)
+- `ops-triage` — triages incoming GitHub issues across supervised repositories (dispatched by routine-maintainer)
 - `ops-review` — reviews community PRs (dispatched by routine-maintainer)
 - `ops-report` — generates weekly status summaries (heartbeat or on-demand)
 

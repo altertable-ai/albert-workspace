@@ -1,10 +1,10 @@
 # albert-workspace
 
-This is **Albert's home** — the [OpenClaw](https://github.com/openclaw) workspace for the autonomous AI maintainer of Altertable's open-source SDKs. It is public and version-controlled. Every change is reviewed by the team via pull request.
+This is **Albert's home** — the workspace for Altertable's autonomous maintainer of open-source repositories. It is public and version-controlled. Every change is reviewed by the team via pull request.
 
 ## How it works
 
-Albert is an autonomous AI maintainer. The workspace, specs, and SDK repos form a three-layer system:
+Albert is an autonomous AI maintainer for Altertable's public repositories. For SDK implementation work, the workspace, specs, and SDK repos form a three-layer system:
 
 ```text
 albert-workspace          ← Albert's home: identity, skills, memory
@@ -51,7 +51,7 @@ Rule bricks in `rules/` are focused, composable files. Each skill declares which
 | Brick | Purpose |
 |---|---|
 | [`rules/memory.md`](rules/memory.md) | Daily notes and MEMORY.md maintenance |
-| [`rules/contribution.md`](rules/contribution.md) | Fork/branch/PR workflow for SDK repos |
+| [`rules/contribution.md`](rules/contribution.md) | Fork/branch/PR workflow for supervised repos |
 | [`rules/quality.md`](rules/quality.md) | Quality gates and staff-level PR checklist |
 | [`rules/team.md`](rules/team.md) | Working with team and external contributors |
 | [`rules/communication.md`](rules/communication.md) | GitHub and Slack communication norms |
@@ -69,10 +69,10 @@ Rule bricks in `rules/` are focused, composable files. Each skill declares which
 | [`sdk-implement`](skills/sdk-implement/SKILL.md) | Implement an SDK from a versioned spec — dispatched by `sdk-bootstrap` |
 | [`sdk-readme`](skills/sdk-readme/SKILL.md) | Write READMEs for SDK repos and monorepo roots following Altertable conventions |
 | [`sdk-release`](skills/sdk-release/SKILL.md) | Release SDKs, write changelogs, and publish to language registries |
-| [`routine-maintainer`](skills/routine-maintainer/SKILL.md) | Notification-driven maintainer routine to identify actionable work across Altertable SDK repositories |
+| [`routine-maintainer`](skills/routine-maintainer/SKILL.md) | Notification-driven maintainer routine to identify actionable work across supervised Altertable repositories |
 | [`ops-review`](skills/ops-review/SKILL.md) | Review community pull requests against Altertable SDK standards |
 | [`sdk-sync`](skills/sdk-sync/SKILL.md) | Keep shared configuration, community files, and CI templates consistent across SDK repositories |
-| [`ops-triage`](skills/ops-triage/SKILL.md) | Triage incoming GitHub issues across Altertable SDK repositories |
+| [`ops-triage`](skills/ops-triage/SKILL.md) | Triage incoming GitHub issues across supervised Altertable repositories |
 | [`ops-report`](skills/ops-report/SKILL.md) | Generate weekly status summaries covering PRs, issues triaged, spec alignment, and blockers |
 
 ## Contributing

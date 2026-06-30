@@ -24,7 +24,7 @@ Weekly status report. Run on Friday full heartbeat or on demand.
 ### Step 1: Gather data
 
 ```bash
-# PRs authored by Albert in the last 7 days across all SDK repos
+# PRs authored by Albert in the last 7 days across all supervised repos
 gh search prs \
   --author albert20260301 \
   --updated ">=$(date -u -d '7 days ago' +%Y-%m-%d 2>/dev/null || date -u -v-7d +%Y-%m-%d)" \

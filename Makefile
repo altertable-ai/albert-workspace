@@ -1,6 +1,9 @@
 lint:
 	npx rumdl check .
 
+validate:
+	bash scripts/validate-workspace.sh
+
 lint-fix:
 	npx rumdl check --fix .
 
@@ -10,6 +13,6 @@ format:
 check-links:
 	lychee --verbose --exclude-loopback '**/*.md'
 
-ci: lint check-links
+ci: lint validate check-links
 
-.PHONY: lint lint-fix format check-links ci
+.PHONY: lint validate lint-fix format check-links ci

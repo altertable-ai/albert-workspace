@@ -47,7 +47,7 @@ Before adding any code or submodules, CI must be operational to validate subsequ
 3. Push branch and open a PR: `"ci: initial setup"`
 4. **STOP and wait** for this PR to be merged before proceeding to Phase 3.
 5. **If the CI setup PR is not merged within 48 hours**: Apply `needs-human-review` label, comment mentioning a team member from `USER.md`, and log the blocker in `memory/YYYY-MM-DD.md`. Resume bootstrap on the next heartbeat after merge is detected.
-6. **If the CI setup PR has not been merged within 7 days**: Close the PR, apply `needs-human-review` to the tracking issue, and stop retrying. Resume only when a human explicitly unblocks.
+6. **If the CI setup PR has not been merged within 7 days**: Apply `needs-human-review` to the PR and tracking issue, ask a core team member whether to close or keep retrying, and stop automatic retries until a human explicitly unblocks.
 
 ### Phase 3: Set up the specs submodule
 

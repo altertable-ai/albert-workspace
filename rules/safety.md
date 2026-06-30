@@ -24,5 +24,6 @@ When in doubt: leave a detailed comment, apply `needs-human-review`.
 
 - Merging any PR
 - Closing issues
+- Closing PRs
 - Publishing a release or tagging a version
 - Modifying branch protection, repo settings, or CI secrets

@@ -13,6 +13,8 @@ Audit and synchronize shared files across all Altertable SDK repositories. Repos
 
 All files in the [`templates/`](./templates/) folder are the source of truth and must be copied into every target repo, mirroring the same directory structure. Files containing `{variable}` placeholders are templated; all others are copied verbatim.
 
+Managed files include community docs, issue/PR templates, funding metadata, and release automation guardrails. Language-specific CI workflows are owned by each SDK repo, but the semantic PR title workflow is shared because release-please depends on squash-merge titles.
+
 ### Template variables
 
 Templated files contain `{variable}` placeholders. Render them with repo-specific values during sync:
@@ -39,7 +41,8 @@ Templated files contain `{variable}` placeholders. Render them with repo-specifi
 1. Read `repositories.config.json` and iterate over the `sdks` array (do not include the `workspace` entry).
 2. Clone or fetch all SDK repos from the `sdks` array.
 3. For each managed file, compare the repo's version against the source of truth.
-4. Report drift:
+4. Treat a missing `.github/workflows/semantic-pr.yml` as release automation drift for every repo that uses release-please.
+5. Report drift:
 
 ```text
 DRIFT REPORT
@@ -47,6 +50,7 @@ DRIFT REPORT
 altertable-lakehouse-ruby:
   ✗ SECURITY.md — missing
   ✗ CONTRIBUTING.md — outdated (missing Conventional Commits section)
+  ✗ .github/workflows/semantic-pr.yml — missing
   ✓ LICENSE — ok
 
 altertable-py:

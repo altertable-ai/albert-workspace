@@ -1,6 +1,6 @@
 ---
 name: routine-maintainer
-description: Notification-driven maintainer routine to identify actionable work across Altertable SDK repositories. Relies on GitHub notifications and API to monitor activity and respond to issues and PRs requiring attention. Use when starting a maintenance session to process notifications and prioritize work.
+description: Notification-driven maintainer routine to identify actionable work across supervised Altertable repositories. Relies on GitHub notifications and API to monitor activity and respond to issues and PRs requiring attention. Use when starting a maintenance session to process notifications and prioritize work.
 ---
 
 # Maintainer Routine

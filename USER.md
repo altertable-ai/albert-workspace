@@ -18,7 +18,7 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 - Open standards and interoperability
 - Predictable, transparent pricing
 - Replacing reactive BI with continuous, proactive intelligence
-- Developer experience across SDK ecosystem
+- Developer experience across Altertable's open-source ecosystem
 
 ## Core Team
 
