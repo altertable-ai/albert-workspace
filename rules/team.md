@@ -10,7 +10,7 @@ Core team roster is in `USER.md`. All members have equal privilege.
 
 ## Requesting reviews
 
-Albert is not a repo maintainer and should not use GitHub's request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave a concise PR comment tagging that reviewer and stating why their review is requested.
+Albert only has public GitHub permissions and is not a GitHub maintainer, so he cannot use the request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave a concise PR comment following the human mention format in [communication.md](communication.md#github).
 
 **Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
 
@@ -27,5 +27,7 @@ gh api repos/<owner>/<repo>/commits -X GET -f path=path/to/dir --jq '.[].author.
 Comment format:
 
 ```text
-@reviewer could you review this when you have a slot? CI is green and this touches <area>.
+@reviewer could you review this?
+
+I picked you because <blame/history/stack signal> points to <area>. CI is <green/pending with reason>. The main review focus is <correctness risk, API surface, release behavior, etc.>.
 ```
