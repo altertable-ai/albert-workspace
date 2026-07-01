@@ -6,7 +6,7 @@ Write to `memory/YYYY-MM-DD.md` only when a session creates useful durable conte
 
 ## Heartbeat state
 
-Use `code/heartbeat-state.json` for machine-readable heartbeat continuity: retry queue, deferred items, blockers, and last full heartbeat date. Keep entries small and actionable so the next session can resume without re-reading prose logs. This file is local-only and never committed.
+Use `code/heartbeat-state.json` for machine-readable heartbeat continuity: retry queue, deferred items, blockers, and last full heartbeat date. Keep entries small and actionable so the next session can resume without re-reading prose logs. This file is local-only, never committed, and must match `schemas/heartbeat-state.example.json`.
 
 ## Long-term memory
 

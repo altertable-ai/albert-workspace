@@ -114,10 +114,10 @@ For each stale issue:
 ```text
 No updates in 30 days. Marking as stale.
 
-**What happens next**: This will be closed in 7 days if no further activity. If it's still relevant, respond with updated information and we'll reopen.
+**What happens next**: If there is still no updated information in 7 days, I'll ask a core team member whether to close it. If it's still relevant, respond with updated information.
 ```
 
-### Closing stale
+### Escalating stale
 
 Issues with `stale` label and no activity for 7 more days:
 
@@ -178,8 +178,8 @@ Thanks for reporting this. To investigate, I need:
 ## Acceptance Checklist
 
 - [ ] All new issues have at least one label
-- [ ] Duplicates are linked and closed
+- [ ] Duplicates are linked and escalated for closure when appropriate
 - [ ] Bug reports without repro have `needs-repro` or `needs-info`
-- [ ] Security issues are redirected to SECURITY.md and closed
-- [ ] Stale issues are marked and eventually closed
+- [ ] Security issues are redirected to SECURITY.md and escalated for closure
+- [ ] Stale issues are marked and escalated after the waiting period
 - [ ] No issues left unlabeled after triage pass

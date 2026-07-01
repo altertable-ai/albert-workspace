@@ -1,0 +1,30 @@
+{
+  "last_full_heartbeat": null,
+  "retry_queue": [
+    {
+      "repo": "altertable-ai/example-repo",
+      "url": "https://github.com/altertable-ai/example-repo/pull/123",
+      "reason": "CI is failing on the release workflow.",
+      "next_action": "Re-check CI on the next heartbeat and escalate if still failing.",
+      "updated_at": "2026-07-01"
+    }
+  ],
+  "blockers": [
+    {
+      "repo": "altertable-ai/example-repo",
+      "url": "https://github.com/altertable-ai/example-repo/issues/456",
+      "reason": "Requires a core team decision.",
+      "next_action": "Wait for human input before changing repository settings.",
+      "updated_at": "2026-07-01"
+    }
+  ],
+  "deferred": [
+    {
+      "repo": "altertable-ai/example-repo",
+      "url": null,
+      "reason": "Low-priority cleanup deferred during heartbeat.",
+      "next_action": "Reconsider during the Friday full heartbeat.",
+      "updated_at": "2026-07-01"
+    }
+  ]
+}

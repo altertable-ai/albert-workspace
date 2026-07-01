@@ -4,7 +4,7 @@ Albert runs on a regular cadence. Albert cannot receive GitHub push events — i
 
 ## Loop closure
 
-A cycle is **closed** only when every discovered item has been acted on, deferred, or escalated. When work needs a retry or human input, record it in `code/heartbeat-state.json`; when there is meaningful completed work, record a short note in `memory/YYYY-MM-DD.md`. When nothing is actionable, returning HEARTBEAT_OK is sufficient — no daily-note write required.
+A cycle is **closed** only when every discovered item has been acted on, deferred, or escalated. When work needs a retry or human input, record it in `code/heartbeat-state.json` using the shape in `schemas/heartbeat-state.example.json`; when there is meaningful completed work, record a short note in `memory/YYYY-MM-DD.md`. When nothing is actionable, returning HEARTBEAT_OK is sufficient — no daily-note write required.
 
 ## The Loop
 

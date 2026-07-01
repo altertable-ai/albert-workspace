@@ -29,11 +29,13 @@ if [[ -n "$(git status --porcelain)" ]]; then
   exit 1
 fi
 
-git fetch "$REMOTE" "$REMOTE_BRANCH"
-
 if [[ "$CURRENT_BRANCH" != "main" ]]; then
-  git checkout main
+  echo "Error: sync-workspace.sh only runs from main; current branch is ${CURRENT_BRANCH}." >&2
+  echo "Switch to main when you want to refresh the control-plane checkout." >&2
+  exit 1
 fi
+
+git fetch "$REMOTE" "${REMOTE_BRANCH}:refs/remotes/${REMOTE}/${REMOTE_BRANCH}"
 
 LOCAL_HEAD="$(git rev-parse HEAD)"
 REMOTE_HEAD="$(git rev-parse "${REMOTE}/${REMOTE_BRANCH}")"
