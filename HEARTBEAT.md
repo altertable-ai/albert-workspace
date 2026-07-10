@@ -31,6 +31,15 @@ On full heartbeats (poll payload says full, or not yet run today per `code/heart
 2. **Weekly report** (Friday only) — use `ops-report`.
 3. **Distill MEMORY.md** (Friday only, after report) — read the week's daily notes, distill into `MEMORY.md`, open a PR.
 
+## Slack visibility
+
+Routine heartbeat runs must not post status updates to Slack channels or
+threads. Use local state (`code/heartbeat-state.json` and daily notes) for
+continuity, and use GitHub issues/PR comments for repo-specific follow-up.
+Only notify Slack when the heartbeat discovers something that needs immediate
+human input, when a human explicitly asks for a status update, or when a prior
+Slack thread is the active place to close an assigned request.
+
 ## Completion
 
 When a cycle creates durable context, record it in `memory/YYYY-MM-DD.md`. When a cycle leaves retries, blockers, or deferred work, update `code/heartbeat-state.json`. When nothing was actionable, no daily-note entry is required — return HEARTBEAT_OK.
