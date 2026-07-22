@@ -124,5 +124,11 @@
       "package": "@altertable/cli",
       "registry": "npm"
     }
+  ],
+  "projects": [
+    {
+      "repo": "altertable-ai/metabase-driver",
+      "kind": "integration"
+    }
   ]
 }
