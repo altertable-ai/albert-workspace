@@ -81,7 +81,7 @@ Because Altertable squash-merges pull requests and release-please derives releas
 - `build`
 - `ci`
 
-Name the workflow clearly (for example `Semantic Pull Request`), keep it separate from language-specific CI when possible, and treat missing PR-title validation as release automation drift that must be patched across affected repositories. The canonical workflow is managed by [sdk-sync](../sdk-sync/SKILL.md) at `skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml`.
+Name the workflow clearly (for example `Semantic Pull Request`), keep it separate from language-specific CI when possible, and treat missing PR-title validation as release automation drift that must be patched across affected repositories. The canonical workflow is managed by [sdk-sync](../sdk-sync/SKILL.md) at `skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml`. It and every repository workflow must follow sdk-sync's GitHub Actions policy: Ubuntu 24.04 LTS, immutable action SHAs, and `.node-version`/`.bun-version` runtime files where those toolchains are used.
 
 Commit message prefixes:
 

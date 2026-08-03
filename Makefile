@@ -4,6 +4,9 @@ lint:
 validate:
 	bash scripts/validate-workspace.sh
 
+validate-workflows:
+	bash scripts/validate-workflow-policy.sh .
+
 lint-fix:
 	npx rumdl check --fix .
 
@@ -15,4 +18,4 @@ check-links:
 
 ci: lint validate check-links
 
-.PHONY: lint validate lint-fix format check-links ci
+.PHONY: lint validate validate-workflows lint-fix format check-links ci

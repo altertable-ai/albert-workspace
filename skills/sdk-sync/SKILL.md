@@ -15,6 +15,17 @@ All files in the [`templates/`](./templates/) folder are the source of truth and
 
 Managed files include community docs, issue/PR templates, funding metadata, and release automation guardrails. Language-specific CI workflows are owned by each SDK repo, but the semantic PR title workflow is shared because release-please depends on squash-merge titles.
 
+## GitHub Actions policy
+
+Apply this policy to every workflow in each repository, including language-specific CI, release, security, and semantic-title workflows:
+
+- Linux jobs use `ubuntu-24.04`, the current GitHub-hosted Ubuntu LTS image; do not use `ubuntu-latest` or an older Ubuntu image. macOS and Windows jobs retain their platform-specific pinned image where required.
+- Every third-party `uses:` reference is pinned to a 40-character commit SHA with its reviewed release tag in a comment. Local reusable workflows remain relative references.
+- A repository that uses `actions/setup-node` commits a root `.node-version`; every Node setup reads it through `node-version-file: .node-version` rather than hard-coding a workflow value.
+- A repository that uses `oven-sh/setup-bun` commits a root `.bun-version`; every Bun setup reads it through `bun-version-file: .bun-version` rather than hard-coding a workflow value.
+
+`.node-version` and `.bun-version` are repository-owned runtime contracts, not shared templates: preserve the version that the repository supports and make its workflows consume that file. During an audit, run `bash scripts/validate-workflow-policy.sh <repository-root>` after fetching the target repository. Resolve any intentionally dynamic matrix runner or runtime version to an explicit, pinned value before opening the sync PR.
+
 ### Template variables
 
 Templated files contain `{variable}` placeholders. Render them with repo-specific values during sync:
@@ -41,8 +52,9 @@ Templated files contain `{variable}` placeholders. Render them with repo-specifi
 1. Read `repositories.config.json` and iterate over the `sdks` array (do not include the `workspace` entry).
 2. Clone or fetch all SDK repos from the `sdks` array.
 3. For each managed file, compare the repo's version against the source of truth.
-4. Treat a missing `.github/workflows/semantic-pull-request.yml` as release automation drift for every repo that uses release-please.
-5. Report drift:
+4. Audit every `.github/workflows/*.{yml,yaml}` against the GitHub Actions policy and record runner, action-pin, and runtime-version-file drift.
+5. Treat a missing `.github/workflows/semantic-pull-request.yml` as release automation drift for every repo that uses release-please.
+6. Report drift:
 
 ```text
 DRIFT REPORT
@@ -65,6 +77,7 @@ For each repo with drift:
 
 1. Copy verbatim files from `templates/` directly.
 2. Render templated files from `templates/` with repo-specific variables (see **Template variables** above).
+3. For workflow-policy drift, update only the affected repository-owned workflow(s) and root runtime version file(s); do not overwrite language-specific workflow logic with a shared template.
 
 ### Phase 3: Open PRs
 
