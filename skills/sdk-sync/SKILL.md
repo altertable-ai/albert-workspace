@@ -41,7 +41,7 @@ Templated files contain `{variable}` placeholders. Render them with repo-specifi
 1. Read `repositories.config.json` and iterate over the `sdks` array (do not include the `workspace` entry).
 2. Clone or fetch all SDK repos from the `sdks` array.
 3. For each managed file, compare the repo's version against the source of truth.
-4. Treat a missing `.github/workflows/semantic-pr.yml` as release automation drift for every repo that uses release-please.
+4. Treat a missing `.github/workflows/semantic-pull-request.yml` as release automation drift for every repo that uses release-please.
 5. Report drift:
 
 ```text
@@ -50,7 +50,7 @@ DRIFT REPORT
 altertable-lakehouse-ruby:
   ✗ SECURITY.md — missing
   ✗ CONTRIBUTING.md — outdated (missing Conventional Commits section)
-  ✗ .github/workflows/semantic-pr.yml — missing
+  ✗ .github/workflows/semantic-pull-request.yml — missing
   ✓ LICENSE — ok
 
 altertable-py:

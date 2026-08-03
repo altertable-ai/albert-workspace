@@ -26,7 +26,7 @@ require_file scripts/spec-status.sh
 require_file scripts/ecosystem-status.sh
 require_file scripts/subscribe-repos.sh
 require_file schemas/heartbeat-state.example.json
-require_file skills/sdk-sync/templates/.github/workflows/semantic-pr.yml
+require_file skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml
 
 jq empty repositories.config.json
 
@@ -81,8 +81,20 @@ if grep -R -nE "Close the issue|Close the PR|close the issue|close the PR|will b
   fail "autonomous issue/PR close instruction found"
 fi
 
-if ! grep -q "action-semantic-pull-request@v5" skills/sdk-sync/templates/.github/workflows/semantic-pr.yml; then
+semantic_workflow="skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml"
+
+if ! grep -qx "    runs-on: ubuntu-24.04" "$semantic_workflow"; then
+  fail "semantic PR title template does not pin its runner image"
+fi
+
+if ! grep -q "action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50" "$semantic_workflow"; then
   fail "semantic PR title template does not use the required action"
 fi
+
+while IFS= read -r action_reference; do
+  if [[ ! "$action_reference" =~ @[0-9a-f]{40}([[:space:]]#.*)?$ ]]; then
+    fail "managed workflow action is not pinned to a commit SHA: $action_reference"
+  fi
+done < <(grep -R -hE '^[[:space:]]*uses:' skills/sdk-sync/templates/.github/workflows)
 
 echo "Workspace validation passed"
