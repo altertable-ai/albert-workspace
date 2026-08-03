@@ -26,7 +26,7 @@ require_file scripts/spec-status.sh
 require_file scripts/ecosystem-status.sh
 require_file scripts/subscribe-repos.sh
 require_file schemas/heartbeat-state.example.json
-require_file skills/sdk-sync/templates/.github/workflows/semantic-pr.yml
+require_file skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml
 
 jq empty repositories.config.json
 
@@ -81,8 +81,12 @@ if grep -R -nE "Close the issue|Close the PR|close the issue|close the PR|will b
   fail "autonomous issue/PR close instruction found"
 fi
 
-if ! grep -q "action-semantic-pull-request@v5" skills/sdk-sync/templates/.github/workflows/semantic-pr.yml; then
-  fail "semantic PR title template does not use the required action"
-fi
+bash scripts/validate-workflow-policy.sh .
+
+template_root="$(mktemp -d)"
+trap 'rm -rf "$template_root"' EXIT
+mkdir -p "$template_root/.github"
+cp -R skills/sdk-sync/templates/.github/workflows "$template_root/.github/workflows"
+bash scripts/validate-workflow-policy.sh "$template_root"
 
 echo "Workspace validation passed"

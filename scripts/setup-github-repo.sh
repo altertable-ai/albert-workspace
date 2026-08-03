@@ -153,5 +153,5 @@ echo "  Org-level labels: bug, enhancement, question, duplicate, needs-repro, ne
 echo "          stale, good first issue, wontfix, invalid, security, needs-human-review"
 echo ""
 echo "  Next required step"
-echo "    Run sdk-sync before opening implementation PRs so .github/workflows/semantic-pr.yml"
+echo "    Run sdk-sync before opening implementation PRs so .github/workflows/semantic-pull-request.yml"
 echo "    and other managed community files are present."
