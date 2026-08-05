@@ -15,8 +15,14 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORKSPACE_ROOT="${SCRIPT_DIR}/.."
 CACHE_FILE="${WORKSPACE_ROOT}/code/.last-spec-tag"
 
+# Only API SDKs consume altertable-client-specs. Tooling repositories are
+# supervised through the same inventory but do not necessarily have a specs/
+# submodule, so including them here produces false MISSING/UNKNOWN results.
 SDK_REPOS=()
-while IFS= read -r line; do SDK_REPOS+=("$line"); done < <(jq -r '.sdks[].repo' "${WORKSPACE_ROOT}/repositories.config.json")
+while IFS= read -r line; do SDK_REPOS+=("$line"); done < <(
+  jq -r '.sdks[] | select(.kind == "lakehouse" or .kind == "product-analytics") | .repo' \
+    "${WORKSPACE_ROOT}/repositories.config.json"
+)
 
 SPECS_REPO="altertable-ai/altertable-client-specs"
 MARKDOWN=false
