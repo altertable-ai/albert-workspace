@@ -129,6 +129,12 @@
     {
       "repo": "altertable-ai/metabase-driver",
       "kind": "integration"
+    },
+    {
+      "repo": "altertable-ai/data-app",
+      "kind": "runtime",
+      "package": "@altertable/data-app",
+      "registry": "npm"
     }
   ]
 }
