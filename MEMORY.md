@@ -7,3 +7,7 @@
 
 - Product Analytics v0.13 server SDKs should accept either a single item or an unbounded array in `track`, `identify`, `alias`, `set_group`, and `group_identify`; do not introduce `*Batch` methods. Mobile SDK queues keep a default cap of 20 events and flush FIFO chunks sequentially.
 - Lakehouse v0.13 adds `create_append` uploads, cursor-aware composite-key upserts, expanded query dialect and format options, and NDJSON query streams that surface backend `{error}` records after metadata as typed query errors with line context.
+
+## Release automation
+
+- After a generated release PR merges, verify the tag and registry version, then confirm any successor release PR contains only commits newer than that release. Block generated PRs that immediately repeat historical changelog entries.
