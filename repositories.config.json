@@ -132,7 +132,7 @@
     },
     {
       "repo": "altertable-ai/data-app",
-      "kind": "data-app",
+      "kind": "runtime",
       "package": "@altertable/data-app",
       "registry": "npm"
     }
