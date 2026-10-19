@@ -41,13 +41,13 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 - `make validate` — check workspace requirements, workflow policy, and script tests
 - `make check-links` — check for broken links
 - `make integration` — run the pinned OpenClaw CLI against local fake-model fixtures
-- `make integration-live` — opt-in real-model startup check with explicitly supplied endpoint settings
 - `make ci` — run all repeatable checks after `npm ci --ignore-scripts`
 
 Install the test dependency with `npm ci --ignore-scripts`. See the
 [OpenClaw integration instructions](README.md#openclaw-integration-tests) for what
-these tests prove and how to run the separate live check. Do not reuse the live
-Albert workspace, account state, or channel credentials in integration tests.
+these tests prove, and the [behavior checks](README.md#checking-behavior-changes)
+for read-only scenarios in the Codex app. Do not reuse Albert's live workspace,
+account state, or channel credentials in integration tests.
 
 ## What not to add
 

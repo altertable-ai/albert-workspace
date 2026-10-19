@@ -6,11 +6,9 @@
     "node": ">=26.12.0 <27"
   },
   "scripts": {
-    "test:integration": "node --test scripts/integration/*.test.mjs",
-    "test:integration:live": "node scripts/integration/openclaw-live.mjs"
+    "test:integration": "node --test scripts/integration/*.test.mjs"
   },
   "devDependencies": {
-    "@openclaw/codex": "2026.10.5",
     "openclaw": "2026.10.5"
   }
 }

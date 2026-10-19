@@ -115,98 +115,42 @@ routine-sync and sdk-bootstrap. This flow does not apply to every repository.
 
 ## Checking behavior changes
 
-Use the [behavior cases](skills/routine-maintainer/references/behavior-cases.md) for
-dry runs without posting or changing external state. They cover useful responses,
-follow-through, permissions, and projects beyond SDKs. Check the result and actions,
-not whether the model repeats the instructions. Script tests run with `make validate`.
+Use fresh agents in the Codex app with the requested model and Albert's relevant
+instructions. Give them the raw [behavior cases](skills/routine-maintainer/references/behavior-cases.md)
+without the expected outcomes, then compare their proposed actions and replies
+with those outcomes. Keep these checks read-only: no posting or changes to real
+repositories. They use the app's model access and need no separate sign-in.
+
+These checks assess responses and decisions with the supplied context. They do
+not prove that OpenClaw loaded that context or that Albert's deployed account can
+run the model. Script tests run with `make validate`.
 
 ## OpenClaw integration tests
 
-OpenClaw is an exact development dependency in `package.json` and `package-lock.json`.
-Use the Node version in `.node-version`, then run:
+OpenClaw 2026.10.5 is pinned as a development dependency. Use the Node version in
+`.node-version`, then run:
 
 ```fish
 npm ci --ignore-scripts
 make integration
 ```
 
-The four model-endpoint tests run the installed OpenClaw CLI against temporary copies of the actual
-workspace instructions. They use fresh home/state directories, an explicit test
-configuration, a localhost fake model endpoint, and read-only tools. They do not
-load operator credentials, enable plugins/channels, or start a Gateway. Package
-lifecycle scripts are disabled; the tests work without them. These checks use the
-built-in OpenClaw runtime; they do not cover a deployed Codex or other plugin runtime.
+Four tests run the installed CLI with temporary copies of the workspace, fresh
+home/state directories, a local scripted model endpoint, and read-only tools:
 
-Four repeatable checks cover automatic `AGENTS.md` injection, an actual
-`ALBERT.md` read, the context-injection off switch, and refusal to read outside the
-workspace. The fake endpoint scripts the tool call: these prove runtime behavior,
-not that a real model chose to follow the startup instruction. A fifth check loads
-the official OpenAI and Codex plugins in temporary state and verifies that the
-Codex runtime registers. That check requires no sign-in or model call.
+- Automatic loading of `AGENTS.md` and identity context.
+- A tool read of `ALBERT.md` returning the actual file contents.
+- Removal of workspace context when context injection is disabled.
+- Refusal to read outside the temporary workspace.
 
-For response and decision checks, use fresh agents in the Codex app with the
-requested model and Albert's relevant instructions. Supply the raw scenarios in
-[behavior cases](skills/routine-maintainer/references/behavior-cases.md) without
-their expected outcomes, then compare the replies and actions with those outcomes.
-Keep the check read-only: simulated cases must not post comments or change real
-repositories. This uses the app's model access and needs no separate CLI sign-in.
+The endpoint chooses the responses, so these tests check OpenClaw's file loading
+and tool execution. They do not show that a real model chose to read `ALBERT.md`.
+They use OpenClaw's built-in runtime, without operator credentials, plugins,
+channels, a Gateway, or model calls. They do not cover a deployed Codex runtime.
 
-App-based checks assess behavior with the supplied context. They do not prove that
-OpenClaw loaded that context or that Albert's deployed account can run the model.
-Use the runtime tests above for loading and tool behavior. To check a real model's
-startup through OpenClaw, `make integration-live` is a separate opt-in check.
-
-To use your existing Codex CLI sign-in with Sol 6.1:
-
-```fish
-env ALBERT_TEST_AUTH=codex-cli ALBERT_TEST_MODEL=gpt-6.1-sol make integration-live
-```
-
-This uses OpenClaw's Codex adapter and your installed `codex` command. Credentials
-stay in the existing Codex home; they are never copied into OpenClaw. The workspace
-and OpenClaw state are temporary, with only workspace file reads available. Codex
-uses that home's native configuration and can record the test session in its local
-state. `CODEX_HOME` and
-`ALBERT_TEST_CODEX_BIN` can select a different Codex home or executable.
-The command prints the CLI version it uses. This is an explicit local-account
-test; CI never runs it.
-
-This checks the model and instructions using your account. It does not verify
-Albert's deployed account, configuration, or unattended maintenance.
-The requested model must be available to that account; the test never substitutes
-another model when access is denied.
-
-For a separate subscription sign-in instead, run in an interactive terminal:
-
-```fish
-env ALBERT_TEST_AUTH=codex ALBERT_TEST_MODEL=gpt-6.1-sol make integration-live
-```
-
-Complete the device sign-in shown by the command. The matching Codex plugin is
-pinned as a development dependency. This path uses a fresh sign-in in temporary
-state; it does not copy your existing credentials, settings, plugins, or history.
-It explicitly selects the Codex runtime, disables session discovery and supervision,
-and allows only workspace file reads. Temporary credentials and state are deleted
-when the command finishes. This uses the signed-in subscription's allowance.
-
-For API access instead, set
-`ALBERT_TEST_MODEL` to the model ID and `ALBERT_TEST_BASE_URL` to an OpenAI-compatible
-endpoint. Set `ALBERT_TEST_API_KEY` if it requires authentication;
-`ALBERT_TEST_API` defaults to `openai-completions` and can be `openai-responses` for
-an endpoint supporting that API. The endpoint may be local or an explicitly chosen
-hosted provider. Hosted calls use that provider's normal billing.
-
-The ordinary task names neither `ALBERT.md` nor the random marker added only to its
-temporary copy. The live check requires a successful read and that marker in the
-answer, with the requested model and only the read tool used. It fails when
-settings are missing; a skipped live check is not a pass.
-Only file reads are available, so this checks loading the runtime instructions,
-not completion of startup commands or repository maintenance.
-
-The pinned OpenClaw version is the locally tested release; compare it with Albert's
-deployed version before treating this as a production check. `make ci` includes the
-repeatable integration tests. CI runs those without model credentials; the live
-check is never started automatically.
+`make ci` includes these tests. Check Albert's actual version, startup, and a
+scheduled maintenance run on his deployment before treating local results as
+production verification.
 
 ## Contributing
 

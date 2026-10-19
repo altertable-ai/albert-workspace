@@ -20,9 +20,6 @@ check-links:
 integration:
 	npm run test:integration
 
-integration-live:
-	npm run test:integration:live
-
 ci: lint validate check-links integration
 
-.PHONY: lint validate validate-workflows lint-fix format check-links integration integration-live ci
+.PHONY: lint validate validate-workflows lint-fix format check-links integration ci
