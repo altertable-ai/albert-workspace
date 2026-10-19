@@ -2,7 +2,7 @@
 
 This routine runs only in an Albert runtime session initialized through
 [ALBERT.md](ALBERT.md). A heartbeat is a bounded maintenance pass, not permission to
-expand scope or repeat unchanged public messages.
+take on unrelated work or repeat unchanged public messages.
 
 ## One pass
 

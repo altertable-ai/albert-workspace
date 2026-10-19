@@ -26,6 +26,7 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 **Prerequisites**:
 
 - Node.js (for `npx`)
+- Python 3.9+ (for the activity report and its tests)
 - [Lychee](https://github.com/lycheeverse/lychee):
   - macOS: `brew install lychee`
   - Linux: `cargo install lychee` (or `snap install lychee` on Ubuntu/Debian)
@@ -33,7 +34,7 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 **Commands**:
 
 - `make lint` — lint all Markdown files
-- `make validate` — check workspace contracts and workflow policy
+- `make validate` — check workspace requirements, workflow policy, and script tests
 - `make check-links` — check for broken links
 - `make ci` — run all checks
 

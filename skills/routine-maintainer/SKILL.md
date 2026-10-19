@@ -22,7 +22,7 @@ and independent reviews. Age informs priority but does not trigger automatic pin
 - Albert-authored PRs: address valid feedback and diagnose CI using
   [contribution](../../rules/contribution.md) and [quality](../../rules/quality.md).
   Resolve conflicts without force-pushing; do not review your own PR.
-- Spec or shared-file drift: hand off to [routine-sync](../routine-sync/SKILL.md)
+- Outdated specs or shared files: use [routine-sync](../routine-sync/SKILL.md)
   if not already handled in this cycle.
 
 Do not fix unrelated maintainers' branches merely because CI is red. Use a small

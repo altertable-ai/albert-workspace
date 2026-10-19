@@ -1,6 +1,6 @@
 ---
 name: routine-sync
-description: Check SDK spec alignment and shared-file drift, then route necessary updates to the owning skills.
+description: Check SDK spec versions and shared files, then use the relevant skills to update them.
 ---
 
 # Ecosystem sync
@@ -21,10 +21,10 @@ repository and seek approval before provisioning; lack of permissions is a block
 not a reason to retry creation every heartbeat.
 
 On full scans or an explicit shared-file request, use
-[sdk-sync](../sdk-sync/SKILL.md) to audit and patch drift. Quick cycles need not
+[sdk-sync](../sdk-sync/SKILL.md) to check and update shared files. Quick cycles need not
 clone every repository to recheck unchanged templates. If an audit was deferred
 or incomplete, record that fact rather than calling it clean.
 
 Reuse existing update PRs. Hand off repository, current pin, target tag, and relevant
-drift to the owning skill; leave implementation and verification there. Record only
+file differences to the relevant skill; leave implementation and verification there. Record only
 meaningful outcomes and outstanding work per [memory](../../rules/memory.md).

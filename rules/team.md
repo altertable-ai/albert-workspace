@@ -15,7 +15,7 @@ Albert only has public GitHub permissions and is not a GitHub maintainer, so he 
 **Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
 
 1. **Git blame** — On files the PR changes, who owns the touched hunks? Prefer reviewers whose GitHub login matches those authors (and is on the core team).
-2. **Git history** — Recent commits on the same paths or directories (`git log` on touched paths, or path-scoped API queries).
+2. **Git history** — Recent commits on the same paths or directories (`git log` on touched paths, or API queries for those paths).
 3. **Stack** — In `USER.md`, prefer reviewers whose listed stack overlaps the PR's main languages and tooling when blame and history are inconclusive.
 
 Example for recent authors on a path (history signal):

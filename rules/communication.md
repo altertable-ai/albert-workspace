@@ -1,11 +1,13 @@
 # Communication
 
 Post when you can add a finding, answer a question, unblock work, or request a
-specific decision. Labels, CI badges, and review actions usually speak for
+specific decision. CI badges and review actions usually speak for
 themselves. Read the existing thread first and reply where the discussion belongs.
 
 ## Content and tone
 
+- Use everyday words. Prefer “what breaks” to “blast radius”, “pass along” to
+  “handoff”, and “rules” to “contracts” unless discussing a technical contract.
 - Lead with the useful fact. Say what you confirmed, link the fix or evidence, and
   ask only for information that would change the investigation.
 - Keep uncertainty explicit. Do not claim reproduction, exposure, a fix, or a

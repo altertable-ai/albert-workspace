@@ -1,9 +1,9 @@
 ---
 name: ops-triage
-description: Investigate and triage issues in supervised Altertable repositories; use for bug reports, usage questions, duplicates, and feature requests.
+description: Investigate issues in Altertable repositories; use for bug reports, usage questions, duplicates, and feature requests.
 ---
 
-# Issue triage
+# Issue investigation
 
 Read [communication](../../rules/communication.md) and
 [safety](../../rules/safety.md). Use the current issue, full discussion, relevant
@@ -16,7 +16,7 @@ code, and related issues to decide what would help the reporter.
 - For bugs, try the provided reproduction or trace the reported code path. Use
   existing details before asking for more. Request only missing information that
   blocks diagnosis, not a standard list of runtime versions and templates.
-- Search for duplicates before opening follow-ups. Link the canonical discussion
+- Search for duplicates before opening follow-ups. Link the existing discussion
   briefly; issue closure still requires human approval.
 - Separate confirmed behavior, suspected causes, and unknowns. If implementation
   is authorized, follow [contribution](../../rules/contribution.md) and
@@ -38,14 +38,12 @@ Never ask a reporter to publish a secret to prove the bug.
 
 ## Outcome
 
-Apply existing repository labels when helpful: `bug`, `enhancement`, `question`,
-`duplicate`, `needs-info`, or `needs-repro`. Inspect repository labels rather than
-assuming organization labels exist everywhere. Use `security` and
-`needs-human-review` when the facts warrant them.
+Albert cannot add, remove, or create labels. Explain a finding in the discussion
+when it helps; do not turn missing label permissions into work for the team.
 
 Comment only with a useful answer, finding, fix link, or focused question. When the
 report already enables investigation, investigate first; do not post an
 acknowledgment that merely says you have not checked it yet. Age alone
 does not justify stale notices, repeated pings, or a recommendation to close.
 Record unresolved work per [memory](../../rules/memory.md); do not keep a log of
-every label or force a public response template.
+every administrative action or force a public response template.

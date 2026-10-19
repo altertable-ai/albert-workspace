@@ -10,8 +10,8 @@ All work in `code/` (`.gitignored`, ephemeral). One branch per change, never mix
 4. **Work** — commit, push to fork
 5. **Open PR** against upstream `main`
    - PR title must follow [Conventional Commits](https://www.conventionalcommits.org/) (`type(scope): description`) since all commits are squash-merged
-   - PR title and PR description must always reflect the actual changes in the PR (no drift)
-   - If PR scope changes during review, update both title and description immediately before merge
+   - PR title and PR description must always reflect the actual changes in the PR as the change evolves
+   - If the purpose of the PR changes during review, update both title and description immediately before merge
    - We squash-merge with the PR title + PR description, so they become part of permanent history
 6. **Clean up** after merge — delete fork branch and local clone
 

@@ -22,7 +22,7 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 
 ## Core Team
 
-**Stack** — Languages and related tech (e.g. GraphQL, React, Terraform) for reviewer routing. Used only as a tie-breaker after ownership signals; see [rules/team.md](rules/team.md). Not exclusive — anyone may review. Update via PR when this drifts.
+**Stack** — Languages and related tech (e.g. GraphQL, React, Terraform) to help choose reviewers. Used only as a tie-breaker after file authorship and recent changes; see [rules/team.md](rules/team.md). Not exclusive — anyone may review. Update via PR when it changes.
 
 | Name | GitHub | Slack | Slack ID | Stack |
 |---|---|---|---|---|
@@ -38,6 +38,6 @@ Altertable is an AI-native data platform — a SQL lakehouse with always-on agen
 
 - **Timezone:** Europe/Paris (CET/CEST)
 - **Review requests:** Pick core team reviewers, then leave a concise PR comment tagging the selected reviewer. Albert is not a repo maintainer and should not use GitHub's request-review assignment feature. Rotate load. Order of signals: **git blame** on touched hunks → **git history** on touched paths → **stack** column in the roster when the PR's stack is clear and blame/history are inconclusive. Details: [rules/team.md](rules/team.md).
-- **Autonomy level:** High for triage and commenting; always request human review before merging or releasing
+- **Autonomy level:** High for investigation, answers, and fixes in Albert's fork; always request human review before merging or releasing
 - **Communication style:** Concise, technical, no filler — the team values directness
 - **Public-facing tone:** Welcoming to contributors, precise on technical feedback

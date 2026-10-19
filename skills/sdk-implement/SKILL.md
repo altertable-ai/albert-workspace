@@ -10,7 +10,7 @@ Read [specs](../../rules/specs.md), [quality](../../rules/quality.md), and
 optional old-to-new spec diff. This skill also works directly on an already pinned
 repository; bootstrap is not a prerequisite.
 
-## Read the contract
+## Read the requirements
 
 - Both SDK types: `specs/http/SPEC.md`.
 - Lakehouse: `specs/lakehouse/SPEC.md`.
@@ -18,7 +18,7 @@ repository; bootstrap is not a prerequisite.
   `TEST_PLAN.md`, and `fixtures/` in that directory.
 
 Use the pinned submodule, not a workspace copy or unversioned web spec. Identify
-affected APIs, consumers, tests, and docs. For a spec update, implement the changed
+affected APIs, calling code, tests, and docs. For a spec update, implement the changed
 requirements rather than rebuilding the SDK. Respect the target tier and language.
 
 ## Implement and verify
@@ -26,17 +26,17 @@ requirements rather than rebuilding the SDK. Respect the target tier and languag
 Follow existing package structure and idioms. Test observable behavior and meaningful
 failure paths. Run Product Analytics serializer fixtures with exact expected output.
 Use the spec's platform fallback chains; do not invent universal polyfills or
-silently weaken a requirement. For Lakehouse streaming, surface parse/backend
+silently weaken a requirement. For Lakehouse streaming, report parsing or backend
 errors with line context rather than dropping rows; avoid exposing sensitive data.
 
-Compare shared semantics, defaults, and error behavior with a sibling SDK of the
+Compare behavior, defaults, and errors with a sibling SDK of the
 same type. A sibling implementation is evidence, not a replacement for the spec.
-Record a real divergence in a focused follow-up (`cross-sdk-divergence`) when
-posting is authorized; keep the current patch scoped.
+Record a meaningful difference in a short follow-up when posting is authorized.
+Keep unrelated SDK fixes out of the current patch.
 
-If a referenced OpenAPI source is unavailable, use the pinned endpoint contract.
+If a referenced OpenAPI source is unavailable, use the pinned endpoint documentation.
 Product Analytics reference JS types can help resolve models; state their version
-and any unresolved mismatch rather than silently treating them as normative.
+and any unresolved mismatch instead of treating them as the spec without explanation.
 
 Run the repository's tests, lint, type checks, and package build as applicable.
 Integration tests should use the mock server without live credentials. If tooling

@@ -1,5 +1,12 @@
 # TOOLS.md - Environment Notes
 
+## GitHub permissions
+
+Albert can investigate public code and discussions and contribute through his own
+forks. He cannot add, remove, or create labels. Do not try to update labels or ask
+the team to do routine labeling on his behalf. Other protected actions follow
+[rules/safety.md](rules/safety.md).
+
 ## GitHub / Git
 
 - **CLI:** `gh` (pre-configured — do not run `gh auth login`)
@@ -10,6 +17,12 @@
 git config user.name "Albert"
 git config user.email "albert20260301@gmail.com"
 ```
+
+## Activity reports
+
+Use `python3 scripts/github-activity.py` for the last seven days of Albert's PR and
+issue-comment activity. It uses Python 3.9+ and the authenticated `gh` CLI, returns
+JSON, and only reads GitHub. See `--help` for dates and author options.
 
 ## Workspace Linting
 

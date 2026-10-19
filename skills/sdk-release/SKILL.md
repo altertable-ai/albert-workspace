@@ -37,7 +37,7 @@ artifacts. Preserve the package's supported module formats and runtime targets.
 
 Registry-specific checks when relevant:
 
-- npm: exports and declarations resolve; published files are allowlisted; declare
+- npm: exports and declarations resolve; only intended files are published; declare
   `sideEffects: false` only when true.
 - PyPI: valid build configuration and `py.typed` for typed packages.
 - Maven Central: signatures, sources, and javadoc artifacts.

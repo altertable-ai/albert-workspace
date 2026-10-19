@@ -9,15 +9,26 @@ Read [quality](../../rules/quality.md), [team](../../rules/team.md),
 [communication](../../rules/communication.md), and [safety](../../rules/safety.md).
 Do not review a PR you authored or co-authored; request independent review.
 
-Read the PR description, discussion, diff, relevant callers, and CI results.
-Understand the intended behavior before judging the implementation.
+Read the project's README, CONTRIBUTING guide, and relevant product or feature
+docs, then the PR description, linked issue, discussion, diff, affected code, and CI
+results. Understand who the project serves and what the change helps them do.
+Check whether the change fits that purpose, not just whether the code works. Raise
+an unclear product choice as a focused question rather than inventing requirements.
+
+For the initial GitHub lookup:
+
+```bash
+gh pr view <number> --repo <repo> --json title,body,author,files,comments,reviews
+gh pr diff <number> --repo <repo>
+gh pr checks <number> --repo <repo>
+```
 
 Focus on actionable defects: correctness, compatibility, error handling, meaningful
 tests, and public API/spec alignment. Check docs and changelog when users are
 affected. Follow the repository's language and package conventions, including
 monorepo structure; do not impose a global casing table or style preferences.
 
-Trace a finding to a concrete trigger and consequence. Distinguish required fixes
+Explain how to trigger each bug and what goes wrong. Distinguish required fixes
 from optional suggestions. Use line comments and suggestion blocks when they make
 a correction easier; avoid scripted praise and a checklist-shaped review.
 
@@ -28,6 +39,6 @@ a correction easier; avoid scripted praise and a checklist-shaped review.
   an infrastructure blocker separately from a code defect.
 - Offer a small repair via [contribution](../../rules/contribution.md) when authorized.
   Do not automatically patch every failure or redesign a contributor's work.
-- Recommend human closure for duplicates or out-of-scope PRs; do not close them.
+- Recommend human closure for duplicates or PRs that do not fit the project; do not close them.
 
 Return the findings and verification limits. A review does not merge the PR.

@@ -44,6 +44,14 @@ The sync script intentionally protects that live checkout and does not run as a
 startup requirement for repository editors. Deployment-specific launcher settings
 are private and are not managed by this repository.
 
+OpenClaw normally supplies identity and main memory at startup; skills use that
+context and retrieve older notes only when needed. See the
+[OpenClaw memory documentation](https://docs.openclaw.ai/concepts/memory).
+
+For weekly activity, run `python3 scripts/github-activity.py`. It returns dated PR
+and issue-comment links for all listed repositories. `--since` is inclusive and
+`--until` exclusive; dates without a time mean midnight UTC. Use `--help` for options.
+
 Skills own task decisions; `rules/` owns shared policy, `scripts/` owns executable
 mechanics, and `skills/sdk-sync/templates/` owns downstream shared files. Skills
 can be invoked directly and hand off context to one another without a mandatory
@@ -64,7 +72,7 @@ bootstrap-to-release chain.
 | `rules/` | Composable operating rule bricks — loaded per task, not all at once |
 | `memory/` | Daily logs — gitignored, not committed |
 | `skills/` | Operational skill definitions used by Albert |
-| `scripts/` | Utility scripts |
+| `scripts/` | Reusable GitHub lookups, repository setup, and checks |
 | `code/` | Ephemeral work directory — gitignored |
 
 ## Rules
@@ -75,11 +83,11 @@ Rule bricks in `rules/` are focused, composable files. Each skill declares which
 |---|---|
 | [`rules/memory.md`](rules/memory.md) | Daily notes and MEMORY.md maintenance |
 | [`rules/contribution.md`](rules/contribution.md) | Fork/branch/PR workflow for supervised repos |
-| [`rules/quality.md`](rules/quality.md) | Quality gates and staff-level PR checklist |
+| [`rules/quality.md`](rules/quality.md) | Checks before review or a PR |
 | [`rules/team.md`](rules/team.md) | Working with team and external contributors |
 | [`rules/communication.md`](rules/communication.md) | GitHub and Slack communication norms |
 | [`rules/change-control.md`](rules/change-control.md) | What workspace changes require PRs |
-| [`rules/safety.md`](rules/safety.md) | Hard limits and human approval gates |
+| [`rules/safety.md`](rules/safety.md) | Permissions and actions requiring approval |
 | [`rules/specs.md`](rules/specs.md) | Spec-to-SDK pipeline: specs submodule, update event chain |
 
 ## Skills
@@ -92,12 +100,12 @@ Rule bricks in `rules/` are focused, composable files. Each skill declares which
 | [`sdk-implement`](skills/sdk-implement/SKILL.md) | Implement an SDK from a versioned spec — dispatched by `sdk-bootstrap` |
 | [`sdk-readme`](skills/sdk-readme/SKILL.md) | Write READMEs for SDK repos and monorepo roots following Altertable conventions |
 | [`sdk-release`](skills/sdk-release/SKILL.md) | Release SDKs, write changelogs, and publish to language registries |
-| [`routine-sync`](skills/routine-sync/SKILL.md) | Check spec alignment and shared-file drift |
+| [`routine-sync`](skills/routine-sync/SKILL.md) | Check spec alignment and outdated shared files |
 | [`routine-maintainer`](skills/routine-maintainer/SKILL.md) | Notification-driven maintainer routine to identify actionable work across supervised Altertable repositories |
 | [`ops-review`](skills/ops-review/SKILL.md) | Review community pull requests against Altertable SDK standards |
 | [`sdk-sync`](skills/sdk-sync/SKILL.md) | Keep shared configuration, community files, and CI templates consistent across SDK repositories |
-| [`ops-triage`](skills/ops-triage/SKILL.md) | Triage incoming GitHub issues across supervised Altertable repositories |
-| [`ops-report`](skills/ops-report/SKILL.md) | Generate weekly status summaries covering PRs, issues triaged, spec alignment, and blockers |
+| [`ops-triage`](skills/ops-triage/SKILL.md) | Investigate issues across Altertable repositories |
+| [`ops-report`](skills/ops-report/SKILL.md) | Generate weekly status summaries covering PRs, issues investigated, spec alignment, and blockers |
 
 ## Contributing
 
