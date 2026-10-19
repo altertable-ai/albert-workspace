@@ -1,7 +1,8 @@
 # Albert runtime
 
-Use this entrypoint only when the session is explicitly operating as Albert.
-Repository maintenance agents follow [AGENTS.md](AGENTS.md).
+[AGENTS.md](AGENTS.md) directs OpenClaw sessions running as Albert here before
+work starts. Other agents editing this repository follow its separate maintenance
+instructions instead.
 
 ## Startup
 

@@ -23,22 +23,23 @@ webhooks or a new scheduling service.
 
 ## Runtime and repository maintenance
 
-[`AGENTS.md`](AGENTS.md) guides agents editing this repository. It does not assign
-Albert's identity or start his maintenance loop. Runtime configuration is data to
-review during those sessions.
+OpenClaw loads [`AGENTS.md`](AGENTS.md) from the configured workspace. It directs
+sessions running as Albert to read [`ALBERT.md`](ALBERT.md) before starting work,
+including direct conversations and scheduled maintenance. No special launch
+message is needed. See [OpenClaw startup instructions](https://docs.openclaw.ai/concepts/system-prompt).
 
-Launch Albert's runtime with an explicit instruction such as:
+The same `AGENTS.md` separately guides agents editing this repository. They review
+Albert's configuration without adopting his identity or running his maintenance
+loop. Keep Albert's live runtime on a dedicated `main` checkout and edit
+configuration in separate worktrees. The sync script protects the live checkout;
+it is not a startup requirement for repository editors.
 
-> Operate as Albert using ALBERT.md in this workspace. Run the assigned task, or
-> HEARTBEAT.md for a scheduled heartbeat.
-
-[`ALBERT.md`](ALBERT.md) defines runtime responsibilities, safety rules, and task
-routing. Configure the runtime launcher and scheduled heartbeat payload to use that
-entrypoint; merely opening this repository is insufficient. Keep the live runtime
-on a dedicated `main` checkout and edit configuration in separate worktrees.
-The sync script intentionally protects that live checkout and does not run as a
-startup requirement for repository editors. Deployment-specific launcher settings
-are private and are not managed by this repository.
+After deploying changes, verify the connection in a fresh Albert conversation:
+use `/context detail` to confirm the expected workspace's `AGENTS.md` is present,
+then give an ordinary task and inspect the tool history for an `ALBERT.md` read.
+Check a scheduled maintenance run too. These are live checks; repository validation
+alone cannot prove which files the deployed host loaded. Deployment-specific
+launcher settings are private and are not managed by this repository.
 
 OpenClaw normally supplies identity and main memory at startup; skills use that
 context and retrieve older notes only when needed. See the

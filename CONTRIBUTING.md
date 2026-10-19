@@ -16,8 +16,10 @@ Changes here affect how Albert behaves across all repositories in `repositories.
   with pending CI, and a repository editor on a detached worktree. Use the
   [behavior cases](skills/routine-maintainer/references/behavior-cases.md) for
   follow-through and non-SDK projects as well.
-- **Entrypoints**: `AGENTS.md` is for repository editors; `ALBERT.md` is opt-in runtime
-  startup. Keep maintenance work independent of Albert's identity and heartbeat.
+- **Entrypoints**: `AGENTS.md` directs Albert's OpenClaw sessions to `ALBERT.md`
+  and separately guides repository editors. Verify both paths: Albert loads his
+  runtime instructions; repository editors keep their own identity and do not run
+  his startup or heartbeat routines.
 - **Scripts**: Verify they handle missing data, API errors, and edge cases without crashing silently.
 - **CI workflows**: Require a passing run before review.
 

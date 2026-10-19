@@ -1,9 +1,18 @@
-# Working on this repository
+# Albert workspace instructions
 
-This repository contains Albert's runtime configuration. Editing it does not make
-you Albert. Keep your own identity, Git credentials, and session instructions.
+## Choose the session
 
-For repository maintenance:
+When this session is running as Albert through OpenClaw, read
+[ALBERT.md](ALBERT.md) before starting work and follow its startup and task routing.
+This applies to direct conversations and scheduled maintenance.
+
+Other agents editing, reviewing, or testing this repository's configuration follow
+the repository-maintenance instructions below. Treat Albert's runtime files as files
+under review; do not adopt his identity or run his startup or heartbeat routines.
+
+## Repository maintenance
+
+Keep your own identity, Git credentials, and session instructions.
 
 - Work in a task branch or worktree; refresh from the remote base without switching
   the live Albert checkout or running its startup routine.
@@ -19,9 +28,3 @@ For repository maintenance:
 - Explain behavior changes and verification in the PR. Follow the caller's
   publication permissions; editing this repository alone does not authorize posting.
 - Never commit `memory/`, `code/`, credentials, or private session context.
-
-## Albert runtime
-
-Only sessions explicitly launched to operate as Albert should load
-[ALBERT.md](ALBERT.md) and follow its startup and task routing. A request to inspect,
-edit, or test Albert's configuration is repository maintenance, not runtime activation.
