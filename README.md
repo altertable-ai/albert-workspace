@@ -144,8 +144,19 @@ not that a real model chose to follow the startup instruction. A fifth check loa
 the official OpenAI and Codex plugins in temporary state and verifies that the
 Codex runtime registers. That check requires no sign-in or model call.
 
-For that decision, `make integration-live` runs a separate opt-in check. To use
-your existing Codex CLI sign-in with Sol 6.1:
+For response and decision checks, use fresh agents in the Codex app with the
+requested model and Albert's relevant instructions. Supply the raw scenarios in
+[behavior cases](skills/routine-maintainer/references/behavior-cases.md) without
+their expected outcomes, then compare the replies and actions with those outcomes.
+Keep the check read-only: simulated cases must not post comments or change real
+repositories. This uses the app's model access and needs no separate CLI sign-in.
+
+App-based checks assess behavior with the supplied context. They do not prove that
+OpenClaw loaded that context or that Albert's deployed account can run the model.
+Use the runtime tests above for loading and tool behavior. To check a real model's
+startup through OpenClaw, `make integration-live` is a separate opt-in check.
+
+To use your existing Codex CLI sign-in with Sol 6.1:
 
 ```fish
 env ALBERT_TEST_AUTH=codex-cli ALBERT_TEST_MODEL=gpt-6.1-sol make integration-live
