@@ -120,6 +120,46 @@ dry runs without posting or changing external state. They cover useful responses
 follow-through, permissions, and projects beyond SDKs. Check the result and actions,
 not whether the model repeats the instructions. Script tests run with `make validate`.
 
+## OpenClaw integration tests
+
+OpenClaw is an exact development dependency in `package.json` and `package-lock.json`.
+Use the Node version in `.node-version`, then run:
+
+```fish
+npm ci --ignore-scripts
+make integration
+```
+
+The tests run the installed OpenClaw CLI against temporary copies of the actual
+workspace instructions. They use fresh home/state directories, an explicit test
+configuration, a localhost fake model endpoint, and read-only tools. They do not
+load operator credentials, enable plugins/channels, or start a Gateway. Package
+lifecycle scripts are disabled; the tests work without them. These checks use the
+built-in OpenClaw runtime; they do not cover a deployed Codex or other plugin runtime.
+
+Four repeatable checks cover automatic `AGENTS.md` injection, an actual
+`ALBERT.md` read, the context-injection off switch, and refusal to read outside the
+workspace. The fake endpoint scripts the tool call: these prove runtime behavior,
+not that a real model chose to follow the startup instruction.
+
+For that decision, `make integration-live` runs a separate opt-in check. Set
+`ALBERT_TEST_MODEL` to the model ID and `ALBERT_TEST_BASE_URL` to an OpenAI-compatible
+endpoint. Set `ALBERT_TEST_API_KEY` if it requires authentication;
+`ALBERT_TEST_API` defaults to `openai-completions` and can be `openai-responses` for
+an endpoint supporting that API. The endpoint may be local or an explicitly chosen
+hosted provider. Hosted calls use that provider's normal billing.
+
+The ordinary task names neither `ALBERT.md` nor the random marker added only to its
+temporary copy. The live check requires a successful read and that marker in the
+answer. It fails when settings are missing; a skipped live check is not a pass.
+Only file reads are available, so this checks loading the runtime instructions,
+not completion of startup commands or repository maintenance.
+
+The pinned OpenClaw version is the locally tested release; compare it with Albert's
+deployed version before treating this as a production check. `make ci` includes the
+repeatable integration tests. CI runs those without model credentials; the live
+check is never started automatically.
+
 ## Contributing
 
 1. Fork this repository
