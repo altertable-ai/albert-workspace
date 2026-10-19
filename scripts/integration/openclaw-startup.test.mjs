@@ -1,9 +1,14 @@
 import assert from 'node:assert/strict';
+import { execFile } from 'node:child_process';
 import { createServer } from 'node:http';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import test from 'node:test';
-import { configFor, createFixture, ordinaryTask, root, runAgent } from './openclaw-test-support.mjs';
+import { promisify } from 'node:util';
+import {
+  cli, codexConfigFor, configFor, createFixture, fixtureEnv, ordinaryTask, root,
+  runAgent, stageCodexPlugin, writeConfig,
+} from './openclaw-test-support.mjs';
 
 async function modelServer(t, respond) {
   const requests = [];
@@ -64,6 +69,18 @@ async function fixtureFor(t) {
   t.after(fixture.cleanup);
   return fixture;
 }
+
+test('the official Codex plugin registers its runtime in isolated state', { timeout: 60_000 }, async t => {
+  const fixture = await fixtureFor(t);
+  await stageCodexPlugin(fixture);
+  await writeConfig(fixture, codexConfigFor('gpt-6.1-sol'));
+  const { stdout } = await promisify(execFile)(process.execPath, [
+    cli, 'plugins', 'inspect', 'codex', '--runtime', '--json',
+  ], { cwd: fixture.workspace, env: fixtureEnv(fixture), timeout: 45_000 });
+  const inspected = JSON.parse(stdout);
+  assert.ok(inspected.plugin.agentHarnessIds.includes('codex'), 'Codex runtime was not registered');
+  assert.deepEqual(inspected.diagnostics.filter(item => item.level === 'error'), []);
+});
 
 // These are plumbing tests with scripted responses, not evidence that a real
 // model independently chose to follow the startup instructions.

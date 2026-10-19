@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process';
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { basename, delimiter, dirname, join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
@@ -66,18 +66,25 @@ export function configFor({ baseUrl, model = 'scripted', api = 'openai-completio
   };
 }
 
-export function codexConfigFor(model) {
+export async function stageCodexPlugin(fixture) {
+  // Codex must be discovered as an installed official plugin. Loading it from
+  // plugins.load.paths cannot register its reserved runtime capabilities.
+  const extensions = join(fixture.state, 'extensions');
+  await mkdir(extensions, { recursive: true });
+  await symlink(join(root, 'node_modules/@openclaw/codex'), join(extensions, 'codex'), 'dir');
+}
+
+export function codexConfigFor(model, { nativeLogin = false, codexBin = 'codex' } = {}) {
   return {
     plugins: {
-      allow: ['codex'],
-      load: { paths: [join(root, 'node_modules/@openclaw/codex')] },
-      entries: { codex: { enabled: true, config: {
+      allow: ['openai', 'codex'],
+      entries: { openai: { enabled: true }, codex: { enabled: true, config: {
         codexDynamicToolsLoading: 'direct',
         sessionCatalog: { enabled: false },
         supervision: { enabled: false },
         appServer: {
-          homeScope: 'agent',
-          command: join(root, 'node_modules/@openai/codex/bin/codex.js'),
+          homeScope: nativeLogin ? 'user' : 'agent',
+          command: nativeLogin ? codexBin : join(root, 'node_modules/@openai/codex/bin/codex.js'),
           sandbox: 'read-only',
           approvalPolicy: 'never',
           clearEnv: ['CODEX_API_KEY', 'OPENAI_API_KEY'],
@@ -85,12 +92,11 @@ export function codexConfigFor(model) {
         },
       } } },
     },
-    models: { providers: { openai: {
-      baseUrl: 'https://api.openai.com/v1',
-      api: 'openai-responses',
-      agentRuntime: { id: 'codex' },
-    } } },
-    agents: { defaults: { model: `openai/${model}`, contextInjection: 'always' } },
+    agents: { defaults: {
+      model: `openai/${model}`,
+      models: { [`openai/${model}`]: { agentRuntime: { id: 'codex' } } },
+      contextInjection: 'always',
+    } },
     // A finite allowlist also disables Codex native execution, MCP, and hooks.
     tools: readOnlyTools(),
   };
@@ -102,26 +108,32 @@ export async function writeConfig(fixture, config) {
   return configPath;
 }
 
-export function fixtureEnv(fixture, apiKey) {
+export function fixtureEnv(fixture, apiKey, codexHome) {
   // A fresh HOME and explicit config/state exclude operator sessions, plugins,
-  // channels, auth files, and inherited credentials. Only the selected test key
-  // is passed to the provider. The CLI has no exec or messaging tools.
+  // channels, and inherited credentials. Native-login tests explicitly point
+  // Codex at its existing home; credentials are never copied into the fixture.
+  // npm prepends dependency bins. Native-login mode must find the operator's
+  // installed CLI rather than silently selecting our pinned test dependency.
+  const nativePath = process.env.PATH?.split(delimiter)
+    .filter(path => !(basename(path) === '.bin' && basename(dirname(path)) === 'node_modules'))
+    .join(delimiter);
   return {
-    PATH: process.env.PATH,
+    PATH: codexHome ? nativePath : process.env.PATH,
     HOME: fixture.home,
     TMPDIR: tmpdir(),
     OPENCLAW_STATE_DIR: fixture.state,
     OPENCLAW_CONFIG_PATH: join(fixture.directory, 'config.json'),
     ALBERT_TEST_API_KEY: apiKey,
+    ...(codexHome ? { CODEX_HOME: codexHome } : {}),
     NO_COLOR: '1',
   };
 }
 
 export async function runAgent(fixture, config, {
-  apiKey = 'local-fixture-not-a-secret', timeoutSeconds = 30, thinking = 'off', signal,
+  apiKey = 'local-fixture-not-a-secret', timeoutSeconds = 30, thinking = 'off', signal, codexHome,
 } = {}) {
   const configPath = await writeConfig(fixture, config);
-  const env = fixtureEnv(fixture, apiKey);
+  const env = fixtureEnv(fixture, apiKey, codexHome);
   const child = spawn(process.execPath, [
     cli, 'agent', 'exec', '--cwd', fixture.workspace, '--config', configPath,
     '--state-dir', fixture.state, '--code-mode', 'direct', '--thinking', thinking,

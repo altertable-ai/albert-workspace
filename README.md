@@ -130,7 +130,7 @@ npm ci --ignore-scripts
 make integration
 ```
 
-The tests run the installed OpenClaw CLI against temporary copies of the actual
+The four model-endpoint tests run the installed OpenClaw CLI against temporary copies of the actual
 workspace instructions. They use fresh home/state directories, an explicit test
 configuration, a localhost fake model endpoint, and read-only tools. They do not
 load operator credentials, enable plugins/channels, or start a Gateway. Package
@@ -140,10 +140,32 @@ built-in OpenClaw runtime; they do not cover a deployed Codex or other plugin ru
 Four repeatable checks cover automatic `AGENTS.md` injection, an actual
 `ALBERT.md` read, the context-injection off switch, and refusal to read outside the
 workspace. The fake endpoint scripts the tool call: these prove runtime behavior,
-not that a real model chose to follow the startup instruction.
+not that a real model chose to follow the startup instruction. A fifth check loads
+the official OpenAI and Codex plugins in temporary state and verifies that the
+Codex runtime registers. That check requires no sign-in or model call.
 
-For that decision, `make integration-live` runs a separate opt-in check. To match
-Albert's Sol 6.1 model and ChatGPT/Codex subscription, run in an interactive terminal:
+For that decision, `make integration-live` runs a separate opt-in check. To use
+your existing Codex CLI sign-in with Sol 6.1:
+
+```fish
+env ALBERT_TEST_AUTH=codex-cli ALBERT_TEST_MODEL=gpt-6.1-sol make integration-live
+```
+
+This uses OpenClaw's Codex adapter and your installed `codex` command. Credentials
+stay in the existing Codex home; they are never copied into OpenClaw. The workspace
+and OpenClaw state are temporary, with only workspace file reads available. Codex
+uses that home's native configuration and can record the test session in its local
+state. `CODEX_HOME` and
+`ALBERT_TEST_CODEX_BIN` can select a different Codex home or executable.
+The command prints the CLI version it uses. This is an explicit local-account
+test; CI never runs it.
+
+This checks the model and instructions using your account. It does not verify
+Albert's deployed account, configuration, or unattended maintenance.
+The requested model must be available to that account; the test never substitutes
+another model when access is denied.
+
+For a separate subscription sign-in instead, run in an interactive terminal:
 
 ```fish
 env ALBERT_TEST_AUTH=codex ALBERT_TEST_MODEL=gpt-6.1-sol make integration-live
