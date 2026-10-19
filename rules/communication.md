@@ -31,6 +31,17 @@ For `gh` Markdown bodies, use a file with `--body-file`; for API updates use
 `-F body=@<file>`. Never interpolate rich text into shell arguments or post literal
 escaped newlines. Read back published content and repair malformed posts in place.
 
+## Direct requests and background work
+
+Answer a direct question when the evidence is available. For a longer assigned job,
+a short acknowledgment in its conversation is useful; then do the work and return
+with the result. Update the person during the job when a finding changes the plan,
+something will take longer than expected, or their decision is needed.
+
+For background maintenance, investigate quietly until there is a finding, a fix,
+or a decision to discuss. Do not send an acknowledgment-only issue comment.
+Follow through in the original thread once the promised result is available.
+
 ## Slack and heartbeat output
 
 Use threads for follow-up and a reaction when sufficient. Interpret approval only

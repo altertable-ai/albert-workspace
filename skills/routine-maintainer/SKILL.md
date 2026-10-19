@@ -1,6 +1,6 @@
 ---
 name: routine-maintainer
-description: Process GitHub notifications and queued maintenance work across supervised Altertable repositories.
+description: Process GitHub notifications and saved maintenance work across configured repositories.
 ---
 
 # Maintenance routine
@@ -8,14 +8,18 @@ description: Process GitHub notifications and queued maintenance work across sup
 Read [safety](../../rules/safety.md), [memory](../../rules/memory.md), and
 [communication](../../rules/communication.md).
 
-Use notifications supplied by the heartbeat, or fetch `gh api notifications` with
-pagination when invoked directly. Combine them with local retry state. Limit work
-to [supervised repositories](../../repositories.config.json).
+Use notifications and due work supplied by the heartbeat. When invoked directly,
+fetch `gh api notifications` with pagination and run
+`python3 scripts/heartbeat-state.py due`. Limit work to
+[configured repositories](../../repositories.config.json).
 
 Read each relevant thread's current discussion and state before acting. Prioritize
 credible user impact and work that unblocks an existing change: regressions,
 Albert-authored PR failures, review feedback, and conflicts. Then handle new issues
 and independent reviews. Age informs priority but does not trigger automatic pings.
+Use the standing maintenance permission in safety.md to prepare focused fixes without waiting for
+another assignment. Unread notifications are not the whole backlog: resume due
+commitments even when no new notification exists.
 
 - Issues: use [ops-triage](../ops-triage/SKILL.md).
 - Contributor PRs: use [ops-review](../ops-review/SKILL.md).
@@ -27,6 +31,13 @@ and independent reviews. Age informs priority but does not trigger automatic pin
 
 Do not fix unrelated maintainers' branches merely because CI is red. Use a small
 follow-up PR when authorized and welcome; ask about substantive design changes.
+
+When a new notification concerns saved work scheduled for later, read that saved
+item and resume it now. For each resumed item, compare the new evidence with the
+saved result and next action. Continue when the waiting condition is met; otherwise record the next
+check time and stay quiet. After a human merge or release, verify what users can
+actually use and reply where Albert promised an update. Keep unfinished checks
+queued rather than calling the task done.
 
 Mark a notification read only after handling it or recording an explicit deferral
 (`gh api -X PATCH notifications/threads/{thread_id}`). Persist retries and concrete

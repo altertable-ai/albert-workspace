@@ -1,6 +1,6 @@
 ---
 name: ops-review
-description: Review contributor pull requests for correctness, compatibility, and meaningful verification in supervised Altertable repositories.
+description: Review contributor pull requests for correctness, compatibility, and meaningful verification in configured repositories.
 ---
 
 # PR review

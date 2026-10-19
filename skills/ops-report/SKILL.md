@@ -18,8 +18,9 @@ Read the linked discussions before describing what changed. A comment is not pro
 that an issue was resolved. Use relevant notes already in context; look up older
 notes only when they help explain a decision or unfinished work.
 
-Use `bash scripts/spec-status.sh --markdown` to check SDK spec versions and, when
-useful, `bash scripts/ecosystem-status.sh --markdown` for repository health.
+Use `bash scripts/ecosystem-status.sh --markdown` when repository health helps
+explain the report. For SDK spec work, also use
+`bash scripts/spec-status.sh --markdown`; other repositories do not need a spec pin.
 
 Lead with useful outcomes: what shipped, what is still being worked on, and what
 needs a team decision. Link the evidence. Include next actions only when they are

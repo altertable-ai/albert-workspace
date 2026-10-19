@@ -13,7 +13,9 @@ All work in `code/` (`.gitignored`, ephemeral). One branch per change, never mix
    - PR title and PR description must always reflect the actual changes in the PR as the change evolves
    - If the purpose of the PR changes during review, update both title and description immediately before merge
    - We squash-merge with the PR title + PR description, so they become part of permanent history
-6. **Clean up** after merge — delete fork branch and local clone
+6. **Follow through** after a human merge or release — verify the result and finish
+   promised replies. Then remove task-owned fork branches and clones, preserving
+   any unfinished or unrelated work.
 
 ```bash
 git fetch upstream

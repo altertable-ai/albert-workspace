@@ -2,28 +2,24 @@
 
 This is **Albert's home** — the workspace for Altertable's autonomous maintainer of open-source repositories. It is public and version-controlled. Every change is reviewed by the team via pull request.
 
-## How it works
+## What Albert does
 
-Albert is an autonomous AI maintainer for Altertable's public repositories. For SDK implementation work, the workspace, specs, and SDK repos form a three-layer system:
+Albert maintains every repository listed in
+[repositories.config.json](repositories.config.json), including this workspace,
+libraries, CLIs, integrations, and applications. The `sdks` and `projects` groups
+organize the list; both are part of his responsibility.
 
-```text
-albert-workspace          ← Albert's home: identity, skills, memory
-        |
-        | reads specs from altertable-client-specs
-        ↓
-altertable-client-specs       ← versioned API specs, fixtures, constants, test plans
-        |
-        | consumed as git submodule (pinned to a tag)
-        ↓
-SDK repos                     ← implementations: altertable-ruby, altertable-swift, etc.
-  └── specs/                     submodule → altertable-client-specs@v0.x.0
-```
+He answers users, investigates bugs, reviews contributions, prepares verified
+fixes in his fork, and follows his PRs through review. After a human merges or
+releases a fix, he checks the result and returns to the original thread when a
+follow-up was promised. Routine maintenance has
+[standing permission](rules/safety.md#standing-maintenance-permission); product
+decisions, merges, releases, and repository administration stay with the team.
 
-**Typical flow when a new spec version ships:**
-
-1. A spec change is merged and tagged in `altertable-client-specs` (e.g. `v0.3.0`).
-2. On each heartbeat, Albert runs `spec-status.sh`, detects the new tag, and uses the `sdk-bootstrap` skill to open a PR in each outdated SDK, bumping its `specs/` submodule to the new tag and implementing the diff.
-3. Team reviews and merges. When a release is requested, Albert uses `sdk-release` to prepare it; tagging and publishing require human approval.
+Work arrives through direct requests and the existing periodic checks. Saved work
+records the intended result, evidence, promises, and when to check again. Albert
+resumes it on the next relevant polling pass. This workspace does not require
+webhooks or a new scheduling service.
 
 ## Runtime and repository maintenance
 
@@ -36,8 +32,8 @@ Launch Albert's runtime with an explicit instruction such as:
 > Operate as Albert using ALBERT.md in this workspace. Run the assigned task, or
 > HEARTBEAT.md for a scheduled heartbeat.
 
-[`ALBERT.md`](ALBERT.md) loads runtime identity, safety rules, and the relevant task
-skill. Configure the runtime launcher and scheduled heartbeat payload to use that
+[`ALBERT.md`](ALBERT.md) defines runtime responsibilities, safety rules, and task
+routing. Configure the runtime launcher and scheduled heartbeat payload to use that
 entrypoint; merely opening this repository is insufficient. Keep the live runtime
 on a dedicated `main` checkout and edit configuration in separate worktrees.
 The sync script intentionally protects that live checkout and does not run as a
@@ -52,10 +48,10 @@ For weekly activity, run `python3 scripts/github-activity.py`. It returns dated 
 and issue-comment links for all listed repositories. `--since` is inclusive and
 `--until` exclusive; dates without a time mean midnight UTC. Use `--help` for options.
 
-Skills own task decisions; `rules/` owns shared policy, `scripts/` owns executable
-mechanics, and `skills/sdk-sync/templates/` owns downstream shared files. Skills
-can be invoked directly and hand off context to one another without a mandatory
-bootstrap-to-release chain.
+Skills describe how to do a task, `rules/` keeps shared instructions, and `scripts/`
+handles repeated lookups and checks. Each skill can be used on its own. SDK-specific
+skills and shared templates apply only where relevant; other projects use their own
+contribution guide, architecture, and tests.
 
 ## What's in here
 
@@ -69,15 +65,15 @@ bootstrap-to-release chain.
 | `TOOLS.md` | Environment-specific notes |
 | `MEMORY.md` | Curated long-term memory |
 | `HEARTBEAT.md` | Heartbeat routine |
-| `rules/` | Composable operating rule bricks — loaded per task, not all at once |
+| `rules/` | Shared instructions, read when needed |
 | `memory/` | Daily logs — gitignored, not committed |
 | `skills/` | Operational skill definitions used by Albert |
 | `scripts/` | Reusable GitHub lookups, repository setup, and checks |
 | `code/` | Ephemeral work directory — gitignored |
 
-## Rules
+## Shared rules
 
-Rule bricks in `rules/` are focused, composable files. Each skill declares which bricks it depends on. Albert loads only what's relevant to the task.
+Skills link to the shared rules they need. Albert reads only what helps with the task.
 
 | Brick | Purpose |
 |---|---|
@@ -92,20 +88,36 @@ Rule bricks in `rules/` are focused, composable files. Each skill declares which
 
 ## Skills
 
-### Operational skills (this repo)
+### General maintenance
 
-| Skill | Description |
+| Skill | Purpose |
 |---|---|
-| [`sdk-bootstrap`](skills/sdk-bootstrap/SKILL.md) | Fork, clone, and wire up a new SDK repo or update an existing one to a new spec version |
-| [`sdk-implement`](skills/sdk-implement/SKILL.md) | Implement an SDK from a versioned spec — dispatched by `sdk-bootstrap` |
-| [`sdk-readme`](skills/sdk-readme/SKILL.md) | Write READMEs for SDK repos and monorepo roots following Altertable conventions |
-| [`sdk-release`](skills/sdk-release/SKILL.md) | Release SDKs, write changelogs, and publish to language registries |
-| [`routine-sync`](skills/routine-sync/SKILL.md) | Check spec alignment and outdated shared files |
-| [`routine-maintainer`](skills/routine-maintainer/SKILL.md) | Notification-driven maintainer routine to identify actionable work across supervised Altertable repositories |
-| [`ops-review`](skills/ops-review/SKILL.md) | Review community pull requests against Altertable SDK standards |
-| [`sdk-sync`](skills/sdk-sync/SKILL.md) | Keep shared configuration, community files, and CI templates consistent across SDK repositories |
-| [`ops-triage`](skills/ops-triage/SKILL.md) | Investigate issues across Altertable repositories |
-| [`ops-report`](skills/ops-report/SKILL.md) | Generate weekly status summaries covering PRs, issues investigated, spec alignment, and blockers |
+| [routine-maintainer](skills/routine-maintainer/SKILL.md) | Handle notifications, saved work, and promised follow-ups |
+| [ops-triage](skills/ops-triage/SKILL.md) | Investigate issues and prepare confirmed bug fixes |
+| [ops-review](skills/ops-review/SKILL.md) | Review code and whether a change fits the project |
+| [ops-report](skills/ops-report/SKILL.md) | Report useful outcomes across the configured repositories |
+| [routine-sync](skills/routine-sync/SKILL.md) | Check supported SDK specs and shared files |
+
+### SDK tasks
+
+| Skill | Purpose |
+|---|---|
+| [sdk-bootstrap](skills/sdk-bootstrap/SKILL.md) | Set up an SDK or update its spec pin |
+| [sdk-implement](skills/sdk-implement/SKILL.md) | Implement the requirements in a pinned spec |
+| [sdk-readme](skills/sdk-readme/SKILL.md) | Write SDK package and monorepo documentation |
+| [sdk-release](skills/sdk-release/SKILL.md) | Prepare package versions and releases for human approval |
+| [sdk-sync](skills/sdk-sync/SKILL.md) | Maintain selected shared files and CI settings |
+
+SDK repositories consume versioned specs from `altertable-client-specs` through a
+`specs/` submodule. A new tag can lead to a pin-and-implementation PR through
+routine-sync and sdk-bootstrap. This flow does not apply to every repository.
+
+## Checking behavior changes
+
+Use the [behavior cases](skills/routine-maintainer/references/behavior-cases.md) for
+dry runs without posting or changing external state. They cover useful responses,
+follow-through, permissions, and projects beyond SDKs. Check the result and actions,
+not whether the model repeats the instructions. Script tests run with `make validate`.
 
 ## Contributing
 

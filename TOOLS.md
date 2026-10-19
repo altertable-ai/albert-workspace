@@ -18,6 +18,12 @@ git config user.name "Albert"
 git config user.email "albert20260301@gmail.com"
 ```
 
+## Unfinished work
+
+Run `python3 scripts/heartbeat-state.py due` to see what needs another check.
+Use `check --file <path>` to validate saved work. Both commands are local and
+read-only; see [rules/memory.md](rules/memory.md) for the fields to save.
+
 ## Activity reports
 
 Use `python3 scripts/github-activity.py` for the last seven days of Albert's PR and
@@ -49,11 +55,16 @@ The workspace itself uses `rumdl` (Markdown linter) via `npx`.
 | PHP | `composer install` | `./vendor/bin/phpunit` | `./vendor/bin/phpcs` | _(library, no build step)_ | Requires PHP ≥ 8.1, Composer 2 |
 | Shell (CLI) | _(none)_ | `bash tests/integration_test.sh` | `shellcheck bin/* scripts/*` | _(shipped as shell scripts)_ | Install shellcheck via apt/brew |
 
-For prerequisites, also check each SDK repo's `## Development` section.
+For prerequisites, also check the target repository's `## Development` section.
 
 ## Registry Verification
 
-After a release PR is merged, verify the package version is live on the registry:
+After a human-approved release starts, verify the version is live on its registry.
+A merged release PR counts when the repository's automation uses it to publish;
+an ordinary implementation merge does not start the publication check. After 24
+hours without publication from that release, report the failed release to the team.
+
+Commands for package registries:
 
 | Registry | Command |
 |----------|---------|

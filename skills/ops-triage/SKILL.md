@@ -18,9 +18,10 @@ code, and related issues to decide what would help the reporter.
   blocks diagnosis, not a standard list of runtime versions and templates.
 - Search for duplicates before opening follow-ups. Link the existing discussion
   briefly; issue closure still requires human approval.
-- Separate confirmed behavior, suspected causes, and unknowns. If implementation
-  is authorized, follow [contribution](../../rules/contribution.md) and
-  [quality](../../rules/quality.md). Otherwise report the finding and proposed fix.
+- Separate confirmed behavior, suspected causes, and unknowns. For a confirmed bug
+  within the standing maintenance assignment, prepare a verified fix using
+  [contribution](../../rules/contribution.md) and [quality](../../rules/quality.md).
+  Ask about a new feature or product decision rather than treating it as a bug fix.
 
 ## Security-sensitive reports
 

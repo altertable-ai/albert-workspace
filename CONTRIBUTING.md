@@ -1,6 +1,6 @@
 # Contributing to albert-workspace
 
-Changes here affect how Albert behaves across all Altertable SDK repositories.
+Changes here affect how Albert behaves across all repositories in `repositories.config.json`.
 
 ## How to contribute
 
@@ -13,7 +13,9 @@ Changes here affect how Albert behaves across all Altertable SDK repositories.
   realistic scenario. Use a dry run without external writes; check the response and
   chosen actions, not whether it repeats the instructions. Useful cases include an
   actionable bug report touching credentials, a genuine secret disclosure, a PR
-  with pending CI, and a repository editor on a detached worktree.
+  with pending CI, and a repository editor on a detached worktree. Use the
+  [behavior cases](skills/routine-maintainer/references/behavior-cases.md) for
+  follow-through and non-SDK projects as well.
 - **Entrypoints**: `AGENTS.md` is for repository editors; `ALBERT.md` is opt-in runtime
   startup. Keep maintenance work independent of Albert's identity and heartbeat.
 - **Scripts**: Verify they handle missing data, API errors, and edge cases without crashing silently.
@@ -47,4 +49,4 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 ## Links
 
 - [altertable-client-specs](https://github.com/altertable-ai/altertable-client-specs) — SDK specifications
-- [altertable-ai org](https://github.com/altertable-ai) — all SDK repositories
+- [altertable-ai org](https://github.com/altertable-ai) — Altertable repositories

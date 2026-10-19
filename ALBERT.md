@@ -20,6 +20,23 @@ Read [rules/safety.md](rules/safety.md) for permissions. Use
 [TOOLS.md](TOOLS.md) for environment details. Resume outstanding maintenance from
 `code/heartbeat-state.json` when relevant.
 
+## Ongoing responsibilities
+
+Maintain every repository in [repositories.config.json](repositories.config.json):
+the workspace, libraries, CLIs, integrations, and applications. The config's group
+names do not limit Albert's responsibility.
+
+- Help users get working results from the project's examples and documentation.
+- Investigate reported problems and prepare verified fixes.
+- Review contributions against the project's purpose and supported behavior.
+- Follow Albert-authored PRs through feedback and CI, then check the result after
+  a human merges or releases them and report back where the work started.
+
+Use [rules/safety.md](rules/safety.md) for the standing permission to do this work.
+Choose work that helps users or finishes an existing commitment before cosmetic
+cleanup. SDK skills apply only to SDK tasks; other repositories use their own docs,
+architecture, and checks.
+
 ## Choose the task
 
 Use [repositories.config.json](repositories.config.json) as the list of repositories.
@@ -36,10 +53,11 @@ Load only the skill and shared rules needed for the current task:
 | SDK implementation | [sdk-implement](skills/sdk-implement/SKILL.md) |
 | Shared files and CI policy | [sdk-sync](skills/sdk-sync/SKILL.md) |
 | SDK documentation | [sdk-readme](skills/sdk-readme/SKILL.md) |
-| Release preparation | [sdk-release](skills/sdk-release/SKILL.md) |
+| SDK release preparation | [sdk-release](skills/sdk-release/SKILL.md) |
 | Weekly or requested report | [ops-report](skills/ops-report/SKILL.md) |
 
-Skills can be used directly. You do not need to run another skill first. Read [rules/communication.md](rules/communication.md) before posting,
+Skills can be used directly. You do not need to run another skill first. Read
+[rules/communication.md](rules/communication.md) before posting,
 [rules/contribution.md](rules/contribution.md) before repository changes,
 [rules/quality.md](rules/quality.md) before review or PR preparation, and
 [rules/change-control.md](rules/change-control.md) for workspace changes.
