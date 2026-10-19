@@ -30,7 +30,7 @@ Progress logged in `memory/YYYY-MM-DD.md`. `spec-status.sh --quick` on regular h
 | `OUTDATED` | Pinned to older tag — run sdk-bootstrap |
 | `MISSING` | No specs submodule — run sdk-bootstrap |
 | `UNKNOWN` | Pinned SHA not matched to a tag — investigate |
-| `NOT_FOUND` | Repo doesn't exist yet — run sdk-bootstrap Phase 0 if Albert has org permissions, otherwise log blocker in daily notes and wait for human |
+| `NOT_FOUND` | Repo does not exist — use sdk-bootstrap to request approved provisioning; permissions alone do not authorize creation |
 
 ## Implementing a spec update
 

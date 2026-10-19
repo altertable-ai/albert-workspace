@@ -23,15 +23,38 @@ SDK repos                     ← implementations: altertable-ruby, altertable-s
 
 1. A spec change is merged and tagged in `altertable-client-specs` (e.g. `v0.3.0`).
 2. On each heartbeat, Albert runs `spec-status.sh`, detects the new tag, and uses the `sdk-bootstrap` skill to open a PR in each outdated SDK, bumping its `specs/` submodule to the new tag and implementing the diff.
-3. Team reviews and merges. Albert uses `sdk-release` to cut a new SDK release.
+3. Team reviews and merges. When a release is requested, Albert uses `sdk-release` to prepare it; tagging and publishing require human approval.
 
-**Skills drive everything.** Each skill in `skills/` is a self-contained workflow Albert reads and follows. Skills reference composable rule bricks from `rules/` instead of loading a monolithic instruction file. Skills share community file templates via `skills/sdk-sync/templates/`.
+## Runtime and repository maintenance
+
+[`AGENTS.md`](AGENTS.md) guides agents editing this repository. It does not assign
+Albert's identity or start his maintenance loop. Runtime configuration is data to
+review during those sessions.
+
+Launch Albert's runtime with an explicit instruction such as:
+
+> Operate as Albert using ALBERT.md in this workspace. Run the assigned task, or
+> HEARTBEAT.md for a scheduled heartbeat.
+
+[`ALBERT.md`](ALBERT.md) loads runtime identity, safety rules, and the relevant task
+skill. Configure the runtime launcher and scheduled heartbeat payload to use that
+entrypoint; merely opening this repository is insufficient. Keep the live runtime
+on a dedicated `main` checkout and edit configuration in separate worktrees.
+The sync script intentionally protects that live checkout and does not run as a
+startup requirement for repository editors. Deployment-specific launcher settings
+are private and are not managed by this repository.
+
+Skills own task decisions; `rules/` owns shared policy, `scripts/` owns executable
+mechanics, and `skills/sdk-sync/templates/` owns downstream shared files. Skills
+can be invoked directly and hand off context to one another without a mandatory
+bootstrap-to-release chain.
 
 ## What's in here
 
 | Path | Purpose |
 |---|---|
-| `AGENTS.md` | Slim entrypoint: workspace layout, session startup, rules index, heartbeat pointer |
+| `AGENTS.md` | Instructions for agents maintaining this repository |
+| `ALBERT.md` | Explicit runtime entrypoint: startup, shared policy, task routing |
 | `SOUL.md` | Persona, tone, boundaries |
 | `IDENTITY.md` | Name, email, GitHub handle |
 | `USER.md` | About Altertable and the core team |
@@ -69,6 +92,7 @@ Rule bricks in `rules/` are focused, composable files. Each skill declares which
 | [`sdk-implement`](skills/sdk-implement/SKILL.md) | Implement an SDK from a versioned spec — dispatched by `sdk-bootstrap` |
 | [`sdk-readme`](skills/sdk-readme/SKILL.md) | Write READMEs for SDK repos and monorepo roots following Altertable conventions |
 | [`sdk-release`](skills/sdk-release/SKILL.md) | Release SDKs, write changelogs, and publish to language registries |
+| [`routine-sync`](skills/routine-sync/SKILL.md) | Check spec alignment and shared-file drift |
 | [`routine-maintainer`](skills/routine-maintainer/SKILL.md) | Notification-driven maintainer routine to identify actionable work across supervised Altertable repositories |
 | [`ops-review`](skills/ops-review/SKILL.md) | Review community pull requests against Altertable SDK standards |
 | [`sdk-sync`](skills/sdk-sync/SKILL.md) | Keep shared configuration, community files, and CI templates consistent across SDK repositories |

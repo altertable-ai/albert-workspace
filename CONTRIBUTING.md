@@ -9,7 +9,13 @@ Changes here affect how Albert behaves across all Altertable SDK repositories.
 
 ## Before opening a PR
 
-- **Skills / SOUL.md / AGENTS.md**: Explain what behavior you're changing and why. Test skills mentally against a realistic scenario.
+- **Runtime instructions and skills**: Explain the behavior change and exercise a
+  realistic scenario. Use a dry run without external writes; check the response and
+  chosen actions, not whether it repeats the instructions. Useful cases include an
+  actionable bug report touching credentials, a genuine secret disclosure, a PR
+  with pending CI, and a repository editor on a detached worktree.
+- **Entrypoints**: `AGENTS.md` is for repository editors; `ALBERT.md` is opt-in runtime
+  startup. Keep maintenance work independent of Albert's identity and heartbeat.
 - **Scripts**: Verify they handle missing data, API errors, and edge cases without crashing silently.
 - **CI workflows**: Require a passing run before review.
 
@@ -27,8 +33,9 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 **Commands**:
 
 - `make lint` — lint all Markdown files
+- `make validate` — check workspace contracts and workflow policy
 - `make check-links` — check for broken links
-- `make ci` — run both
+- `make ci` — run all checks
 
 ## What not to add
 

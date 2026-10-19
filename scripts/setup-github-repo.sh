@@ -6,7 +6,7 @@
 #
 # Prerequisites: gh CLI authenticated with sufficient org permissions.
 #
-# Referenced by: skills/sdk-bootstrap/SKILL.md (Phase 0: Create repository)
+# Referenced by: skills/sdk-bootstrap/SKILL.md (repository provisioning)
 
 set -euo pipefail
 

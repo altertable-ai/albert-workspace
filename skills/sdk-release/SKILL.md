@@ -1,130 +1,49 @@
 ---
 name: sdk-release
-description: Defines conventions for releasing open-source SDKs and libraries. Use when releasing a new version of an SDK, writing changelogs, or publishing to a language registry (npm, PyPI, Maven, etc.).
+description: Prepare SDK versioning, changelogs, and package artifacts; publish or tag only with explicit human approval.
 ---
 
-# SDK Release
+# SDK release
 
-Called by `sdk-implement` Phase 7.
+Read [safety](../../rules/safety.md), [quality](../../rules/quality.md), and the
+target repository's release configuration. Distinguish package preparation from
+publishing: neither an implementation task nor a green release PR authorizes a tag
+or registry release.
 
-**Rules:** [safety](../../rules/safety.md) · [change-control](../../rules/change-control.md)
+## Prepare
 
-## Versioning
+Use [repositories.config.json](../../repositories.config.json) for package names,
+registries, and monorepo mappings. Preserve existing published names. New Product
+Analytics packages use `altertable-{lang}`; other products use
+`altertable-{product}-{lang}` unless the ecosystem requires a different registry name.
+All packages use MIT.
 
-Use [Semantic Versioning](https://semver.org/):
+Use SemVer: start at `0.1.0`; fixes bump patch, features minor, breaking changes
+major (minor while on `0.x`). Check the repository's actual release-please settings
+and pre-1.0 behavior before relying on automation.
 
-- **Initial version**: `0.1.0` for new packages.
-- Increment **patch** for bug fixes, **minor** for new features, **major** for breaking changes.
-- While on `0.x`, breaking changes bump **minor** (e.g., `0.1.0` → `0.2.0`).
+Keep user-facing entries under `[Unreleased]`, grouped by Added/Changed/Fixed/Removed,
+with migration guidance for breaking changes and version comparison links at release.
+For release-please repositories, let the configured automation own version/changelog
+PRs. Conventional Commit PR titles matter because merges are squashed. The shared
+title workflow and Actions policy are owned by [sdk-sync](../sdk-sync/SKILL.md).
+Do not install a new release system as a side effect of preparing a package.
 
-## Package Naming
+## Verify and hand off
 
-Convention: `altertable-{lang}` for product analytics SDKs (default product). `altertable-{product}-{lang}` for other product SDKs (e.g., `altertable-lakehouse-ruby`).
+Check intended versions, CI, changelog, usage docs, license, package metadata, and
+the actual archive contents. Exclude credentials, local state, and development-only
+artifacts. Preserve the package's supported module formats and runtime targets.
 
-Package names, registries, and repository mappings are defined in [`repositories.config.json`](../../repositories.config.json).
+Registry-specific checks when relevant:
 
-Note: the JS/TS SDK and web framework wrappers live in the [`altertable-js` monorepo](https://github.com/altertable-ai/altertable-js) under `packages/` — that repo publishes multiple packages.
+- npm: exports and declarations resolve; published files are allowlisted; declare
+  `sideEffects: false` only when true.
+- PyPI: valid build configuration and `py.typed` for typed packages.
+- Maven Central: signatures, sources, and javadoc artifacts.
+- crates.io: `cargo publish --dry-run`.
 
-## Changelog
-
-Follow [Keep a Changelog](https://keepachangelog.com/) format:
-
-```markdown
-# Changelog
-
-## [Unreleased]
-
-### Added
-
-- New feature description.
-
-### Changed
-
-- Changed behavior description.
-
-### Fixed
-
-- Bug fix description.
-
-### Removed
-
-- Removed feature description.
-```
-
-Rules:
-
-- One entry per user-facing change.
-- Use imperative mood ("Add support for…", not "Added support for…").
-- Group by type (`Added`, `Changed`, `Fixed`, `Removed`).
-- Link each version heading to a diff (e.g., `[0.2.0]: https://github.com/altertable-ai/altertable-js/compare/v0.1.0...v0.2.0`).
-
-## Automated Releases
-
-Use **release-please** GitHub Action for:
-
-1. Automated version bumps from [Conventional Commits](https://www.conventionalcommits.org/).
-2. Changelog generation.
-3. GitHub Release creation with release notes.
-4. Triggering registry publish on release.
-
-Because Altertable squash-merges pull requests and release-please derives release notes and version bumps from the merged commit subject, every repository using release-please must validate pull request titles in CI. The required gate is a dedicated GitHub Actions workflow using `amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50` (v6.1.1), triggered on `pull_request_target` for `opened`, `edited`, and `synchronize`. Allowed title types are:
-
-- `feat`
-- `fix`
-- `perf`
-- `revert`
-- `docs`
-- `style`
-- `chore`
-- `refactor`
-- `test`
-- `build`
-- `ci`
-
-Name the workflow clearly (for example `Semantic Pull Request`), keep it separate from language-specific CI when possible, and treat missing PR-title validation as release automation drift that must be patched across affected repositories. The canonical workflow is managed by [sdk-sync](../sdk-sync/SKILL.md) at `skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml`. It and every repository workflow must follow sdk-sync's GitHub Actions policy: Ubuntu 24.04 LTS, immutable action SHAs, and `.node-version`/`.bun-version` runtime files where those toolchains are used.
-
-Commit message prefixes:
-
-| Prefix | Version Bump |
-|--------|--------------|
-| `fix:` | Patch |
-| `feat:` | Minor |
-| `feat!:` | Major |
-
-## Registry Publishing
-
-### Pre-publish checklist
-
-- [ ] Version in manifest matches intended release.
-- [ ] All tests pass in CI.
-- [ ] Changelog is up to date.
-- [ ] README has usage examples for all public API methods.
-- [ ] Package metadata is complete (description, keywords, license, repository URL, homepage).
-- [ ] Build artifacts are correct (no dev dependencies bundled, tree-shakeable where applicable).
-
-### Language-specific notes
-
-**npm (JS/TS)**:
-
-- Set `"sideEffects": false` for tree shaking.
-- Export both ESM and CJS via `exports` field.
-- Include `types` field pointing to declarations.
-- Use `files` array to allowlist published files.
-
-**PyPI (Python)**:
-
-- Use `pyproject.toml` with `[build-system]` section.
-- Include `py.typed` marker for typed packages.
-
-**Maven Central (Java/Kotlin)**:
-
-- Sign artifacts with GPG.
-- Include sources and javadoc JARs.
-
-**crates.io (Rust)**:
-
-- Run `cargo publish --dry-run` before release.
-
-## License
-
-All packages use the **MIT** license. Include `LICENSE` file at the package root.
+Present the exact version, artifacts, and release action for human approval before
+tagging or publishing. After an authorized release, verify the version on its
+registry using [TOOLS.md](../../TOOLS.md). Track publication failures without
+repeatedly triggering a release.

@@ -1,50 +1,40 @@
-# rules/communication.md
+# Communication
 
-## GitHub
+Post when you can add a finding, answer a question, unblock work, or request a
+specific decision. Labels, CI badges, and review actions usually speak for
+themselves. Read the existing thread first and reply where the discussion belongs.
 
-- Reply to specific threads, not generic top-level comments.
-- Do not post a comment when a heartbeat finds nothing actionable — return HEARTBEAT_OK to the invoker only; no GitHub activity.
-- Close the loop: acknowledge feedback, state what you did, mark resolved.
-- When blocked: explain what you tried, what you found, and what decision you need. Apply `needs-human-review`.
-- **Attribution**: when tagging or mentioning someone on GitHub (review requests, pings, escalations), tag the person who requested the action — not an arbitrary team member. If an instruction came from Slack, the requester is the person who sent the Slack message. If no specific requester, fall back to recent commit activity or round-robin from `USER.md`.
-- Within 5 minutes of posting, edit in place instead of adding a new comment — unless the update needs to surface as a new notification.
-  - Prefer `gh pr edit --body-file` for PR descriptions.
-  - Prefer `gh issue comment --edit-last --body-file` (or `gh api PATCH` with `--input`) for comments.
+## Content and tone
 
-### Markdown-safe posting (required)
+- Lead with the useful fact. Say what you confirmed, link the fix or evidence, and
+  ask only for information that would change the investigation.
+- Keep uncertainty explicit. Do not claim reproduction, exposure, a fix, or a
+  scheduled response without evidence. Do not promise another person's next action.
+- Be welcoming without scripted praise. Avoid mandatory headings such as
+  “What happens next”, procedural narration, and generic security lectures.
+- Give precautions tied to the actual failure. For example: “If credentials from
+  that file were committed or shared, revoke them.” Do not imply they were leaked.
+- Tag a person only for a concrete request. Prefer the requester for assigned work;
+  choose reviewers by ownership per [team.md](team.md). Avoid repeated pings on
+  unchanged items simply because a time threshold passed.
+- Correct a recent comment in place unless a new notification is useful. Close the
+  loop when there is a substantive result, not after every intermediate step.
 
-- Never pass markdown containing backticks using double-quoted shell strings (command substitution can strip content).
-- For `gh pr create`, `gh pr edit`, `gh issue create`, `gh issue comment`, and `gh pr comment`, always pass rich text via `--body-file` with a single-quoted heredoc:
+## Posting safely
 
-```bash
-gh pr edit <n> --body-file - <<'EOF'
-## Summary
-- keep `inline-code` intact
-EOF
-```
+Keep secrets and private reports out of public threads. Read the target repo's
+`SECURITY.md` when sensitive details need a private channel.
 
-For `gh api PATCH`, use `-F body=@-` to read the body from stdin (same heredoc pattern):
+For `gh` Markdown bodies, use a file with `--body-file`; for API updates use
+`-F body=@<file>`. Never interpolate rich text into shell arguments or post literal
+escaped newlines. Read back published content and repair malformed posts in place.
 
-```bash
-gh api repos/<owner>/<repo>/pulls/<number> -X PATCH -F body=@- <<'EOF'
-## Summary
-- keep `inline-code` intact
-EOF
-```
+## Slack and heartbeat output
 
-- Never send markdown bodies as JSON escaped strings like `"## Summary\\n- item"`; GitHub will render literal `\n`.
-- If a post lands malformed, patch immediately with `gh ... --body-file`.
+Use threads for follow-up and a reaction when sufficient. Interpret approval only
+in the context of the proposal it answers; a reaction does not expand authority.
 
-## Slack
-
-- Lead with the actionable item. Use threads for detail. React with emoji when that's enough.
-- Treat a 👍 reaction on your Slack message as an approval (e.g., for a proposed action or decision).
-- When asked to update your configuration/instructions on Slack: update the local config (markdown, rules, skills, etc.), then open a PR so the team can review and merge. The goal is to always keep your local configuration in sync with the configuration on GitHub.
-- Heartbeats are silent in Slack by default. Do not post routine heartbeat summaries, unchanged status, or bare completion tokens to channels or threads. Notify Slack only when human input is needed, a human explicitly requested the update, or the Slack thread is the active place to close an assigned request.
-- For any heartbeat whose active output surface is Slack, including regular scheduled heartbeats, reply exactly `NO_REPLY` when there is no Slack-visible action so the transport stays silent. Use `HEARTBEAT_OK` only for non-Slack/internal heartbeat invokers.
-
-## Tone
-
-- Direct. No "Great question!" — just help.
-- Never leave a bare token like `HEARTBEAT_OK` in human-facing channels — either include a brief status line or, for silent Slack heartbeats, return `NO_REPLY`.
-- Have opinions. Yield when the team has decided, but make sure they had full information.
+Routine heartbeats stay silent in Slack unless a human requested an update, needs
+to act, or an assigned Slack thread needs a substantive result. Return exactly
+`NO_REPLY` for silent Slack invocations; use `HEARTBEAT_OK` only for idle internal
+invocations. Keep retry state local per [memory.md](memory.md).

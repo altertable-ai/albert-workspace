@@ -1,48 +1,30 @@
 ---
 name: routine-sync
-description: Cross-repo consistency routine dispatched by the heartbeat. Checks spec drift and synchronizes community files across all SDK repositories. Use when the heartbeat needs to verify spec alignment and community file consistency.
+description: Check SDK spec alignment and shared-file drift, then route necessary updates to the owning skills.
 ---
 
-# Sync Routine
+# Ecosystem sync
 
-Dispatched by the heartbeat. Checks spec drift and cross-repo consistency, then dispatches to `sdk-bootstrap` (spec updates) and `sdk-sync` (community files).
+Read [specs](../../rules/specs.md), [contribution](../../rules/contribution.md),
+and [safety](../../rules/safety.md).
 
-**Rules:** [change-control](../../rules/change-control.md) · [contribution](../../rules/contribution.md) · [safety](../../rules/safety.md)
+Use the requested mode: `quick` for a regular heartbeat, `full` for a daily full
+heartbeat or explicit audit. Run the spec check once per cycle:
 
-## Inputs
+- Quick: `bash scripts/spec-status.sh --quick`
+- Full: `bash scripts/spec-status.sh`
 
-- **Mode**: `quick` (regular heartbeat) or `full` (full heartbeat). The heartbeat dispatcher provides this — use `quick` for step 2 of The Loop, `full` for step 1 of Periodic Checks.
+Route `OUTDATED` or `MISSING` SDKs to
+[sdk-bootstrap](../sdk-bootstrap/SKILL.md), carrying the target spec tag.
+Investigate `UNKNOWN` pins before changing them. For `NOT_FOUND`, record the missing
+repository and seek approval before provisioning; lack of permissions is a blocker,
+not a reason to retry creation every heartbeat.
 
-## Workflow
+On full scans or an explicit shared-file request, use
+[sdk-sync](../sdk-sync/SKILL.md) to audit and patch drift. Quick cycles need not
+clone every repository to recheck unchanged templates. If an audit was deferred
+or incomplete, record that fact rather than calling it clean.
 
-### Step 1: Check spec status
-
-Run `bash scripts/spec-status.sh` with the appropriate flag for the current mode:
-
-- **Quick mode**: `bash scripts/spec-status.sh --quick` (1 API call)
-- **Full mode**: `bash scripts/spec-status.sh` (no `--quick`, catches manual submodule updates)
-
-Then:
-
-- **If unchanged**: Skip to Step 2.
-- **If any SDK is outdated**: Run `sdk-bootstrap` for each outdated SDK to update the submodule to the latest spec tag.
-- **If `NOT_FOUND` repos**: Run `sdk-bootstrap` Phase 0 if Albert has org permissions, otherwise wait for a human. Log the blocker in `memory/YYYY-MM-DD.md`.
-
-### Step 2: Audit community file drift
-
-Run `sdk-sync` Phase 1 (Audit) to detect community file drift across all SDK repositories.
-
-### Step 3: Sync community files
-
-If drift is detected in Step 2:
-
-1. Run `sdk-sync` Phase 2 (Generate patches) to create the necessary changes.
-2. Run `sdk-sync` Phase 3 (Open PRs) to open PRs for all repos with drift.
-
-## Acceptance Checklist
-
-- [ ] Spec status checked via `scripts/spec-status.sh`
-- [ ] Outdated SDKs updated via `sdk-bootstrap` (if any)
-- [ ] Community file drift report generated via `sdk-sync` Phase 1
-- [ ] PRs opened for all repos with community file drift (if any)
-- [ ] All actions logged in `memory/YYYY-MM-DD.md`
+Reuse existing update PRs. Hand off repository, current pin, target tag, and relevant
+drift to the owning skill; leave implementation and verification there. Record only
+meaningful outcomes and outstanding work per [memory](../../rules/memory.md).

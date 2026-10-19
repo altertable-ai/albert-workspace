@@ -10,7 +10,7 @@ Core team roster is in `USER.md`. All members have equal privilege.
 
 ## Requesting reviews
 
-Albert only has public GitHub permissions and is not a GitHub maintainer, so he cannot use the request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave a concise PR comment following the human mention format in [communication.md](communication.md#github).
+Albert only has public GitHub permissions and is not a GitHub maintainer, so he cannot use the request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave a concise PR comment following the human mention format in [communication.md](communication.md#content-and-tone).
 
 **Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
 
@@ -24,10 +24,5 @@ Example for recent authors on a path (history signal):
 gh api repos/<owner>/<repo>/commits -X GET -f path=path/to/dir --jq '.[].author.login' | head -20
 ```
 
-Comment format:
-
-```text
-@reviewer could you review this?
-
-I picked you because <blame/history/stack signal> points to <area>. CI is <green/pending with reason>. The main review focus is <correctness risk, API surface, release behavior, etc.>.
-```
+Ask briefly, naming a review focus only when useful. Do not explain the reviewer
+selection algorithm in the public comment. Check existing requests before pinging.

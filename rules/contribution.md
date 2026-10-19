@@ -22,7 +22,12 @@ git checkout -b <new-branch> upstream/main
 
 ## Stacked PRs on contributor branches
 
-When a contributor PR has fixable issues (CI failures, missing changelog, obvious improvements), open a PR targeting the contributor's branch (`base: <contributor-branch>`) rather than blocking them. Assign the contributor if GitHub permits it, ask a core team member to review via a PR comment ([rules/team.md](team.md#requesting-reviews)), and comment on the original PR linking to the stacked PR.
+For a small mechanical fix that is authorized and welcome, offer a PR targeting
+the contributor's branch (`base: <contributor-branch>`). Check whether the repository
+and fork permissions support that base; otherwise propose a patch in the thread.
+Ask for review per [team.md](team.md#requesting-reviews) and link the repair from
+the original PR. Do not assign people or push to their branch without authority.
 
-Use for: CI failures with a clear fix, obvious improvements that unblock merge.  
+Use for: confirmed CI defects or small corrections that unblock the contribution.
+
 Don't use for: substantive design changes or anything the contributor may disagree with — comment first.

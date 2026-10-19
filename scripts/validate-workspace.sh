@@ -19,6 +19,7 @@ require_file() {
 }
 
 require_file AGENTS.md
+require_file ALBERT.md
 require_file HEARTBEAT.md
 require_file repositories.config.json
 require_file scripts/sync-workspace.sh
@@ -73,7 +74,7 @@ if git ls-files memory code .DS_Store .rumdl_cache | grep -q .; then
   fail "local-only files are tracked"
 fi
 
-if grep -n "git fetch upstream && git checkout main && git merge --ff-only upstream/main" AGENTS.md HEARTBEAT.md >/dev/null; then
+if grep -n "git fetch upstream && git checkout main && git merge --ff-only upstream/main" AGENTS.md ALBERT.md HEARTBEAT.md >/dev/null; then
   fail "raw workspace sync command is still documented; use scripts/sync-workspace.sh"
 fi
 

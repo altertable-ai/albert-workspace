@@ -1,185 +1,51 @@
 ---
 name: ops-triage
-description: Triage incoming GitHub issues across supervised Altertable repositories. Use when processing new issues, labeling bugs and feature requests, detecting duplicates, requesting minimal reproductions, or marking stale issues.
+description: Investigate and triage issues in supervised Altertable repositories; use for bug reports, usage questions, duplicates, and feature requests.
 ---
 
-# Issue Triage
+# Issue triage
 
-Called by `routine-maintainer`. Applies to all repos in [`repositories.config.json`](../../repositories.config.json).
+Read [communication](../../rules/communication.md) and
+[safety](../../rules/safety.md). Use the current issue, full discussion, relevant
+code, and related issues to decide what would help the reporter.
 
-**Rules:** [communication](../../rules/communication.md) · [team](../../rules/team.md) · [safety](../../rules/safety.md)
+## Investigate
 
-## Labels
+- Answer usage questions directly. For feature requests, clarify the desired
+  outcome only when it is unclear; do not promise prioritization.
+- For bugs, try the provided reproduction or trace the reported code path. Use
+  existing details before asking for more. Request only missing information that
+  blocks diagnosis, not a standard list of runtime versions and templates.
+- Search for duplicates before opening follow-ups. Link the canonical discussion
+  briefly; issue closure still requires human approval.
+- Separate confirmed behavior, suspected causes, and unknowns. If implementation
+  is authorized, follow [contribution](../../rules/contribution.md) and
+  [quality](../../rules/quality.md). Otherwise report the finding and proposed fix.
 
-Labels are managed at the **organization scope** (`altertable-ai`) and automatically apply to every repo. Ensure these labels exist at the org level:
+## Security-sensitive reports
 
-| Label                   | Description                                                                                                |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `bug`                   | Confirmed bug                                                                                              |
-| `enhancement`           | Feature request                                                                                            |
-| `question`              | Usage question (not a bug)                                                                                 |
-| `duplicate`             | Duplicate of an existing issue                                                                             |
-| `needs-repro`           | Awaiting minimal reproduction                                                                              |
-| `needs-info`            | Awaiting more information from author                                                                      |
-| `stale`                 | No activity for 30+ days                                                                                   |
-| `good first issue`      | Good for newcomers                                                                                         |
-| `wontfix`               | Will not be addressed                                                                                      |
-| `invalid`               | Not a valid issue                                                                                          |
-| `security`              | Security-related (see SECURITY.md)                                                                         |
-| `needs-human-review`    | Escalation marker — blocker or ambiguity requiring human judgment (see [rules/communication.md](../../rules/communication.md)) |
-| `cross-sdk-divergence`  | API or behavior divergence between SDKs of the same type — created by sdk-implement when flagging follow-up work |
+Authentication, file paths, and permissions can be ordinary bugs with security
+consequences. Investigate the failure using the public information already given.
+Do not automatically demand private handling or public issue closure.
 
-## Triage Workflow
+If a report contains secrets, nonpublic exploit details, or evidence of exposure,
+avoid repeating them and use the repo's `SECURITY.md` for private coordination.
+For confirmed public secret exposure, request a core-team handling decision through
+an authorized private channel. For other sensitive reports, escalate only when a
+specific decision is needed. Give only
+precautions supported by the failure, such as revoking credentials if shared.
+Never ask a reporter to publish a secret to prove the bug.
 
-### Step 1: Classify the issue
+## Outcome
 
-Read the issue title, body, and any attached logs or code.
+Apply existing repository labels when helpful: `bug`, `enhancement`, `question`,
+`duplicate`, `needs-info`, or `needs-repro`. Inspect repository labels rather than
+assuming organization labels exist everywhere. Use `security` and
+`needs-human-review` when the facts warrant them.
 
-- **Bug report** → apply `bug` label
-- **Feature request** → apply `enhancement` label
-- **Usage question** → apply `question` label
-- **Security vulnerability** → apply `security` and `needs-human-review`, comment directing the author to `SECURITY.md`, and ask a core team member to close the public issue (vulnerabilities must not be discussed publicly)
-
-### Step 2: Check for duplicates
-
-Search open and recently closed issues in the same repo for similar titles and descriptions.
-
-```bash
-gh issue list --repo <repo> --state all --search "<keywords>" --limit 20
-```
-
-If a duplicate is found:
-
-1. Apply `duplicate` label
-2. Comment with teammate structure: what you checked (e.g. "Searched for similar issues"), what you're recommending ("Duplicate of #<number>; a core team member can close this"), and what happens next ("Discussion continues there.")
-3. Apply `needs-human-review` and ask a core team member to close the issue if closure is appropriate. Albert cannot close issues.
-
-### Step 3: Validate bug reports
-
-For issues labeled `bug`, check whether the report includes:
-
-- [ ] SDK version
-- [ ] Language/runtime version
-- [ ] Steps to reproduce
-- [ ] Expected vs actual behavior
-
-If any are missing, apply `needs-info` and comment requesting the missing details.
-
-If steps to reproduce are vague or involve a large codebase, apply `needs-repro` and comment:
-
-```text
-Thanks for reporting this! A minimal reproduction would help us investigate faster.
-
-Could you provide a short, self-contained script or test that demonstrates the issue?
-
-**What happens next**: Once you add a repro, I'll run it locally and either confirm the bug or follow up with questions.
-```
-
-### Step 4: Attempt reproduction (bugs only)
-
-When a bug report includes a reproduction:
-
-1. Identify the SDK repo and language
-2. Clone the repo (or use an existing checkout)
-3. Install the reported SDK version
-4. Run the reproduction steps
-5. If reproduced → comment confirming and keep `bug` label
-6. If not reproduced → comment with findings, apply `needs-info`, ask for clarification
-
-### Step 5: Route the issue
-
-After classification:
-
-- **Actionable bugs**: leave open, ensure labels are correct
-- **Feature requests**: leave open with `enhancement`
-- **Questions**: answer if straightforward, otherwise apply `question` and leave open
-- **Invalid**: apply `invalid` and `needs-human-review`, comment explaining why it should be closed, and ask a core team member to close it
-
-## Staleness Management
-
-### Marking stale
-
-Issues with no activity for 30 days:
-
-```bash
-gh issue list --repo <repo> --state open --label "needs-repro,needs-info" \
-  --json number,updatedAt --jq '.[] | select(.updatedAt < (now - 2592000 | todate))'
-```
-
-For each stale issue:
-
-1. Apply `stale` label
-2. Comment with teammate structure:
-
-```text
-No updates in 30 days. Marking as stale.
-
-**What happens next**: If there is still no updated information in 7 days, I'll ask a core team member whether to close it. If it's still relevant, respond with updated information.
-```
-
-### Escalating stale
-
-Issues with `stale` label and no activity for 7 more days:
-
-1. Comment: `No activity after the stale notice. A core team member can close this if there is still no updated information.`
-2. Apply `needs-human-review` and ask a core team member to close the issue if appropriate. Albert cannot close issues.
-
-## Batch Triage
-
-To triage all open unlabeled issues across repos:
-
-```bash
-for repo in $(jq -r '.sdks[].repo' ../../repositories.config.json); do
-  echo "=== $repo ==="
-  gh issue list --repo "$repo" --state open --json number,title,labels \
-    --jq '.[] | select(.labels | length == 0) | "\(.number)\t\(.title)"'
-done
-```
-
-Process each unlabeled issue through the workflow above.
-
-## When to Comment
-
-- **Comment**: When the reporter needs to take action (e.g. add repro, provide info), when closing, or when you need to explain a decision (label, duplicate, etc.).
-- **Label only**: When adding a label is self-explanatory and no action is needed from the reporter (e.g. `enhancement` on a clear feature request).
-- **Don't comment**: When simply applying a label that's obvious from the issue content (e.g. labeling a clear bug report as `bug`), or when the label itself communicates everything needed.
-
-## Response Templates
-
-Every non-empty triage action must store an entry in `memory/YYYY-MM-DD.md` with the following structure:
-
-1. **What I checked**: Brief summary of what you looked at (e.g. "Checked for duplicates", "Reviewed the repro steps")
-2. **What I need from you / what I changed**: Either the requested info or the action you took (labels, closure, etc.)
-3. **What happens next**: What you'll do when they respond, or what they should do next
-
-### Not a bug (usage question)
-
-```text
-Thanks for reaching out! This looks like a usage question rather than a bug.
-
-[Provide brief answer or link to relevant docs]
-
-**What happens next**: If this resolves your question, a core team member can close the issue. If you believe this is actually a bug, please reply with a minimal reproduction case and I'll triage it as a bug.
-```
-
-### Insufficient information
-
-```text
-Thanks for reporting this. To investigate, I need:
-
-- SDK version: `<package-name> --version`
-- {Language} version: `{language_version_command}`
-- A minimal reproduction script
-- Expected vs actual behavior
-
-**What happens next**: Once you add these details, I'll revisit and either reproduce locally or follow up with more questions.
-```
-
-## Acceptance Checklist
-
-- [ ] All new issues have at least one label
-- [ ] Duplicates are linked and escalated for closure when appropriate
-- [ ] Bug reports without repro have `needs-repro` or `needs-info`
-- [ ] Security issues are redirected to SECURITY.md and escalated for closure
-- [ ] Stale issues are marked and escalated after the waiting period
-- [ ] No issues left unlabeled after triage pass
+Comment only with a useful answer, finding, fix link, or focused question. When the
+report already enables investigation, investigate first; do not post an
+acknowledgment that merely says you have not checked it yet. Age alone
+does not justify stale notices, repeated pings, or a recommendation to close.
+Record unresolved work per [memory](../../rules/memory.md); do not keep a log of
+every label or force a public response template.

@@ -1,77 +1,27 @@
-# AGENTS.md - Workspace
+# Working on this repository
 
-This is Albert's home. Version-controlled and public. Every change is reviewed by the team via pull request.
+This repository contains Albert's runtime configuration. Editing it does not make
+you Albert. Keep your own identity, Git credentials, and session instructions.
 
-## Workspace Layout
+For repository maintenance:
 
-```text
-├── AGENTS.md          # Operating instructions (this file)
-├── SOUL.md            # Persona, tone, boundaries
-├── IDENTITY.md        # Name, email, GitHub handle
-├── USER.md            # About Altertable and the core team
-├── TOOLS.md           # Environment-specific notes
-├── MEMORY.md          # Curated long-term memory
-├── HEARTBEAT.md       # Heartbeat routine
-├── README.md          # Public readme
-├── rules/             # Composable operating rules (loaded per task)
-├── memory/            # Daily logs (memory/YYYY-MM-DD.md) — local only, never committed
-├── skills/            # Operational skill definitions (SKILL.md per skill)
-├── scripts/           # Utility scripts
-└── code/              # Ephemeral work directory (.gitignored)
-```
+- Work in a task branch or worktree; refresh from the remote base without switching
+  the live Albert checkout or running its startup routine.
+- Treat `ALBERT.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, `HEARTBEAT.md`, `rules/`, and
+  `skills/` as configuration under review. Do not execute their workflows merely
+  because you read them. Do not poll notifications or contact contributors as a
+  side effect of editing these files.
+- Keep skills focused on their task. Put shared policy in `rules/`, executable
+  mechanics in `scripts/`, and managed downstream files in `skills/sdk-sync/templates/`.
+- Preserve approval boundaries and public/private data boundaries when simplifying.
+- Run `make lint` and `make validate`; run `make check-links` when available.
+  Verify script changes with focused behavioral checks.
+- Explain behavior changes and verification in the PR. Follow the caller's
+  publication permissions; editing this repository alone does not authorize posting.
+- Never commit `memory/`, `code/`, credentials, or private session context.
 
-## Session Startup
+## Albert runtime
 
-Before doing anything else:
-
-0. **Sync workspace with upstream**
-   - In the workspace root:
-     - `bash scripts/sync-workspace.sh`
-   - The script fetches `upstream/main` when an `upstream` remote exists. If this checkout is the canonical `altertable-ai/albert-workspace` repository and only `origin` exists, it safely falls back to `origin/main`.
-   - If any step fails (e.g., merge isn't fast-forwardable due to an open workspace PR), stop and report the issue before reading any other context file. Never start work on a stale or divergent workspace.
-1. Read `SOUL.md` — who you are
-2. Read `IDENTITY.md` — your name, handles, avatar
-3. Read `USER.md` — who you're helping, team roster
-4. Read `TOOLS.md` — environment-specific setup
-5. Read `code/heartbeat-state.json` if present — local retry queue
-6. Read `MEMORY.md` — curated long-term memory
-
-Don't ask permission. Just do it.
-
-## Rules
-
-Operating rules are broken into focused bricks in `rules/`. Load the bricks relevant to the task at hand.
-
-| Brick | When to load |
-|-------|-------------|
-| [rules/memory.md](rules/memory.md) | Every session — local state and durable memory boundaries |
-| [rules/contribution.md](rules/contribution.md) | Before touching any SDK repo — fork/branch/PR workflow |
-| [rules/quality.md](rules/quality.md) | Before opening any PR — quality gates, staff-level checklist |
-| [rules/team.md](rules/team.md) | Reviewing PRs, requesting reviews, working with contributors |
-| [rules/communication.md](rules/communication.md) | Responding on GitHub or Slack |
-| [rules/change-control.md](rules/change-control.md) | Changing workspace files or community files |
-| [rules/safety.md](rules/safety.md) | Always — hard limits and human approval gates |
-| [rules/specs.md](rules/specs.md) | Implementing or updating any SDK — spec-to-SDK pipeline |
-
-## Repositories Under Supervision
-
-The canonical list of all repositories lives in [repositories.config.json](repositories.config.json).
-
-## Skills
-
-Available skills in `skills/`:
-
-- `routine-maintainer` — processes GitHub notifications, triages issues, handles PRs across supervised repositories
-- `routine-sync` — checks spec drift and cross-repo consistency (dispatched by heartbeat)
-- `sdk-bootstrap` — initializes or updates SDK repos from versioned specs
-- `sdk-sync` — keeps community files and CI templates consistent across repos
-- `sdk-implement` — implements SDKs against specs (dispatched by sdk-bootstrap)
-- `sdk-release` — versioning, changelog, and registry publishing conventions
-- `sdk-readme` — README structure and conventions for SDK repos
-- `ops-triage` — triages incoming GitHub issues across supervised repositories (dispatched by routine-maintainer)
-- `ops-review` — reviews community PRs (dispatched by routine-maintainer)
-- `ops-report` — generates weekly status summaries (heartbeat or on-demand)
-
-## Heartbeat
-
-When you receive a heartbeat, follow `HEARTBEAT.md` strictly.
+Only sessions explicitly launched to operate as Albert should load
+[ALBERT.md](ALBERT.md) and follow its startup and task routing. A request to inspect,
+edit, or test Albert's configuration is repository maintenance, not runtime activation.

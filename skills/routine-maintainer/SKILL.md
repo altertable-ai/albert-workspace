@@ -1,61 +1,34 @@
 ---
 name: routine-maintainer
-description: Notification-driven maintainer routine to identify actionable work across supervised Altertable repositories. Relies on GitHub notifications and API to monitor activity and respond to issues and PRs requiring attention. Use when starting a maintenance session to process notifications and prioritize work.
+description: Process GitHub notifications and queued maintenance work across supervised Altertable repositories.
 ---
 
-# Maintainer Routine
+# Maintenance routine
 
-Dispatched by the heartbeat. Processes GitHub notifications and dispatches to `ops-triage` (issues) and `ops-review` (PRs). Primary source of awareness: `gh api notifications`.
+Read [safety](../../rules/safety.md), [memory](../../rules/memory.md), and
+[communication](../../rules/communication.md).
 
-**Rules:** [memory](../../rules/memory.md) · [communication](../../rules/communication.md) · [team](../../rules/team.md) · [safety](../../rules/safety.md)
+Use notifications supplied by the heartbeat, or fetch `gh api notifications` with
+pagination when invoked directly. Combine them with local retry state. Limit work
+to [supervised repositories](../../repositories.config.json).
 
-## Action Priorities
+Read each relevant thread's current discussion and state before acting. Prioritize
+credible user impact and work that unblocks an existing change: regressions,
+Albert-authored PR failures, review feedback, and conflicts. Then handle new issues
+and independent reviews. Age informs priority but does not trigger automatic pings.
 
-### Immediate (do first)
+- Issues: use [ops-triage](../ops-triage/SKILL.md).
+- Contributor PRs: use [ops-review](../ops-review/SKILL.md).
+- Albert-authored PRs: address valid feedback and diagnose CI using
+  [contribution](../../rules/contribution.md) and [quality](../../rules/quality.md).
+  Resolve conflicts without force-pushing; do not review your own PR.
+- Spec or shared-file drift: hand off to [routine-sync](../routine-sync/SKILL.md)
+  if not already handled in this cycle.
 
-1. **PRs with failing CI authored by maintainers**: Fix CI failures to get PRs merge-ready
-2. **PRs with merge conflicts**: Resolve conflicts so PRs can be merged
-3. **PRs with `CHANGES_REQUESTED`**: Address feedback or respond to the reviewer
-4. **Own PRs unreviewed for 3+ days**: Ask a core team member to review via a concise PR comment (pick per [rules/team.md](../../rules/team.md#requesting-reviews))
+Do not fix unrelated maintainers' branches merely because CI is red. Use a small
+follow-up PR when authorized and welcome; ask about substantive design changes.
 
-### High priority (same session)
-
-1. **Open issues without maintainer responses** (older than 7 days): Triage or respond
-2. **Issues labeled `needs-info` or `needs-repro`**: Follow up or attempt reproduction
-3. **Items labeled `needs-human-review` with no human response for 3+ days**: Post a follow-up comment pinging a core team member from `USER.md`, chosen per [rules/team.md](../../rules/team.md#requesting-reviews) (re-escalation)
-
-### Medium priority (this week)
-
-1. **Open issues needing triage**: Apply labels, check for duplicates
-2. **PRs awaiting review**: Review using [ops-review](../ops-review/SKILL.md) workflow (skip PRs you authored — request a team member review instead)
-3. **Issues labeled `cross-sdk-divergence`**: Check if the divergence has been resolved by a subsequent PR
-
-### Low priority (backlog)
-
-1. **Stale issues**: Mark as stale or close per [ops-triage](../ops-triage/SKILL.md)
-2. **Feature requests**: Evaluate and prioritize
-
-## Work Session
-
-1. **Assess scope** — is this isolated to one repo or ecosystem-wide? If ecosystem-wide, note it in `memory/YYYY-MM-DD.md` and flag it for a human by tagging a team member from `USER.md` in the relevant thread rather than closing in isolation.
-2. **Check notifications** — `gh api notifications`
-3. **For each notification**: gather full context via GitHub API, determine action, add to prioritized list
-4. **Work through items** by priority. Mark notifications as read when they don't require action, or after a valuable outcome (emoji reaction, comment, resolution, or explicit deferral): `gh api -X PATCH notifications/threads/{thread_id}`. If no visible action needed, store in `memory/YYYY-MM-DD.md`, no GitHub activity.
-
-   **Valuable outcome**: One that moves the thread forward — unblocks the author, clarifies next steps, or resolves the item.
-
-   **Avoid low-value comments**:
-   - Restating what the UI already shows (e.g. "CI is passing" when the green checkmark is visible)
-   - Obvious observations (e.g. "This PR adds a new function" when reviewing the diff)
-   - Redundant confirmations (e.g. "Approved!" when the approval badge is sufficient)
-5. **PRs**: CI failing → fix + push; changes requested → address + ask for review in a PR comment; conflicts → rebase + push
-6. **Issues**: untriaged → `ops-triage`; needs response → answer or request info; needs repro → attempt locally
-
-## Acceptance Checklist
-
-- [ ] Notifications checked and processed
-- [ ] PRs with failing CI identified and addressed
-- [ ] Issues triaged or responded to
-- [ ] Every notification is acted
-- [ ] Every processed notification marked as read
-- [ ] Blocked items have `needs-human-review` + team member tagged
+Mark a notification read only after handling it or recording an explicit deferral
+(`gh api -X PATCH notifications/threads/{thread_id}`). Persist retries and concrete
+human decisions per the memory rule. Leave unchanged blocked items quiet. An idle
+cycle needs no public comment or daily note.

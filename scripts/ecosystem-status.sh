@@ -7,7 +7,7 @@
 #
 # Usage: bash scripts/ecosystem-status.sh [--markdown] [--json]
 #
-# Referenced by: skills/ops-report/SKILL.md (Step 1: Gather data)
+# Referenced by: skills/ops-report/SKILL.md (report data gathering)
 
 set -euo pipefail
 
