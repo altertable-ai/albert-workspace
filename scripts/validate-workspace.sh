@@ -26,45 +26,16 @@ require_file scripts/sync-workspace.sh
 require_file scripts/spec-status.sh
 require_file scripts/ecosystem-status.sh
 require_file scripts/github-activity.py
+require_file scripts/heartbeat-state.py
 require_file scripts/subscribe-repos.sh
 require_file schemas/heartbeat-state.example.json
 require_file skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml
 
 jq empty repositories.config.json
 
-validate_heartbeat_state() {
-  local path="$1"
-  jq -e '
-    type == "object"
-    and ((keys - ["last_full_heartbeat", "retry_queue", "blockers", "deferred"]) | length == 0)
-    and has("last_full_heartbeat")
-    and has("retry_queue")
-    and has("blockers")
-    and has("deferred")
-    and (.last_full_heartbeat == null or (.last_full_heartbeat | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")))
-    and (.retry_queue | type == "array")
-    and (.blockers | type == "array")
-    and (.deferred | type == "array")
-    and ([.retry_queue[], .blockers[], .deferred[]] | all(
-      type == "object"
-      and ((keys - ["repo", "url", "reason", "next_action", "updated_at"]) | length == 0)
-      and has("repo")
-      and has("url")
-      and has("reason")
-      and has("next_action")
-      and has("updated_at")
-      and (.repo | type == "string" and length > 0)
-      and (.url == null or (.url | type == "string"))
-      and (.reason | type == "string" and length > 0)
-      and (.next_action | type == "string" and length > 0)
-      and (.updated_at | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))
-    ))
-  ' "$path" >/dev/null || fail "invalid heartbeat state shape: $path"
-}
-
-validate_heartbeat_state schemas/heartbeat-state.example.json
+python3 scripts/heartbeat-state.py check --file schemas/heartbeat-state.example.json
 if [[ -f code/heartbeat-state.json ]]; then
-  validate_heartbeat_state code/heartbeat-state.json
+  python3 scripts/heartbeat-state.py check --file code/heartbeat-state.json
 fi
 
 for script in scripts/*.sh; do

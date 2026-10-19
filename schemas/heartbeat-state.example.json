@@ -3,10 +3,20 @@
   "retry_queue": [
     {
       "repo": "altertable-ai/example-repo",
-      "url": "https://github.com/altertable-ai/example-repo/pull/123",
-      "reason": "CI is failing on the release workflow.",
-      "next_action": "Re-check CI on the next heartbeat and escalate if still failing.",
-      "updated_at": "2026-07-01"
+      "url": "https://github.com/altertable-ai/example-repo/issues/123",
+      "reason": "The fix PR is waiting for CI.",
+      "next_action": "Read the latest CI result; fix a code failure, or ask for review when green.",
+      "updated_at": "2026-07-01",
+      "goal": "Get the reported login failure fixed and report back to the author.",
+      "done_when": "Regression test passes, the fix is available, and the original thread has the result.",
+      "promise": "Check the next CI result and return with the fix link.",
+      "evidence": [
+        "Reproduced the failure; regression test passes locally.",
+        "Fix PR: https://github.com/altertable-ai/example-repo/pull/789"
+      ],
+      "resume_when": "CI completes or the reviewer replies.",
+      "next_check_at": "2026-07-01T12:00:00Z",
+      "last_notified": "Shared the reproduction and fix PR in the original issue."
     }
   ],
   "blockers": [
@@ -15,7 +25,11 @@
       "url": "https://github.com/altertable-ai/example-repo/issues/456",
       "reason": "Requires a core team decision.",
       "next_action": "Wait for human input before changing repository settings.",
-      "updated_at": "2026-07-01"
+      "updated_at": "2026-07-01",
+      "goal": "Resolve the configuration question without changing unapproved settings.",
+      "done_when": "The team decides and the permitted next action is completed.",
+      "resume_when": "A core team member replies with the configuration decision.",
+      "next_check_at": "2026-07-02T09:00:00Z"
     }
   ],
   "deferred": [
@@ -24,7 +38,11 @@
       "url": null,
       "reason": "Low-priority cleanup deferred during heartbeat.",
       "next_action": "Reconsider during the Friday full heartbeat.",
-      "updated_at": "2026-07-01"
+      "updated_at": "2026-07-01",
+      "goal": "Repair a broken getting-started example.",
+      "done_when": "The documented example runs with the supported version.",
+      "resume_when": "Higher-impact reported bugs are handled.",
+      "next_check_at": "2026-07-03T09:00:00Z"
     }
   ]
 }
