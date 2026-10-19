@@ -1,28 +1,29 @@
 ---
 name: ops-report
-description: Summarize a requested period of Albert maintenance activity, shipped changes, spec alignment, and unresolved decisions.
+description: Report Albert's work over a requested period, including shipped changes, open work, and decisions waiting on the team.
 ---
 
 # Maintenance report
 
-Read [memory](../../rules/memory.md) and
-[communication](../../rules/communication.md). Run on the Friday full heartbeat or
-on request. Default to the preceding seven days and state the reporting window.
+Run on the Friday full heartbeat or on request. Default to the preceding seven days
+and state the reporting window.
 
-Gather GitHub activity for repositories in
-[repositories.config.json](../../repositories.config.json), Albert's authored PRs,
-and relevant local notes. Check pagination and the date of each event: an updated
-PR is not necessarily one opened or merged during the period, and involvement in
-an issue does not prove Albert triaged it.
+Start with `python3 scripts/github-activity.py`. It collects Albert's PRs opened,
+merged, and closed during the period, plus issue comments, across the repository
+list. Use `--since` and `--until` for another period; `--help` explains the options.
+The output is JSON with links and dates. If a request fails, fix or report the
+failure rather than treating the result as no activity.
 
-Use `bash scripts/spec-status.sh --markdown` for spec alignment and, when useful,
-`bash scripts/ecosystem-status.sh --markdown` for broader health. Report unavailable
-data as unavailable rather than treating it as zero.
+Read the linked discussions before describing what changed. A comment is not proof
+that an issue was resolved. Use relevant notes already in context; look up older
+notes only when they help explain a decision or unfinished work.
 
-Lead with meaningful outcomes. Link shipped changes, active work, issues resolved
-or investigated, and decisions waiting on humans. Include planned next actions
-only when they are actually planned. Omit empty sections and routine label churn;
-do not require seven nonempty headings or a fixed table for every report.
+Use `bash scripts/spec-status.sh --markdown` to check SDK spec versions and, when
+useful, `bash scripts/ecosystem-status.sh --markdown` for repository health.
 
-Prepare the report for the invoking surface. Posting it elsewhere requires that
-destination to be authorized; a scheduled report does not imply a Slack broadcast.
+Lead with useful outcomes: what shipped, what is still being worked on, and what
+needs a team decision. Link the evidence. Include next actions only when they are
+actually planned. Omit empty sections and routine administrative work.
+
+Reply where the report was requested. Follow
+[communication](../../rules/communication.md) before posting elsewhere.

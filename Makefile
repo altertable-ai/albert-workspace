@@ -3,6 +3,7 @@ lint:
 
 validate:
 	bash scripts/validate-workspace.sh
+	python3 -m unittest discover -s scripts/tests -p 'test_*.py'
 
 validate-workflows:
 	bash scripts/validate-workflow-policy.sh .

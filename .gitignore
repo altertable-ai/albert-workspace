@@ -5,3 +5,4 @@ memory/
 .DS_Store
 .rumdl-cache/
 .rumdl_cache/
+__pycache__/

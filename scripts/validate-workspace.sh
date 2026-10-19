@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Validates Albert workspace contracts that Markdown linting cannot catch.
+# Validates Albert workspace requirements that Markdown linting cannot catch.
 #
 # Usage: bash scripts/validate-workspace.sh
 
@@ -25,6 +25,7 @@ require_file repositories.config.json
 require_file scripts/sync-workspace.sh
 require_file scripts/spec-status.sh
 require_file scripts/ecosystem-status.sh
+require_file scripts/github-activity.py
 require_file scripts/subscribe-repos.sh
 require_file schemas/heartbeat-state.example.json
 require_file skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml
