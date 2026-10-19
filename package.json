@@ -10,6 +10,7 @@
     "test:integration:live": "node scripts/integration/openclaw-live.mjs"
   },
   "devDependencies": {
+    "@openclaw/codex": "2026.10.5",
     "openclaw": "2026.10.5"
   }
 }

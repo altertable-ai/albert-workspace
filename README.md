@@ -142,7 +142,21 @@ Four repeatable checks cover automatic `AGENTS.md` injection, an actual
 workspace. The fake endpoint scripts the tool call: these prove runtime behavior,
 not that a real model chose to follow the startup instruction.
 
-For that decision, `make integration-live` runs a separate opt-in check. Set
+For that decision, `make integration-live` runs a separate opt-in check. To match
+Albert's Sol 6.1 model and ChatGPT/Codex subscription, run in an interactive terminal:
+
+```fish
+env ALBERT_TEST_AUTH=codex ALBERT_TEST_MODEL=gpt-6.1-sol make integration-live
+```
+
+Complete the device sign-in shown by the command. The matching Codex plugin is
+pinned as a development dependency. This path uses a fresh sign-in in temporary
+state; it does not copy your existing credentials, settings, plugins, or history.
+It explicitly selects the Codex runtime, disables session discovery and supervision,
+and allows only workspace file reads. Temporary credentials and state are deleted
+when the command finishes. This uses the signed-in subscription's allowance.
+
+For API access instead, set
 `ALBERT_TEST_MODEL` to the model ID and `ALBERT_TEST_BASE_URL` to an OpenAI-compatible
 endpoint. Set `ALBERT_TEST_API_KEY` if it requires authentication;
 `ALBERT_TEST_API` defaults to `openai-completions` and can be `openai-responses` for
@@ -151,7 +165,8 @@ hosted provider. Hosted calls use that provider's normal billing.
 
 The ordinary task names neither `ALBERT.md` nor the random marker added only to its
 temporary copy. The live check requires a successful read and that marker in the
-answer. It fails when settings are missing; a skipped live check is not a pass.
+answer, with the requested model and only the read tool used. It fails when
+settings are missing; a skipped live check is not a pass.
 Only file reads are available, so this checks loading the runtime instructions,
 not completion of startup commands or repository maintenance.
 
