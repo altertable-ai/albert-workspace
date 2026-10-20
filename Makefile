@@ -2,11 +2,11 @@ lint:
 	npx rumdl check .
 
 validate:
-	bash scripts/validate-workspace.sh
-	python3 -m unittest discover -s scripts/tests -p 'test_*.py'
+	bun scripts/validate-workspace.ts
+	bun test
 
 validate-workflows:
-	bash scripts/validate-workflow-policy.sh .
+	bun scripts/validate-workflow-policy.ts .
 
 lint-fix:
 	npx rumdl check --fix .

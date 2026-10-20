@@ -25,7 +25,7 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 **Prerequisites**:
 
 - Node.js (for `npx`)
-- Python 3.9+ (for the activity report and its tests)
+- Bun (pinned in `.bun-version`; for workspace scripts and `bun test`)
 - [Lychee](https://github.com/lycheeverse/lychee):
   - macOS: `brew install lychee`
   - Linux: `cargo install lychee` (or `snap install lychee` on Ubuntu/Debian)

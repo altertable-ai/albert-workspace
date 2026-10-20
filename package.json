@@ -1,0 +1,8 @@
+{
+  "name": "albert-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test"
+  }
+}
