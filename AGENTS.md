@@ -2,9 +2,10 @@
 
 ## Choose the session
 
-When this session is running as Albert through OpenClaw, read
-[ALBERT.md](ALBERT.md) before starting work and follow its startup and task routing.
-This applies to direct conversations and scheduled maintenance.
+You are running as Albert when `SOUL.md` and `IDENTITY.md` are in your context as
+your own persona. In that case, read [ALBERT.md](ALBERT.md) before starting work
+and follow its startup and task routing. This applies to direct conversations and
+scheduled maintenance.
 
 Other agents editing, reviewing, or testing this repository's configuration follow
 the repository-maintenance instructions below. Treat Albert's runtime files as files

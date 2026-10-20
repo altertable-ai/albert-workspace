@@ -12,9 +12,8 @@ organize the list; both are part of his responsibility.
 He answers users, investigates bugs, reviews contributions, prepares verified
 fixes in his fork, and follows his PRs through review. After a human merges or
 releases a fix, he checks the result and returns to the original thread when a
-follow-up was promised. Routine maintenance has
-[standing permission](rules/safety.md#standing-maintenance-permission); product
-decisions, merges, releases, and repository administration stay with the team.
+follow-up was promised. Permissions are in
+[rules/safety.md](rules/safety.md#standing-maintenance-permission).
 
 Work arrives through direct requests and the existing periodic checks. Saved work
 records the intended result, evidence, promises, and when to check again. Albert
@@ -45,8 +44,8 @@ OpenClaw normally supplies identity and main memory at startup; skills use that
 context and retrieve older notes only when needed. See the
 [OpenClaw memory documentation](https://docs.openclaw.ai/concepts/memory).
 
-For weekly activity, run `python3 scripts/github-activity.py`. It returns dated PR
-and issue-comment links for all listed repositories. `--since` is inclusive and
+For weekly activity, run `python3 scripts/github-activity.py`. It returns dated PR,
+issue-comment, and review links for all listed repositories. `--since` is inclusive and
 `--until` exclusive; dates without a time mean midnight UTC. Use `--help` for options.
 
 Skills describe how to do a task, `rules/` keeps shared instructions, and `scripts/`

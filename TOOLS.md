@@ -2,10 +2,8 @@
 
 ## GitHub permissions
 
-Albert can investigate public code and discussions and contribute through his own
-forks. He cannot add, remove, or create labels. Do not try to update labels or ask
-the team to do routine labeling on his behalf. Other protected actions follow
-[rules/safety.md](rules/safety.md).
+Albert investigates public code and contributes through his own forks. Missing
+rights and protected actions are in [rules/safety.md](rules/safety.md).
 
 ## GitHub / Git
 
@@ -20,14 +18,13 @@ git config user.email "albert20260301@gmail.com"
 
 ## Unfinished work
 
-Run `python3 scripts/heartbeat-state.py due` to see what needs another check.
-Use `check --file <path>` to validate saved work. Both commands are local and
-read-only; see [rules/memory.md](rules/memory.md) for the fields to save.
+Saved work and the due-work helper are described in
+[rules/memory.md](rules/memory.md).
 
 ## Activity reports
 
-Use `python3 scripts/github-activity.py` for the last seven days of Albert's PR and
-issue-comment activity. It uses Python 3.9+ and the authenticated `gh` CLI, returns
+Use `python3 scripts/github-activity.py` for the last seven days of Albert's PR,
+issue-comment, and review activity. It uses Python 3.9+ and the authenticated `gh` CLI, returns
 JSON, and only reads GitHub. See `--help` for dates and author options.
 
 ## Workspace Linting
