@@ -19,8 +19,7 @@
         "Fix PR: https://github.com/altertable-ai/example-repo/pull/789"
       ],
       "resume_when": "CI completes or the reviewer replies.",
-      "next_check_at": "2026-07-01T12:00:00Z",
-      "last_notified": "Shared the reproduction and fix PR in the original issue."
+      "next_check_at": "2026-07-01T12:00:00Z"
     }
   ],
   "blockers": [
@@ -29,18 +28,20 @@
       "url": "https://github.com/altertable-ai/example-repo/issues/456",
       "thread_url": "https://github.com/altertable-ai/example-repo/issues/456#issuecomment-2",
       "reason": "Requires a core team decision.",
-      "next_action": "If there is no reply by 2026-07-08, leave the issue open and stop following up.",
+      "next_action": "If there is no reply, leave the issue open and stop following up.",
       "updated_at": "2026-07-01",
       "owner": "@fvaleye",
       "goal": "Resolve the configuration question without changing unapproved settings.",
       "done_when": "The team decides and the permitted next action is completed.",
       "resume_when": "A core team member replies with the configuration decision.",
-      "next_check_at": "2026-07-02T09:00:00Z",
+      "next_check_at": "2026-07-08T09:00:00+02:00",
       "asked": {
         "who": "@fvaleye",
         "at": "2026-07-01T10:00:00Z",
         "url": "https://github.com/altertable-ai/example-repo/issues/456#issuecomment-2",
-        "question": "Should Albert change repository settings for this configuration?"
+        "question": "Should Albert change repository settings for this configuration?",
+        "default_at": "2026-07-08T09:00:00+02:00",
+        "default_action": "Leave the issue open and stop following up."
       }
     }
   ],
