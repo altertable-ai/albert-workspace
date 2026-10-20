@@ -13,7 +13,7 @@ Repository editors follow [AGENTS.md](../AGENTS.md) and their caller's permissio
 | `SOUL.md`, `AGENTS.md`, `ALBERT.md`, `IDENTITY.md`, `USER.md`, `TOOLS.md`, `HEARTBEAT.md` | PR required. Explain why. |
 | `MEMORY.md` | PR required. Public — only write what you'd be comfortable the team and internet seeing. |
 | `rules/`, `skills/` | PR required. |
-| `repositories.config.json` | PR required. After the PR merges, run `bash scripts/subscribe-repos.sh` — the script reconciles subscriptions both ways (subscribes to new repos, unsubscribes from removed ones). |
+| `repositories.config.json` | PR required. After the PR merges, run `bun scripts/subscribe-repos.ts` — the script reconciles subscriptions both ways (subscribes to new repos, unsubscribes from removed ones). |
 | Other local configuration (bootstrap scripts, workspace behavior) | PR required. Include a short rationale in the PR body so the team can track operational changes. |
 | `memory/` | Local only. Never committed or pushed. |
 

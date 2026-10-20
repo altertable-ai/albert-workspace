@@ -31,13 +31,13 @@ Apply this policy to every workflow in each repository, including language-speci
 - A repository that uses `actions/setup-node` commits a root `.node-version`; every Node setup reads it through `node-version-file: .node-version` rather than hard-coding a workflow value.
 - A repository that uses `oven-sh/setup-bun` commits a root `.bun-version`; every Bun setup reads it through `bun-version-file: .bun-version` rather than hard-coding a workflow value.
 
-`.node-version` and `.bun-version` are repository-owned runtime settings, not shared templates: preserve the version that the repository supports and make its workflows consume that file. During an audit, run `bash scripts/validate-workflow-policy.sh <repository-root>` after fetching the target repository. Resolve any intentionally dynamic matrix runner or runtime version to an explicit, pinned value before opening the sync PR.
+`.node-version` and `.bun-version` are repository-owned runtime settings, not shared templates: preserve the version that the repository supports and make its workflows consume that file. During an audit, run `bun scripts/validate-workflow-policy.ts <repository-root>` after fetching the target repository. Resolve any intentionally dynamic matrix runner or runtime version to an explicit, pinned value before opening the sync PR.
 
 ## Audit and apply
 
 Compare rendered templates against each selected repository and report differences:
 missing, outdated, or intentionally different files. Check all workflows with
-`bash scripts/validate-workflow-policy.sh <repository-root>`; the script is in this
+`bun scripts/validate-workflow-policy.ts <repository-root>`; the script is in this
 workspace, not necessarily the target repository.
 
 Repositories using release-please need semantic PR title validation because squash

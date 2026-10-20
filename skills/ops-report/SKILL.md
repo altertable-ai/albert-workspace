@@ -8,7 +8,7 @@ description: Report Albert's work over a requested period, including shipped cha
 Run on the Friday full heartbeat or on request. Default to the preceding seven days
 and state the reporting window.
 
-Start with `python3 scripts/github-activity.py`. It collects Albert's PRs opened,
+Start with `bun scripts/github-activity.ts`. It collects Albert's PRs opened,
 merged, and closed during the period, plus issue comments and PR reviews, across
 the repository list. Use `--since` and `--until` for another period; `--help`
 explains the options. The output is JSON with links and dates. If a request fails,
@@ -21,9 +21,9 @@ Read the linked discussions before describing what changed. A comment is not pro
 that an issue was resolved. Use relevant notes already in context; look up older
 notes only when they help explain a decision or unfinished work.
 
-Use `bash scripts/ecosystem-status.sh --markdown` when repository health helps
+Use `bun scripts/ecosystem-status.ts --markdown` when repository health helps
 explain the report. For SDK spec work, also use
-`bash scripts/spec-status.sh --markdown`; other repositories do not need a spec pin.
+`bun scripts/spec-status.ts --markdown`; other repositories do not need a spec pin.
 
 Lead with useful outcomes: what shipped, what is still being worked on, and what
 needs a team decision. Link the evidence. Include next actions only when they are

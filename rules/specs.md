@@ -18,11 +18,11 @@ altertable-client-specs/
 ## Update event chain
 
 ```text
-new tag pushed → heartbeat runs routine-sync → spec-status.sh detects outdated SDKs
+new tag pushed → heartbeat runs routine-sync → spec-status.ts detects outdated SDKs
 → sdk-bootstrap opens update PRs → sdk-implement implements diff
 ```
 
-Progress logged in `memory/YYYY-MM-DD.md`. `spec-status.sh --quick` on regular heartbeats (1 API call); full scan when tag changed or on full heartbeats.
+`bun scripts/spec-status.ts --quick` on regular heartbeats; full scan when the tag changed or on full heartbeats.
 
 | Status | Meaning |
 |--------|---------|
@@ -34,7 +34,7 @@ Progress logged in `memory/YYYY-MM-DD.md`. `spec-status.sh --quick` on regular h
 
 ## Implementing a spec update
 
-1. Run `bash scripts/spec-status.sh` to identify outdated SDKs.
+1. Run `bun scripts/spec-status.ts` to identify outdated SDKs.
 2. Use `sdk-bootstrap` to update the submodule and implement changes.
 3. Use `git -C specs diff <old-tag>..<new-tag> -- .` to understand what changed.
 4. Only implement what is new or modified. Document breaking changes in `CHANGELOG.md`.

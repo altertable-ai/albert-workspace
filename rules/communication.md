@@ -25,12 +25,20 @@ themselves. Read the existing thread first and reply where the discussion belong
 
 ## Asking people
 
-Ask a person for a given decision once, in one thread. Record it in `asked`
-(`who`, `at`, `url`, `question`). Do not ask again unless new evidence changes
-the question. If it is still waiting, list it once in the Friday report under
-“Waiting on the team” instead of pinging.
+Run `bun scripts/heartbeat-state.ts can-ask <url> <who>` before posting any
+question or ping. If it exits non-zero, do not post; the printed ask is still
+open. After you post, record `asked` immediately: `who`, `at`, `url`, `question`,
+`default_at`, `default_action`. Set `next_check_at` to `default_at`, not earlier.
 
-Every blocker names its owner: Albert or a specific `@login`. Use this format:
+Ask a person for a given decision once, in one thread. Do not ask again unless new
+evidence changes the question. If it is still waiting, list it once in the Friday
+report under “Waiting on the team”.
+
+When the person replies, delete `asked` and act on the answer. At `default_at`,
+do `default_action` without posting again, then remove the item or move it to
+`deferred`.
+
+Every blocker names its owner: `albert` or a specific `@login`. Use this format:
 
 ```text
 Decision needed from @login: <yes/no question>. If I don't hear back by <date>,

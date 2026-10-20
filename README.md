@@ -44,7 +44,7 @@ OpenClaw normally supplies identity and main memory at startup; skills use that
 context and retrieve older notes only when needed. See the
 [OpenClaw memory documentation](https://docs.openclaw.ai/concepts/memory).
 
-For weekly activity, run `python3 scripts/github-activity.py`. It returns dated PR,
+For weekly activity, run `bun scripts/github-activity.ts`. It returns dated PR,
 issue-comment, and review links for all listed repositories. `--since` is inclusive and
 `--until` exclusive; dates without a time mean midnight UTC. Use `--help` for options.
 
@@ -63,7 +63,7 @@ contribution guide, architecture, and tests.
 | `IDENTITY.md` | Name, email, GitHub handle |
 | `USER.md` | About Altertable and the core team |
 | `TOOLS.md` | Environment-specific notes |
-| `MEMORY.md` | Curated long-term memory |
+| `MEMORY.md` | Lasting facts about people, ownership, and context |
 | `HEARTBEAT.md` | Heartbeat routine |
 | `rules/` | Shared instructions, read when needed |
 | `memory/` | Daily logs — gitignored, not committed |
@@ -77,7 +77,7 @@ Skills link to the shared rules they need. Albert reads only what helps with the
 
 | Brick | Purpose |
 |---|---|
-| [`rules/memory.md`](rules/memory.md) | Daily notes and MEMORY.md maintenance |
+| [`rules/memory.md`](rules/memory.md) | Heartbeat state, facts vs rules, Friday distillation |
 | [`rules/contribution.md`](rules/contribution.md) | Fork/branch/PR workflow for supervised repos |
 | [`rules/quality.md`](rules/quality.md) | Checks before review or a PR |
 | [`rules/team.md`](rules/team.md) | Working with team and external contributors |

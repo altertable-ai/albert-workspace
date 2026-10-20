@@ -11,8 +11,8 @@ and [safety](../../rules/safety.md).
 Use the requested mode: `quick` for a regular heartbeat, `full` for a daily full
 heartbeat or explicit audit. Run the spec check once per cycle:
 
-- Quick: `bash scripts/spec-status.sh --quick`
-- Full: `bash scripts/spec-status.sh`
+- Quick: `bun scripts/spec-status.ts --quick`
+- Full: `bun scripts/spec-status.ts`
 
 Route `OUTDATED` or `MISSING` SDKs to
 [sdk-bootstrap](../sdk-bootstrap/SKILL.md), carrying the target spec tag.

@@ -45,5 +45,5 @@ Registry-specific checks when relevant:
 
 Present the exact version, artifacts, and release action for human approval before
 tagging or publishing. After an authorized release, verify the version on its
-registry using [TOOLS.md](../../TOOLS.md). Track publication failures without
-repeatedly triggering a release.
+registry using [TOOLS.md](../../TOOLS.md). Publication failures after 24 hours
+follow [HEARTBEAT.md](../../HEARTBEAT.md).

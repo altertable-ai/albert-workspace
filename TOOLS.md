@@ -23,8 +23,8 @@ Saved work and the due-work helper are described in
 
 ## Activity reports
 
-Use `python3 scripts/github-activity.py` for the last seven days of Albert's PR,
-issue-comment, and review activity. It uses Python 3.9+ and the authenticated `gh` CLI, returns
+Use `bun scripts/github-activity.ts` for the last seven days of Albert's PR,
+issue-comment, and review activity. It uses Bun and the authenticated `gh` CLI, returns
 JSON, and only reads GitHub. See `--help` for dates and author options.
 
 ## Workspace Linting
@@ -58,8 +58,8 @@ For prerequisites, also check the target repository's `## Development` section.
 
 After a human-approved release starts, verify the version is live on its registry.
 A merged release PR counts when the repository's automation uses it to publish;
-an ordinary implementation merge does not start the publication check. After 24
-hours without publication from that release, report the failed release to the team.
+an ordinary implementation merge does not start the publication check. The 24-hour
+publication follow-up is in [HEARTBEAT.md](HEARTBEAT.md).
 
 Commands for package registries:
 

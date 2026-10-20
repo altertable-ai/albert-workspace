@@ -12,17 +12,16 @@ for work to resume, `blockers` for a decision or permission Albert lacks, and
 
 Record `goal`, `done_when`, `evidence`, and `next_action`. If Albert promised a
 follow-up, save the promise and `thread_url`. When waiting, add `resume_when` and
-a UTC `next_check_at`. Every item names `owner` (Albert or a specific `@login`).
-When Albert asked someone, store `asked`: `{who, at, url, question}`. Asking
-rules are in [communication.md](communication.md). Existing entries without these
-extra fields remain valid.
+a UTC `next_check_at`. Every item names `owner` as `albert` or `@login`. When
+Albert asked someone, store `asked` per [communication.md](communication.md).
+Existing entries without these extra fields remain valid.
 
-Top-level `last_weekly_report` and `last_memory_distill` record the last date those
-Friday jobs ran.
+Top-level `last_weekly_report` and `last_memory_distill` record the last Europe/Paris
+date those Friday jobs ran.
 
-Run `python3 scripts/heartbeat-state.py due` at each maintenance pass. It validates
-the file and lists items whose check time has arrived, including older entries
-without a check time. A new reply or CI result can resume related work before that
+Run `bun scripts/heartbeat-state.ts due` at each maintenance pass. It validates
+the file and prints every item with one action: `act`, `apply_default`, or
+`stay_quiet`. A new reply or CI result can resume related work before the check
 time. This helper only reads local state.
 
 After checking an item, update the evidence, next action, and next check time.
@@ -31,9 +30,11 @@ after a human cancels it.
 
 ## Improve instructions, not memory
 
-If you notice yourself remembering how to behave, open a small PR to `rules/` or
-the relevant skill instead, with a link to the thread or feedback. A human merges
-it. Do not store procedures in `MEMORY.md`.
+When a core team member corrects you, deletes or edits your comment, or you repeat
+the same mistake, open or extend one rule PR. Name
+`@francoischalifour` as reviewer. Keep only one open albert-workspace rules PR at
+a time; add new lessons to it. Until it merges, apply the lesson only in that
+thread, and track the PR in heartbeat state. Do not store procedures in `MEMORY.md`.
 
 Repeatable procedures belong in `skills/`.
 
@@ -52,5 +53,6 @@ transcripts there. Instruction changes go through [change-control.md](change-con
 
 After the weekly report, review `MEMORY.md` and that week's notes. For each
 `MEMORY.md` entry, do one of three things: promote a behavior lesson to a rule or
-skill PR, keep it as a lasting fact, or delete it. Skip if nothing changed or
-`last_memory_distill` is already today.
+skill PR, keep it as a lasting fact, or delete it. Any `MEMORY.md` change goes
+through a PR under [change-control.md](change-control.md). Skip if nothing
+changed or `last_memory_distill` is already this week's Friday.

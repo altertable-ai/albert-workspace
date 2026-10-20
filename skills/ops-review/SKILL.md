@@ -7,8 +7,6 @@ description: Review contributor pull requests for correctness, compatibility, an
 
 Read [quality](../../rules/quality.md), [team](../../rules/team.md),
 [communication](../../rules/communication.md), and [safety](../../rules/safety.md).
-Do not review a PR you authored or co-authored; request independent review.
-
 Read the project's README, CONTRIBUTING guide, and relevant product or feature
 docs, then the PR description, linked issue, discussion, diff, affected code, and CI
 results. Understand who the project serves and what the change helps them do.
@@ -43,6 +41,7 @@ a correction easier; avoid scripted praise and a checklist-shaped review.
   do not close them.
 - Bot dependency PRs (Dependabot/Renovate): if CI is green and it is a patch or
   minor bump, approve once with no comment. If it is obsolete or superseded, say
-  so once with the link. Never ping for it again; it goes in the weekly report.
+  so once with the link. Major or red: one comment with the breaking change or
+  failure cause, then weekly report only. Never ping for it again.
 
 Return the findings and verification limits. A review does not merge the PR.

@@ -18,7 +18,7 @@ fork workflow. Framework packages in `altertable-js/packages/` use the monorepo'
 structure and tooling; this does not bypass branch or publication permissions.
 
 For a nonexistent repository, request explicit approval before running
-`bash scripts/setup-github-repo.sh <repo> "<description>"`: it also changes settings
+`bun scripts/setup-github-repo.ts <repo> "<description>"`: it also changes settings
 and protection. If permissions are unavailable, track the blocker without repeated
 creation attempts.
 
