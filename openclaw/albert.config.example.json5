@@ -1,0 +1,52 @@
+// Copy the needed keys into ~/.openclaw/openclaw.json (OpenClaw 2026.10.5).
+// Cron job rows live in SQLite; create them with the CLI in HOST.md.
+// Never set heartbeat.lightContext or cron lightContext for Albert.
+{
+  agents: {
+    defaults: {
+      skipBootstrap: true,
+      timeoutSeconds: 1800,
+      compaction: {
+        memoryFlush: { enabled: true },
+      },
+      heartbeat: {
+        every: "30m",
+        target: "none",
+        timeoutSeconds: 900,
+        lightContext: false,
+        isolatedSession: false,
+        prompt: "On the live main checkout, run `bun scripts/sync-workspace.ts` once. Load due work with `bun scripts/heartbeat-state.ts due` and fetch GitHub notifications once. Handle due items and notifications with skills/routine-maintainer (rules/safety.md). Recurring full sync and the Friday report are automations — do not invent them from chat history. If nothing needs attention, call heartbeat_respond with notify=false, or reply NO_REPLY.",
+      },
+    },
+    entries: {
+      main: {
+        workspace: "/absolute/path/to/albert-workspace",
+        identity: { name: "Albert" },
+        skipBootstrap: true,
+        heartbeat: {
+          every: "30m",
+          target: "none",
+          timeoutSeconds: 900,
+          lightContext: false,
+          isolatedSession: false,
+        },
+      },
+    },
+  },
+  cron: {
+    enabled: true,
+  },
+  plugins: {
+    entries: {
+      "memory-core": {
+        config: {
+          dreaming: {
+            enabled: true,
+            timezone: "Europe/Paris",
+            frequency: "0 3 * * *",
+          },
+        },
+      },
+    },
+  },
+}
