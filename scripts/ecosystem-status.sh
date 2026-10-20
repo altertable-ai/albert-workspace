@@ -52,7 +52,7 @@ SPEC_TAGS='[]'
 if [[ ${#SPEC_REPOS[@]} -gt 0 ]]; then
   # /tags gives commit SHAs even for annotated tags, and older pins may require
   # later pages. Fetch once rather than repeating a tag request for every SDK.
-  SPEC_TAGS=$(gh api "repos/${SPECS_REPO}/tags" --paginate --slurp --jq 'add' 2>/dev/null || echo '[]')
+  SPEC_TAGS=$(gh api "repos/${SPECS_REPO}/tags" --paginate --slurp 2>/dev/null | jq 'add' || echo '[]')
 fi
 LATEST_SPEC_TAG=$(jq -r '.[0].name // "unknown"' <<< "$SPEC_TAGS")
 LATEST_SPEC_SHA=$(jq -r '.[0].commit.sha // "unknown"' <<< "$SPEC_TAGS")
@@ -110,10 +110,11 @@ gh_ci_state() {
     return 0
   fi
 
-  checks_state=$(gh api "repos/${repo}/commits/${sha}/check-runs?per_page=100" \
-    --paginate --slurp --jq \
-    '[.[].check_runs[]] | if length == 0 then "none" elif ([.[] | select(.status != "completed")] | length) > 0 then "pending" elif ([.[] | select(.conclusion as $c | ($c != "success" and $c != "skipped" and $c != "neutral"))] | length) > 0 then "failure" else "success" end' \
-    2>/dev/null || echo "unknown")
+  checks_state=$(
+    gh api "repos/${repo}/commits/${sha}/check-runs?per_page=100" --paginate --slurp 2>/dev/null \
+      | jq -r '[.[].check_runs[]] | if length == 0 then "none" elif ([.[] | select(.status != "completed")] | length) > 0 then "pending" elif ([.[] | select(.conclusion as $c | ($c != "success" and $c != "skipped" and $c != "neutral"))] | length) > 0 then "failure" else "success" end' \
+    || echo "unknown"
+  )
 
   if [[ "$checks_state" != "none" && "$checks_state" != "unknown" ]]; then
     echo "$checks_state"

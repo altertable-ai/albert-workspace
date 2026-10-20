@@ -25,6 +25,9 @@ value = responses[endpoint]
 if isinstance(value, dict) and "error" in value:
     print(value["error"], file=sys.stderr)
     sys.exit(1)
+if "--slurp" in args and "--jq" in args:
+    print("the `--slurp` option is not supported with `--jq` or `--template`", file=sys.stderr)
+    sys.exit(1)
 if "--slurp" in args:
     value = value["_pages"] if isinstance(value, dict) and "_pages" in value else [value]
 if "--jq" in args:
