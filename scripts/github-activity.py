@@ -69,7 +69,7 @@ def collect(config, author, since, until):
     report = {
         "since": iso(since), "until_exclusive": iso(until), "author": author,
         "repositories": repos, "opened_prs": [], "merged_prs": [],
-        "closed_unmerged_prs": [], "issue_comments": [],
+        "closed_unmerged_prs": [], "issue_comments": [], "pr_reviews": [],
     }
     events = [
         ("opened_prs", "created", "", "created_at"),
@@ -97,9 +97,10 @@ def collect(config, author, since, until):
                     "url": item["html_url"], "at": value,
                 })
 
-    # An issue may have changed again after the reporting period. Do not impose
-    # an upper updated-at bound; filter the actual comment dates below.
-    query = f"{scope} is:issue commenter:{author} updated:>={iso(since)}"
+    # Threads can change after the reporting period. Do not impose an upper
+    # updated-at bound; filter the actual comment and review dates below.
+    # `involves` covers issues and PRs Albert commented on or reviewed.
+    query = f"{scope} involves:{author} updated:>={iso(since)}"
     for item in search(query):
         repo = repo_of(item)
         if repo not in repo_set:
@@ -113,7 +114,21 @@ def collect(config, author, since, until):
                         "repo": repo, "number": item["number"], "title": item["title"],
                         "url": comment["html_url"], "at": comment["created_at"],
                     })
-    for group in ("opened_prs", "merged_prs", "closed_unmerged_prs", "issue_comments"):
+        if not item.get("pull_request"):
+            continue
+        pages = api(f"repos/{repo}/pulls/{item['number']}/reviews", per_page=100)
+        for page in pages:
+            for review in page:
+                submitted = review.get("submitted_at")
+                if ((review.get("user") or {}).get("login", "").lower() == author.lower()
+                        and submitted and in_period(submitted)):
+                    report["pr_reviews"].append({
+                        "repo": repo, "number": item["number"], "title": item["title"],
+                        "url": review.get("html_url") or item["html_url"],
+                        "at": submitted, "state": review.get("state"),
+                    })
+    for group in ("opened_prs", "merged_prs", "closed_unmerged_prs",
+                  "issue_comments", "pr_reviews"):
         report[group].sort(key=lambda row: (row["at"], row["url"]))
     return report
 

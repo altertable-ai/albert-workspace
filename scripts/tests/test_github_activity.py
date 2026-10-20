@@ -70,9 +70,41 @@ class ActivityTests(unittest.TestCase):
             report = activity.collect(CONFIG, "albert", SINCE, UNTIL)
         self.assertEqual(len(report["issue_comments"]), 1)
         self.assertTrue(report["issue_comments"][0]["url"].endswith("issuecomment-1"))
-        # An issue updated after the window can still contain comments in it.
+        self.assertEqual(report["pr_reviews"], [])
+        # A thread updated after the window can still contain comments in it.
+        self.assertIn("involves:albert", search.call_args_list[-1].args[0])
+        self.assertNotIn("is:issue", search.call_args_list[-1].args[0])
         self.assertIn("updated:>=", search.call_args_list[-1].args[0])
         self.assertNotIn("..", search.call_args_list[-1].args[0])
+
+    def test_pr_comments_and_reviews_are_included(self):
+        pr = item(
+            9, html_url="https://github.com/acme/sdk/pull/9",
+            pull_request={"url": "https://api.github.com/repos/acme/sdk/pulls/9"},
+        )
+        comments = [[{"user": {"login": "albert"}, "created_at": "2026-10-13T12:00:00Z",
+                      "html_url": "https://github.com/acme/sdk/pull/9#issuecomment-2"}]]
+        reviews = [[{"user": {"login": "albert"}, "submitted_at": "2026-10-14T12:00:00Z",
+                     "html_url": "https://github.com/acme/sdk/pull/9#pullrequestreview-3",
+                     "state": "APPROVED"},
+                    {"user": {"login": "albert"}, "submitted_at": None, "state": "PENDING"},
+                    {"user": {"login": "other"}, "submitted_at": "2026-10-14T12:00:00Z",
+                     "state": "COMMENTED"}]]
+
+        def fake_api(endpoint, **_params):
+            if endpoint.endswith("/comments"):
+                return comments
+            if endpoint.endswith("/reviews"):
+                return reviews
+            self.fail(endpoint)
+
+        with patch.object(activity, "search", side_effect=[[], [], [], [pr]]), \
+             patch.object(activity, "api", side_effect=fake_api):
+            report = activity.collect(CONFIG, "albert", SINCE, UNTIL)
+        self.assertTrue(report["issue_comments"][0]["url"].endswith("issuecomment-2"))
+        self.assertTrue(report["pr_reviews"][0]["url"].endswith("pullrequestreview-3"))
+        self.assertEqual(report["pr_reviews"][0]["state"], "APPROVED")
+        self.assertEqual(len(report["pr_reviews"]), 1)
 
     def test_search_keeps_all_pages_and_rejects_partial_results(self):
         pages = [{"total_count": 101, "items": [item(1)]},
