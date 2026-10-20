@@ -57,10 +57,32 @@ class HeartbeatStateTests(unittest.TestCase):
     def test_broken_or_missing_queues_fail(self):
         for change in (lambda state: state.pop("blockers"),
                        lambda state: state.update(deferred={}),
-                       lambda state: state.update(last_full_heartbeat="2026-02-30")):
+                       lambda state: state.update(last_full_heartbeat="2026-02-30"),
+                       lambda state: state.update(notes="not allowed")):
             state = deepcopy(self.state)
             change(state)
             with self.assertRaises(ValueError):
+                state_tool.validate(state)
+
+    def test_report_dates_and_ask_fields_are_valid(self):
+        state_tool.validate(self.state)
+        self.assertEqual(self.state["last_weekly_report"], "2026-06-27")
+        self.assertEqual(self.state["blockers"][0]["owner"], "@fvaleye")
+        self.assertEqual(self.state["blockers"][0]["asked"]["who"], "@fvaleye")
+        self.assertTrue(self.state["retry_queue"][0]["thread_url"].startswith("https://"))
+
+    def test_invalid_asked_or_report_date_fails(self):
+        cases = (
+            lambda state: state.update(last_weekly_report="2026-02-30"),
+            lambda state: state["blockers"][0].update(asked="pinged Florian"),
+            lambda state: state["blockers"][0]["asked"].update(at="2026-07-01T10:00:00"),
+            lambda state: state["blockers"][0]["asked"].update(extra="no"),
+            lambda state: state["blockers"][0]["asked"].pop("question"),
+        )
+        for change in cases:
+            state = deepcopy(self.state)
+            change(state)
+            with self.assertRaises((TypeError, ValueError)):
                 state_tool.validate(state)
 
     def test_empty_queue_is_valid(self):

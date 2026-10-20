@@ -9,9 +9,12 @@ import sys
 
 ROOT = Path(__file__).resolve().parent.parent
 QUEUES = ("retry_queue", "blockers", "deferred")
+REQUIRED_STATE = {"last_full_heartbeat", *QUEUES}
+OPTIONAL_STATE = {"last_weekly_report", "last_memory_distill"}
 REQUIRED = {"repo", "url", "reason", "next_action", "updated_at"}
-DETAILS = {"goal", "done_when", "promise", "resume_when", "last_notified"}
-OPTIONAL = DETAILS | {"evidence", "next_check_at"}
+DETAILS = {"goal", "done_when", "promise", "resume_when", "last_notified", "owner", "thread_url"}
+OPTIONAL = DETAILS | {"evidence", "next_check_at", "asked"}
+ASKED_FIELDS = {"who", "at", "url", "question"}
 
 
 def timestamp(value):
@@ -21,11 +24,30 @@ def timestamp(value):
     return parsed.astimezone(timezone.utc)
 
 
+def optional_date(value, name):
+    if value is not None:
+        date.fromisoformat(value)
+
+
+def validate_asked(asked, queue):
+    if not isinstance(asked, dict) or set(asked) != ASKED_FIELDS:
+        raise ValueError(f"{queue}.asked must contain who, at, url, and question")
+    for key in ("who", "url", "question"):
+        if not isinstance(asked[key], str) or not asked[key].strip():
+            raise ValueError(f"{queue}.asked.{key} must be a nonempty string")
+    if not isinstance(asked["at"], str):
+        raise ValueError(f"{queue}.asked.at must be a timestamp")
+    timestamp(asked["at"])
+
+
 def validate(state):
-    if not isinstance(state, dict) or set(state) != {"last_full_heartbeat", *QUEUES}:
+    if not isinstance(state, dict) or not REQUIRED_STATE <= set(state):
         raise ValueError("state must contain last_full_heartbeat and the three work queues")
-    if state["last_full_heartbeat"] is not None:
-        date.fromisoformat(state["last_full_heartbeat"])
+    if set(state) - REQUIRED_STATE - OPTIONAL_STATE:
+        raise ValueError("state has unknown fields")
+    optional_date(state["last_full_heartbeat"], "last_full_heartbeat")
+    for key in OPTIONAL_STATE & state.keys():
+        optional_date(state[key], key)
     for queue in QUEUES:
         if not isinstance(state[queue], list):
             raise ValueError(f"{queue} must be a list")
@@ -50,6 +72,8 @@ def validate(state):
                 if not isinstance(entry["next_check_at"], str):
                     raise ValueError(f"{queue}.next_check_at must be a timestamp")
                 timestamp(entry["next_check_at"])
+            if "asked" in entry:
+                validate_asked(entry["asked"], queue)
     return state
 
 
