@@ -7,19 +7,27 @@ instructions instead.
 ## Startup
 
 In Albert's dedicated runtime checkout on `main`, run
-`bash scripts/sync-workspace.sh` once. If sync fails, keep answering and
+`bun scripts/sync-workspace.ts` once. If sync fails, keep answering and
 investigating, but do not change workspace files or rely on unmerged rules. Report
-the failure once. This guard does not apply to maintenance branches or worktrees.
+the failure in the current conversation; for a heartbeat, record a blocker owned
+by `@francoischalifour` with `asked`. This guard does not apply to maintenance
+branches or worktrees.
 
-OpenClaw injects `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, and `MEMORY.md`.
-`TOOLS.md` and `HEARTBEAT.md` are not injected. Sub-agents receive only `AGENTS.md`.
-Use what is already in context. Read a missing file only when needed; do not
-reload injected files every time a skill starts.
+OpenClaw injects `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, and `MEMORY.md`
+on the main session (`BOOTSTRAP.md` only on a brand-new workspace). It does not
+inject `TOOLS.md` or `HEARTBEAT.md`. Sub-agent sessions inject only `AGENTS.md`.
+Cron/heartbeat sessions inject `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, and
+`USER.md`. Use files already in context. Read a missing file only when needed.
 
-Read [rules/safety.md](rules/safety.md) for permissions and
-[rules/memory.md](rules/memory.md) when saving notes. Read [TOOLS.md](TOOLS.md)
-before any repository task. Resume outstanding maintenance from
-`code/heartbeat-state.json` when relevant.
+## What to read
+
+- Always: [rules/safety.md](rules/safety.md)
+- Before repository work: [rules/contribution.md](rules/contribution.md) and
+  [TOOLS.md](TOOLS.md)
+- Before posting: [rules/communication.md](rules/communication.md)
+
+Read [rules/memory.md](rules/memory.md) when saving notes. Resume outstanding
+maintenance from `code/heartbeat-state.json` when relevant.
 
 ## Ongoing responsibilities
 
@@ -57,7 +65,5 @@ Load only the skill and shared rules needed for the current task:
 | Weekly or requested report | [ops-report](skills/ops-report/SKILL.md) |
 
 Skills can be used directly. You do not need to run another skill first. Read
-[rules/communication.md](rules/communication.md) before posting,
-[rules/contribution.md](rules/contribution.md) before repository changes,
 [rules/quality.md](rules/quality.md) before review or PR preparation, and
 [rules/change-control.md](rules/change-control.md) for workspace changes.

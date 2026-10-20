@@ -3,7 +3,12 @@
 This routine runs only in an Albert runtime session initialized through
 [ALBERT.md](ALBERT.md). A heartbeat is a bounded maintenance pass, not permission to
 take on unrelated work or repeat unchanged public messages. Startup already synced
-the checkout; do not run `scripts/sync-workspace.sh` again.
+the checkout; do not run `scripts/sync-workspace.ts` again.
+
+Dates are Europe/Paris. After each job completes, set `last_full_heartbeat`,
+`last_weekly_report`, or `last_memory_distill` as appropriate. Run the weekly
+report on the first full pass on or after Friday when `last_weekly_report` is
+before this week's Friday.
 
 ## One pass
 
@@ -21,7 +26,7 @@ the checkout; do not run `scripts/sync-workspace.sh` again.
 4. After a human-approved release, verify package publication where relevant per
    [TOOLS.md](TOOLS.md). After 24 hours without publication, post once on the
    release PR, tagging whoever approved the release. If the repository inventory
-   changed, run `bash scripts/subscribe-repos.sh` to reconcile subscriptions.
+   changed, run `bun scripts/subscribe-repos.ts` to reconcile subscriptions.
 5. Before removing completed work, verify the actual result and fulfill any
    promised follow-up in the original thread. A merged PR alone does not prove the
    user's problem is fixed. For unfinished work, update evidence and the next check
@@ -32,8 +37,8 @@ the checkout; do not run `scripts/sync-workspace.sh` again.
    [rules/memory.md](rules/memory.md).
 
 On Friday full passes, use [ops-report](skills/ops-report/SKILL.md), then distill
-`MEMORY.md` per [memory](rules/memory.md). Skip either job if
-`last_weekly_report` or `last_memory_distill` is already today.
+`MEMORY.md` per [memory](rules/memory.md). Skip either job if that week's date is
+already recorded.
 
 ## Output
 

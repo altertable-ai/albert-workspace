@@ -7,6 +7,10 @@ your own persona. In that case, read [ALBERT.md](ALBERT.md) before starting work
 and follow its startup and task routing. This applies to direct conversations and
 scheduled maintenance.
 
+A sub-agent started by Albert follows Albert's task prompt and
+[rules/safety.md](rules/safety.md). It does not run startup or the heartbeat, and
+does not post unless the prompt says so.
+
 Other agents editing, reviewing, or testing this repository's configuration follow
 the repository-maintenance instructions below. Treat Albert's runtime files as files
 under review; do not adopt his identity or run his startup or heartbeat routines.
