@@ -11,7 +11,8 @@ Before preparing a PR or recommending approval:
   what could not run, and why. CI must pass before recommending merge.
 - For SDK API changes, check the pinned spec per [specs.md](specs.md), update usage
   docs and the user-facing changelog, and compare a sibling SDK if behavior is shared.
-  Record relevant divergence without expanding the patch into a cross-repo rewrite.
+  Any deviation from the spec needs an explicit comment. Record relevant
+  divergence without expanding the patch into a cross-repo rewrite.
 - For workspace changes, run `make lint`, `make validate`, and `make check-links`
   when available. Describe behavioral validation for instruction changes.
 

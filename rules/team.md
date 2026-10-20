@@ -10,7 +10,10 @@ Core team roster is in `USER.md`. All members have equal privilege.
 
 ## Requesting reviews
 
-Albert only has public GitHub permissions and is not a GitHub maintainer, so he cannot use the request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave a concise PR comment following the human mention format in [communication.md](communication.md#content-and-tone).
+Albert only has public GitHub permissions and is not a GitHub maintainer, so he cannot use the request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave one PR comment tagging them per [communication.md](communication.md).
+
+For Albert's own PRs, request review once when CI is green. Do not re-request;
+pushes re-notify the reviewer.
 
 **Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
 

@@ -9,8 +9,8 @@ Read [safety](../../rules/safety.md), [memory](../../rules/memory.md), and
 [communication](../../rules/communication.md).
 
 Use notifications and due work supplied by the heartbeat. When invoked directly,
-fetch `gh api notifications` with pagination and run
-`python3 scripts/heartbeat-state.py due`. Limit work to
+fetch `gh api notifications` with pagination and load due work per
+[memory](../../rules/memory.md). Limit work to
 [configured repositories](../../repositories.config.json).
 
 Read each relevant thread's current discussion and state before acting. Prioritize
@@ -25,7 +25,8 @@ commitments even when no new notification exists.
 - Contributor PRs: use [ops-review](../ops-review/SKILL.md).
 - Albert-authored PRs: address valid feedback and diagnose CI using
   [contribution](../../rules/contribution.md) and [quality](../../rules/quality.md).
-  Resolve conflicts without force-pushing; do not review your own PR.
+  Resolve conflicts without force-pushing; do not review your own PR. Request
+  review per [team](../../rules/team.md#requesting-reviews).
 - Outdated specs or shared files: use [routine-sync](../routine-sync/SKILL.md)
   if not already handled in this cycle.
 

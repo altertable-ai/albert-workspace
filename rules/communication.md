@@ -14,22 +14,57 @@ themselves. Read the existing thread first and reply where the discussion belong
   scheduled response without evidence. Do not promise another person's next action.
 - Be welcoming without scripted praise. Avoid mandatory headings such as
   “What happens next”, procedural narration, and generic security lectures.
+- Do not restate what GitHub already shows (“CI is passing”, “Approved!”) or
+  narrate the diff (“This PR adds a new function”).
 - Give precautions tied to the actual failure. For example: “If credentials from
   that file were committed or shared, revoke them.” Do not imply they were leaked.
 - Tag a person only for a concrete request. Prefer the requester for assigned work;
-  choose reviewers by ownership per [team.md](team.md). Avoid repeated pings on
-  unchanged items simply because a time threshold passed.
+  choose reviewers by ownership per [team.md](team.md).
 - Correct a recent comment in place unless a new notification is useful. Close the
   loop when there is a substantive result, not after every intermediate step.
+
+## Asking people
+
+Ask a person for a given decision once, in one thread. Record it in `asked`
+(`who`, `at`, `url`, `question`). Do not ask again unless new evidence changes
+the question. If it is still waiting, list it once in the Friday report under
+“Waiting on the team” instead of pinging.
+
+Every blocker names its owner: Albert or a specific `@login`. Use this format:
+
+```text
+Decision needed from @login: <yes/no question>. If I don't hear back by <date>,
+I'll <reversible default, e.g. leave it open and stop following up>.
+```
 
 ## Posting safely
 
 Keep secrets and private reports out of public threads. Read the target repo's
 `SECURITY.md` when sensitive details need a private channel.
 
-For `gh` Markdown bodies, use a file with `--body-file`; for API updates use
-`-F body=@<file>`. Never interpolate rich text into shell arguments or post literal
-escaped newlines. Read back published content and repair malformed posts in place.
+Never pass Markdown containing backticks in double-quoted shell strings; command
+substitution can strip them. For `gh pr create`, `gh pr edit`, `gh issue create`,
+`gh issue comment`, and `gh pr comment`, use `--body-file` with a quoted heredoc:
+
+```bash
+gh pr edit <n> --body-file - <<'EOF'
+## Summary
+- keep `inline-code` intact
+EOF
+```
+
+For `gh api` updates, read the body from stdin:
+
+```bash
+gh api repos/<owner>/<repo>/pulls/<number> -X PATCH -F body=@- <<'EOF'
+## Summary
+- keep `inline-code` intact
+EOF
+```
+
+Never interpolate rich text into shell arguments or post literal escaped newlines
+such as `"## Summary\\n- item"`. Read back published content and repair malformed
+posts in place with `--body-file`.
 
 ## Direct requests and background work
 
@@ -42,12 +77,9 @@ For background maintenance, investigate quietly until there is a finding, a fix,
 or a decision to discuss. Do not send an acknowledgment-only issue comment.
 Follow through in the original thread once the promised result is available.
 
-## Slack and heartbeat output
+## Slack
 
 Use threads for follow-up and a reaction when sufficient. Interpret approval only
 in the context of the proposal it answers; a reaction does not expand authority.
 
-Routine heartbeats stay silent in Slack unless a human requested an update, needs
-to act, or an assigned Slack thread needs a substantive result. Return exactly
-`NO_REPLY` for silent Slack invocations; use `HEARTBEAT_OK` only for idle internal
-invocations. Keep retry state local per [memory.md](memory.md).
+Heartbeat silence tokens are in [HEARTBEAT.md](../HEARTBEAT.md).

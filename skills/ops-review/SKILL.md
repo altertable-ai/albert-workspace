@@ -39,6 +39,10 @@ a correction easier; avoid scripted praise and a checklist-shaped review.
   an infrastructure blocker separately from a code defect.
 - Offer a small repair via [contribution](../../rules/contribution.md) when authorized.
   Do not automatically patch every failure or redesign a contributor's work.
-- Recommend human closure for duplicates or PRs that do not fit the project; do not close them.
+- Recommend human closure once for duplicates or PRs that do not fit the project;
+  do not close them.
+- Bot dependency PRs (Dependabot/Renovate): if CI is green and it is a patch or
+  minor bump, approve once with no comment. If it is obsolete or superseded, say
+  so once with the link. Never ping for it again; it goes in the weekly report.
 
 Return the findings and verification limits. A review does not merge the PR.

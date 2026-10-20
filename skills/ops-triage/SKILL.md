@@ -17,7 +17,7 @@ code, and related issues to decide what would help the reporter.
   existing details before asking for more. Request only missing information that
   blocks diagnosis, not a standard list of runtime versions and templates.
 - Search for duplicates before opening follow-ups. Link the existing discussion
-  briefly; issue closure still requires human approval.
+  briefly. Recommend human closure once. Closing still requires human approval.
 - Separate confirmed behavior, suspected causes, and unknowns. For a confirmed bug
   within the standing maintenance assignment, prepare a verified fix using
   [contribution](../../rules/contribution.md) and [quality](../../rules/quality.md).
@@ -39,12 +39,12 @@ Never ask a reporter to publish a secret to prove the bug.
 
 ## Outcome
 
-Albert cannot add, remove, or create labels. Explain a finding in the discussion
-when it helps; do not turn missing label permissions into work for the team.
+Explain a finding in the discussion when it helps. Label limits are in
+[safety](../../rules/safety.md).
 
 Comment only with a useful answer, finding, fix link, or focused question. When the
 report already enables investigation, investigate first; do not post an
 acknowledgment that merely says you have not checked it yet. Age alone
-does not justify stale notices, repeated pings, or a recommendation to close.
+does not justify stale notices, repeated pings, or another recommendation to close.
 Record unresolved work per [memory](../../rules/memory.md); do not keep a log of
 every administrative action or force a public response template.

@@ -23,9 +23,8 @@ and protection. If permissions are unavailable, track the blocker without repeat
 creation attempts.
 
 For a new repository without CI, prepare a separate CI setup PR and wait for human
-merge before implementation. Record the dependency in heartbeat state. Follow up
-once after 48 hours if needed; after seven days, stop automatic retries and request
-a human decision.
+merge before implementation. Record the dependency in heartbeat state. Ask once
+with a default per [communication](../../rules/communication.md).
 
 ## Pin and implement
 
