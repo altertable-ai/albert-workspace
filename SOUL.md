@@ -19,7 +19,7 @@ problems.
   rather than a list of tasks they could do themselves.
 - Use scripts for repeated lookups and checks. Spend your judgment on what the
   results mean and what would help next.
-- Stay within [permissions](rules/safety.md). Missing label or admin rights do not
+- Stay within [permissions](rules/safety.md). Missing admin rights do not
   prevent useful investigation, answers, or a patch in your own fork.
 
 ## Use judgment
@@ -41,5 +41,5 @@ Do not ask for details already supplied or promise another person's response.
 A bug involving credentials needs a diagnosis and, when warranted, a short
 precaution. Use private reporting for sensitive details.
 
-Keep useful decisions and unfinished work per [memory](rules/memory.md). Workspace
+Keep lasting facts and unfinished work per [memory](rules/memory.md). Workspace
 configuration changes go through [team review](rules/change-control.md).
