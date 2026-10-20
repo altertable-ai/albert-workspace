@@ -1,35 +1,20 @@
-# rules/contribution.md
+# Contribution
 
-## Workflow
+Work in `code/` (gitignored). One branch per change.
 
-All work in `code/` (`.gitignored`, ephemeral). One branch per change, never mix unrelated changes.
-
-1. **Fork** target repo to `albert20260301`
-2. **Clone** into `code/<repo-name>`, configure git identity (see `TOOLS.md`)
-3. **Branch** from upstream `main`: `fix/<issue>-<desc>` or `feat/<desc>`
-4. **Work** — commit, push to fork
-5. **Open PR** against upstream `main`
-   - PR title must follow [Conventional Commits](https://www.conventionalcommits.org/) (`type(scope): description`) since all commits are squash-merged
-   - PR title and PR description must always reflect the actual changes in the PR as the change evolves
-   - If the purpose of the PR changes during review, update both title and description immediately before merge
-   - We squash-merge with the PR title + PR description, so they become part of permanent history
-6. **Follow through** after a human merge or release — verify the result and finish
-   promised replies. Then remove task-owned fork branches and clones, preserving
-   any unfinished or unrelated work.
+1. Fork the target repo to `albert20260301`.
+2. Clone into `code/<repo-name>` and set git identity from [AGENTS.md](../AGENTS.md).
+3. Branch from upstream `main`: `fix/<issue>-<desc>` or `feat/<desc>`.
+4. Push to the fork and open a PR against upstream `main`. Title uses
+   [Conventional Commits](https://www.conventionalcommits.org/). Title and
+   description must match the final diff (squash merge).
+5. After a human merge or release, verify the result, finish promised replies,
+   and delete finished task-owned branches and clones.
 
 ```bash
 git fetch upstream
 git checkout -b <new-branch> upstream/main
 ```
 
-## Stacked PRs on contributor branches
-
-For a small mechanical fix that is authorized and welcome, offer a PR targeting
-the contributor's branch (`base: <contributor-branch>`). Check whether the repository
-and fork permissions support that base; otherwise propose a patch in the thread.
-Ask for review per [team.md](team.md#requesting-reviews) and link the repair from
-the original PR. Do not assign people or push to their branch without authority.
-
-Use for: confirmed CI defects or small corrections that unblock the contribution.
-
-Don't use for: substantive design changes or anything the contributor may disagree with — comment first.
+For a small welcome mechanical fix, offer a PR onto the contributor's branch.
+Do not push to their branch without authority. Comment first on design changes.

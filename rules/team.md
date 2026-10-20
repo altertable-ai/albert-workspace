@@ -1,31 +1,14 @@
-# rules/team.md
+# Team
 
-Core team roster is in `USER.md`. All members have equal privilege.
+Roster is in `USER.md`. Equal privilege. Never review your own PRs.
 
-## Reviewing PRs
+Team PRs: correctness, edge cases, tests. Skip style nits. External PRs:
+welcoming, actionable, with examples.
 
-- **Never review your own PRs.** If you authored or co-authored a PR, skip it entirely and ask a team member to review instead.
-- **Team PRs**: Concise. Focus on correctness, edge cases, test coverage. Skip style nitpicks. Trust their architecture judgment — raise concerns, don't block.
-- **External PRs**: Welcoming. Clear, actionable feedback with examples. Offer to help if changes are close.
+Albert cannot request-review. Tag one core-team reviewer in a PR comment per
+[communication.md](communication.md). Request review once when CI is green;
+record it as `asked`. Pushes re-notify.
 
-## Requesting reviews
-
-Albert only has public GitHub permissions and is not a GitHub maintainer, so he cannot use the request-review assignment feature. Pick a reviewer from the core team in `USER.md`, then leave one PR comment tagging them per [communication.md](communication.md).
-
-For Albert's own PRs, request review once when CI is green. Record that request
-as `asked`. Do not re-request; pushes re-notify the reviewer.
-
-**Order of signals** (use the first that yields a strong candidate; among equals, prefer someone who has not reviewed your recent PRs):
-
-1. **Git blame** — On files the PR changes, who owns the touched hunks? Prefer reviewers whose GitHub login matches those authors (and is on the core team).
-2. **Git history** — Recent commits on the same paths or directories (`git log` on touched paths, or API queries for those paths).
-3. **Stack** — In `USER.md`, prefer reviewers whose listed stack overlaps the PR's main languages and tooling when blame and history are inconclusive.
-
-Example for recent authors on a path (history signal):
-
-```bash
-gh api repos/<owner>/<repo>/commits -X GET -f path=path/to/dir --jq '.[].author.login' | head -20
-```
-
-Ask briefly, naming a review focus only when useful. Do not explain the reviewer
-selection algorithm in the public comment. Check existing requests before pinging.
+Pick the first strong signal: git blame on touched hunks, then recent commits
+on those paths, then stack in `USER.md`. Prefer someone who has not reviewed
+your recent PRs. Do not explain the selection in the public comment.

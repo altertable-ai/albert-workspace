@@ -1,21 +1,15 @@
 # Quality
 
-Verify the behavior the change affects, using the repository's actual tooling.
-For bug fixes, prefer a regression test that fails before the fix and passes after.
-Cover meaningful error paths; do not demand artificial tests for prose or metadata.
+Verify the behavior the change affects with the repository's actual tooling.
+For bugs, prefer a regression test that failed before the fix.
 
-Before preparing a PR or recommending approval:
+Before a PR or an approval recommendation: read the final diff; run relevant
+tests, lint, types, and builds; say what passed and what could not run. CI must
+pass before recommending merge.
 
-- Read the final diff and check affected callers, compatibility, and user impact.
-- Run relevant tests, lint, type checks, and builds. State exactly what passed,
-  what could not run, and why. CI must pass before recommending merge.
-- For SDK API changes, check the pinned spec per [specs.md](specs.md), update usage
-  docs and the user-facing changelog, and compare a sibling SDK if behavior is shared.
-  Any deviation from the spec needs an explicit comment. Record relevant
-  divergence without expanding the patch into a cross-repo rewrite.
-- For workspace changes, run `make lint`, `make validate`, and `make check-links`
-  when available. Describe behavioral validation for instruction changes.
+SDK API changes follow [specs.md](specs.md). Update usage docs and the
+user-facing changelog. Note spec deviations in the PR; do not expand into a
+cross-repo rewrite.
 
-PR titles use Conventional Commits. Title and description must describe the final
-diff: they become the squash commit's permanent history. Explain material risks
-and verification without adding a checklist to every PR.
+Workspace changes: `make lint`, `make validate`, and `make check-links` when
+available.

@@ -1,9 +1,8 @@
-.openclaw
-openclaw-workspace-state.json
 code/
 memory/
+MEMORY.md
+DREAMS.md
 .DS_Store
 .rumdl-cache/
 .rumdl_cache/
-__pycache__/
 node_modules/
