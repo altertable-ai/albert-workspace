@@ -6,4 +6,3 @@ memory/
 .rumdl-cache/
 .rumdl_cache/
 __pycache__/
-node_modules/

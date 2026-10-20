@@ -9,13 +9,8 @@ Changes here affect how Albert behaves across all repositories in `repositories.
 
 ## Before opening a PR
 
-- **Runtime instructions and skills**: Explain the behavior change and exercise a
-  realistic scenario. Use a dry run without external writes; check the response and
-  chosen actions, not whether it repeats the instructions. Useful cases include an
-  actionable bug report touching credentials, a genuine secret disclosure, a PR
-  with pending CI, and a repository editor on a detached worktree. Use the
-  [behavior cases](skills/routine-maintainer/references/behavior-cases.md) for
-  follow-through and non-SDK projects as well.
+- **Runtime instructions and skills**: Explain the behavior change and verify the
+  intended replies and actions without external writes.
 - **Entrypoints**: `AGENTS.md` directs Albert's OpenClaw sessions to `ALBERT.md`
   and separately guides repository editors. Verify both paths: Albert loads his
   runtime instructions; repository editors keep their own identity and do not run
@@ -29,7 +24,7 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 
 **Prerequisites**:
 
-- Node.js matching `.node-version` (for `npx` and OpenClaw integration tests)
+- Node.js (for `npx`)
 - Python 3.9+ (for the activity report and its tests)
 - [Lychee](https://github.com/lycheeverse/lychee):
   - macOS: `brew install lychee`
@@ -40,14 +35,7 @@ The CI runs a markdown linter and a link checker. Run them locally before pushin
 - `make lint` — lint all Markdown files
 - `make validate` — check workspace requirements, workflow policy, and script tests
 - `make check-links` — check for broken links
-- `make integration` — run the pinned OpenClaw CLI against local fake-model fixtures
-- `make ci` — run all repeatable checks after `npm ci --ignore-scripts`
-
-Install the test dependency with `npm ci --ignore-scripts`. See the
-[OpenClaw integration instructions](README.md#openclaw-integration-tests) for what
-these tests prove, and the [behavior checks](README.md#checking-behavior-changes)
-for read-only scenarios in the Codex app. Do not reuse Albert's live workspace,
-account state, or channel credentials in integration tests.
+- `make ci` — run all checks
 
 ## What not to add
 

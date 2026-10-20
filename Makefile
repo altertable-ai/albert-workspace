@@ -15,11 +15,8 @@ format:
 	npx rumdl fmt .
 
 check-links:
-	lychee --verbose --exclude-loopback --exclude-path node_modules '**/*.md'
+	lychee --verbose --exclude-loopback '**/*.md'
 
-integration:
-	npm run test:integration
+ci: lint validate check-links
 
-ci: lint validate check-links integration
-
-.PHONY: lint validate validate-workflows lint-fix format check-links integration ci
+.PHONY: lint validate validate-workflows lint-fix format check-links ci

@@ -113,45 +113,6 @@ SDK repositories consume versioned specs from `altertable-client-specs` through 
 `specs/` submodule. A new tag can lead to a pin-and-implementation PR through
 routine-sync and sdk-bootstrap. This flow does not apply to every repository.
 
-## Checking behavior changes
-
-Use fresh agents in the Codex app with the requested model and Albert's relevant
-instructions. Give them the raw [behavior cases](skills/routine-maintainer/references/behavior-cases.md)
-without the expected outcomes, then compare their proposed actions and replies
-with those outcomes. Keep these checks read-only: no posting or changes to real
-repositories. They use the app's model access and need no separate sign-in.
-
-These checks assess responses and decisions with the supplied context. They do
-not prove that OpenClaw loaded that context or that Albert's deployed account can
-run the model. Script tests run with `make validate`.
-
-## OpenClaw integration tests
-
-OpenClaw 2026.10.5 is pinned as a development dependency. Use the Node version in
-`.node-version`, then run:
-
-```fish
-npm ci --ignore-scripts
-make integration
-```
-
-Four tests run the installed CLI with temporary copies of the workspace, fresh
-home/state directories, a local scripted model endpoint, and read-only tools:
-
-- Automatic loading of `AGENTS.md` and identity context.
-- A tool read of `ALBERT.md` returning the actual file contents.
-- Removal of workspace context when context injection is disabled.
-- Refusal to read outside the temporary workspace.
-
-The endpoint chooses the responses, so these tests check OpenClaw's file loading
-and tool execution. They do not show that a real model chose to read `ALBERT.md`.
-They use OpenClaw's built-in runtime, without operator credentials, plugins,
-channels, a Gateway, or model calls. They do not cover a deployed Codex runtime.
-
-`make ci` includes these tests. Check Albert's actual version, startup, and a
-scheduled maintenance run on his deployment before treating local results as
-production verification.
-
 ## Contributing
 
 1. Fork this repository
