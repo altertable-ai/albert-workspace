@@ -11,19 +11,23 @@ export function git(args: string[]) {
   return result.stdout.trim();
 }
 
-export function resolveRemote(): string {
-  const remotes = runCommand(["git", "remote"]);
-  if (remotes.stdout.split("\n").includes("upstream")) {
+export function pickRemote(remoteNames: string[], originUrl = ""): string {
+  if (remoteNames.includes("upstream")) {
     return "upstream";
   }
-  const origin = runCommand(["git", "remote", "get-url", "origin"]);
-  if (origin.exitCode === 0 && origin.stdout.includes("altertable-ai/albert-workspace")) {
+  if (originUrl.includes("altertable-ai/albert-workspace")) {
     console.log("upstream remote not configured; using canonical origin");
     return "origin";
   }
   throw new Error(
     "upstream remote is not configured and origin is not canonical altertable-ai/albert-workspace.",
   );
+}
+
+export function resolveRemote(): string {
+  const remotes = runCommand(["git", "remote"]).stdout.split("\n").map((name) => name.trim()).filter(Boolean);
+  const origin = runCommand(["git", "remote", "get-url", "origin"]);
+  return pickRemote(remotes, origin.exitCode === 0 ? origin.stdout : "");
 }
 
 export function syncWorkspace(): string {

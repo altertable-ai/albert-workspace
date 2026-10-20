@@ -11,11 +11,15 @@ const ROOT = resolve(import.meta.dir, "..");
 
 const REQUIRED_FILES = [
   "AGENTS.md",
-  "ALBERT.md",
-  "HEARTBEAT.md",
+  "SOUL.md",
+  "IDENTITY.md",
+  "USER.md",
+  "openclaw/albert.config.example.json5",
+  "openclaw/HOST.md",
   "repositories.config.json",
   "package.json",
   ".bun-version",
+  "tsconfig.json",
   "scripts/sync-workspace.ts",
   "scripts/spec-status.ts",
   "scripts/ecosystem-status.ts",
@@ -65,12 +69,23 @@ export async function validateWorkspace(root = ROOT): Promise<string[]> {
   if (trackedShell) {
     errors.push(`Shell scripts are still tracked:\n${trackedShell}`);
   }
-  const localOnly = runCommand(["git", "-C", root, "ls-files", "memory", "code", ".DS_Store", ".rumdl_cache"]).stdout.trim();
+  const localOnly = runCommand([
+    "git",
+    "-C",
+    root,
+    "ls-files",
+    "memory",
+    "MEMORY.md",
+    "DREAMS.md",
+    "code",
+    ".DS_Store",
+    ".rumdl_cache",
+  ]).stdout.trim();
   if (localOnly) {
     errors.push("local-only files are tracked");
   }
   const docs = await Promise.all(
-    ["AGENTS.md", "ALBERT.md", "HEARTBEAT.md"].map(async (file) =>
+    ["AGENTS.md"].map(async (file) =>
       existsSync(join(root, file)) ? await Bun.file(join(root, file)).text() : "",
     ),
   );

@@ -106,19 +106,15 @@ describe("heartbeat-state", () => {
     }
   });
 
-  test("report dates and ask fields are valid", () => {
+  test("ask fields are valid", () => {
     validate(example);
-    expect(example.last_weekly_report).toBe("2026-06-27");
     expect(example.blockers[0].owner).toBe("@fvaleye");
     expect(example.blockers[0].asked.who).toBe("@fvaleye");
     expect(example.blockers[0].next_check_at).toBe(example.blockers[0].asked.default_at);
   });
 
-  test("invalid asked or report date fails", () => {
+  test("invalid asked fields fail", () => {
     const changes = [
-      (state: Record<string, unknown>) => {
-        state.last_weekly_report = "2026-02-30";
-      },
       (state: typeof example) => {
         state.blockers[0].asked = "pinged Florian" as never;
       },
@@ -175,6 +171,7 @@ describe("heartbeat-state", () => {
   test("can-ask refuses a duplicate and allows a new question", () => {
     const asked = example.blockers[0].asked;
     expect(canAsk(example, asked.url, asked.who)).toEqual(asked);
+    expect(canAsk(example, asked.url, "fvaleye")).toEqual(asked);
     expect(canAsk(example, asked.url, "@utay")).toBeNull();
     const folder = mkdtempSync(join(tmpdir(), "hb-"));
     const path = join(folder, "state.json");

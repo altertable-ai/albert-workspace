@@ -3,6 +3,7 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { gh } from "./lib/gh.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const MAX_INVOLVED_THREADS = 80;
@@ -26,30 +27,17 @@ export function iso(value: Date): string {
   return value.toISOString().replace(/\.\d{3}Z$/, "Z");
 }
 
-function runGh(command: string[]) {
-  const result = Bun.spawnSync(command, { stdout: "pipe", stderr: "pipe" });
-  if (result.exitCode) {
-    throw new Error(`GitHub request failed (${command[command.indexOf("api") + 1] ?? "api"}): ${result.stderr.toString().trim()}`);
-  }
-  return JSON.parse(result.stdout.toString());
-}
-
 function defaultApi(endpoint: string, params: Record<string, string> = {}): unknown {
-  const command = ["gh", "api", "--method", "GET", "--paginate", "--slurp", endpoint];
-  for (const [key, value] of Object.entries(params)) {
-    command.push("-f", `${key}=${value}`);
-  }
-  return runGh(command);
+  return gh.json({ endpoint, paginate: true, fields: params });
 }
 
 function defaultThreadPages(endpoint: string, params: Record<string, string> = {}): unknown[][] {
   const pages: unknown[][] = [];
   for (let page = 1; page <= MAX_THREAD_PAGES; page += 1) {
-    const command = ["gh", "api", "--method", "GET", endpoint];
-    for (const [key, value] of Object.entries({ ...params, page: String(page), per_page: "100" })) {
-      command.push("-f", `${key}=${value}`);
-    }
-    const body = runGh(command);
+    const body = gh.json({
+      endpoint,
+      fields: { ...params, page: String(page), per_page: "100" },
+    });
     const batch = Array.isArray(body) ? body : [];
     pages.push(batch);
     if (batch.length < 100) {
@@ -79,6 +67,27 @@ export function search(query: string) {
   return items;
 }
 
+export type ActivityItem = {
+  repo: string;
+  number: number;
+  title: string;
+  url: string;
+  at: string;
+  state?: string;
+};
+
+export type ActivityReport = {
+  since: string;
+  until_exclusive: string;
+  author: string;
+  repositories: string[];
+  opened_prs: ActivityItem[];
+  merged_prs: ActivityItem[];
+  closed_unmerged_prs: ActivityItem[];
+  issue_comments: ActivityItem[];
+  pr_reviews: ActivityItem[];
+};
+
 export function repositories(config: Record<string, unknown>) {
   const entries = [
     ...((config.sdks as { repo: string }[]) ?? []),
@@ -99,7 +108,7 @@ export function collect(
   author: string,
   since: Date,
   until: Date,
-) {
+): ActivityReport {
   const repos = repositories(config);
   const repoSet = new Set(repos);
   const scope = repos.map((repo) => `repo:${repo}`).join(" ");
@@ -108,7 +117,7 @@ export function collect(
   const repoOf = (item: Record<string, unknown>) =>
     String(item.repository_url).split("/").slice(-2).join("/");
 
-  const report: Record<string, unknown> = {
+  const report: ActivityReport = {
     since: iso(since),
     until_exclusive: iso(until),
     author,
@@ -144,11 +153,11 @@ export function collect(
         value = item[field] as string;
       }
       if (inPeriod(value)) {
-        (report[group] as object[]).push({
+        report[group].push({
           repo,
-          number: item.number,
-          title: item.title,
-          url: item.html_url,
+          number: Number(item.number),
+          title: String(item.title),
+          url: String(item.html_url),
           at: value,
         });
       }
@@ -172,12 +181,12 @@ export function collect(
       for (const comment of page as Record<string, unknown>[]) {
         const login = String((comment.user as { login?: string } | undefined)?.login ?? "");
         if (login.toLowerCase() === author.toLowerCase() && inPeriod(comment.created_at as string)) {
-          (report.issue_comments as object[]).push({
+          report.issue_comments.push({
             repo,
-            number: item.number,
-            title: item.title,
-            url: comment.html_url,
-            at: comment.created_at,
+            number: Number(item.number),
+            title: String(item.title),
+            url: String(comment.html_url),
+            at: String(comment.created_at),
           });
         }
       }
@@ -191,21 +200,21 @@ export function collect(
         const login = String((review.user as { login?: string } | undefined)?.login ?? "");
         const submitted = review.submitted_at as string | undefined;
         if (login.toLowerCase() === author.toLowerCase() && submitted && inPeriod(submitted)) {
-          (report.pr_reviews as object[]).push({
+          report.pr_reviews.push({
             repo,
-            number: item.number,
-            title: item.title,
-            url: review.html_url || item.html_url,
+            number: Number(item.number),
+            title: String(item.title),
+            url: String(review.html_url || item.html_url),
             at: submitted,
-            state: review.state,
+            state: String(review.state),
           });
         }
       }
     }
   }
 
-  for (const group of ["opened_prs", "merged_prs", "closed_unmerged_prs", "issue_comments", "pr_reviews"]) {
-    (report[group] as { at: string; url: string }[]).sort((a, b) =>
+  for (const group of ["opened_prs", "merged_prs", "closed_unmerged_prs", "issue_comments", "pr_reviews"] as const) {
+    report[group].sort((a, b) =>
       a.at === b.at ? a.url.localeCompare(b.url) : a.at.localeCompare(b.at),
     );
   }

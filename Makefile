@@ -2,6 +2,7 @@ lint:
 	npx rumdl check .
 
 validate:
+	bunx tsc --noEmit
 	bun scripts/validate-workspace.ts
 	bun test
 

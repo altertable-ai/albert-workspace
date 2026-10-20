@@ -8,7 +8,7 @@ export const QUEUES = ["retry_queue", "blockers", "deferred"] as const;
 export type QueueName = (typeof QUEUES)[number];
 
 const REQUIRED_STATE = new Set(["last_full_heartbeat", ...QUEUES]);
-const OPTIONAL_STATE = new Set(["last_weekly_report", "last_memory_distill"]);
+const OPTIONAL_STATE = new Set<string>();
 export const REQUIRED = new Set(["repo", "url", "reason", "next_action", "updated_at"]);
 const DETAILS = new Set([
   "goal",
@@ -193,12 +193,17 @@ export function due(state: unknown, now: Date) {
   );
 }
 
+export function login(who: string): string {
+  return who.trim().replace(/^@/, "").toLowerCase();
+}
+
 export function canAsk(state: unknown, url: string, who: string) {
   const valid = validate(state);
+  const handle = login(who);
   for (const queue of QUEUES) {
     for (const entry of valid[queue] as Record<string, unknown>[]) {
       const asked = entry.asked as Asked | undefined;
-      if (asked && asked.url === url && asked.who === who) {
+      if (asked && asked.url === url && login(asked.who) === handle) {
         return asked;
       }
     }
