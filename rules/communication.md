@@ -7,7 +7,7 @@ explicit. Tag a person only for a concrete request.
 ## Asking people
 
 Run `bun scripts/heartbeat-state.ts can-ask <url> <who>` before any question or
-ping. A non-zero exit means the ask is still open — do not post. After posting,
+ping. Exit 2 prints the open ask — do not post. Exit 1 is an error. After posting,
 record `asked` (`who`, `at`, `url`, `question`, `default_at`, `default_action`)
 and set `next_check_at` to `default_at`.
 

@@ -1,6 +1,6 @@
 // Copy the needed keys into ~/.openclaw/openclaw.json (OpenClaw 2026.10.5).
-// Cron job rows live in SQLite; create them with the CLI in HOST.md.
-// Never set heartbeat.lightContext or cron lightContext for Albert.
+// Cron job rows live in SQLite; create them with `openclaw cron` in HOST.md.
+// Never set heartbeat.lightContext or cron --light-context for Albert.
 {
   agents: {
     defaults: {
@@ -22,14 +22,6 @@
       main: {
         workspace: "/absolute/path/to/albert-workspace",
         identity: { name: "Albert" },
-        skipBootstrap: true,
-        heartbeat: {
-          every: "30m",
-          target: "none",
-          timeoutSeconds: 900,
-          lightContext: false,
-          isolatedSession: false,
-        },
       },
     },
   },

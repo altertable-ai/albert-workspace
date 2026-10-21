@@ -9,16 +9,18 @@ export type QueueName = (typeof QUEUES)[number];
 
 const REQUIRED_STATE = new Set(["last_full_heartbeat", ...QUEUES]);
 const OPTIONAL_STATE = new Set<string>();
-export const REQUIRED = new Set(["repo", "url", "reason", "next_action", "updated_at"]);
-const DETAILS = new Set([
+export const REQUIRED = new Set([
+  "repo",
+  "url",
+  "reason",
+  "next_action",
+  "updated_at",
+  "owner",
   "goal",
   "done_when",
-  "promise",
-  "resume_when",
-  "owner",
-  "thread_url",
+  "evidence",
 ]);
-const OPTIONAL = new Set([...DETAILS, "evidence", "next_check_at", "asked"]);
+const OPTIONAL = new Set(["promise", "resume_when", "thread_url", "next_check_at", "asked"]);
 const ASKED_FIELDS = new Set(["who", "at", "url", "question", "default_at", "default_action"]);
 export const OWNER_RE = /^(albert|@[\w-]+)$/;
 
@@ -128,31 +130,21 @@ export function validate(state: unknown) {
       if (Object.keys(item).some((key) => !REQUIRED.has(key) && !OPTIONAL.has(key))) {
         throw new Error(`${queue} item has unknown fields`);
       }
-      for (const key of ["repo", "reason", "next_action", "updated_at"]) {
+      for (const key of ["repo", "reason", "next_action", "updated_at", "owner", "goal", "done_when"]) {
         if (!nonempty(item[key])) {
           throw new Error(`${queue}.${key} must be a nonempty string`);
         }
       }
-      for (const key of DETAILS) {
-        if (key in item && !nonempty(item[key])) {
-          throw new Error(`${queue}.${key} must be a nonempty string`);
-        }
-      }
-      if ("owner" in item && !OWNER_RE.test(item.owner as string)) {
+      if (!OWNER_RE.test(item.owner as string)) {
         throw new Error(`${queue}.owner must match ${OWNER_RE}`);
       }
       if (item.url != null && typeof item.url !== "string") {
         throw new Error(`${queue}.url must be a string or null`);
       }
       calendarDate(String(item.updated_at));
-      if ("evidence" in item) {
-        const evidence = item.evidence;
-        if (
-          !Array.isArray(evidence) ||
-          evidence.some((value) => !nonempty(value))
-        ) {
-          throw new Error(`${queue}.evidence must be a list of nonempty strings`);
-        }
+      const evidence = item.evidence;
+      if (!Array.isArray(evidence) || evidence.length === 0 || evidence.some((value) => !nonempty(value))) {
+        throw new Error(`${queue}.evidence must be a nonempty list of nonempty strings`);
       }
       if ("next_check_at" in item) {
         if (typeof item.next_check_at !== "string") {
@@ -247,7 +239,7 @@ async function main() {
       const existing = canAsk(state, url, who);
       if (existing) {
         console.log(JSON.stringify(existing, null, 2));
-        return 1;
+        return 2;
       }
     } else {
       validate(state);

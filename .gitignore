@@ -2,6 +2,8 @@ code/
 memory/
 MEMORY.md
 DREAMS.md
+.env*
+!.env.example
 .DS_Store
 .rumdl-cache/
 .rumdl_cache/

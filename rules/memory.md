@@ -6,9 +6,10 @@ dreaming). Those files are local and untracked. Lasting team facts live in
 
 Keep unfinished maintenance in local `code/heartbeat-state.json`. Example:
 [schemas/heartbeat-state.example.json](../schemas/heartbeat-state.example.json).
-Each item needs `goal`, `done_when`, `evidence`, `next_action`, and `owner`
-(`albert` or `@login`). Promised replies store `thread_url`. Waiting items store
-`resume_when` and UTC `next_check_at`.
+Each item requires `repo`, `url` (string or null), `reason`, `next_action`,
+`updated_at`, `owner` (`albert` or `@login`), `goal`, `done_when`, and
+`evidence` (nonempty string list). Promised replies store `thread_url`. Waiting
+items store `resume_when` and UTC `next_check_at`.
 
 `bun scripts/heartbeat-state.ts due` prints `act`, `apply_default`, or
 `stay_quiet`. Remove an item only after the result is verified and any promised

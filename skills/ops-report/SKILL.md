@@ -8,4 +8,4 @@ Default window: previous seven days. Start with
 `asked` in `code/heartbeat-state.json`. List each ask once; do not ping.
 
 Lead with what shipped, what is still open, and what needs a decision. Link
-evidence. Reply where the report was requested.
+evidence. Post once to the weekly job's Slack target.

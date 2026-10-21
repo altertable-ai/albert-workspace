@@ -73,7 +73,9 @@ describe("heartbeat-state", () => {
       ["next_check_at", "2026-07-01T12:00:00"],
       ["next_check_at", "not a date"],
       ["evidence", "not a list"],
+      ["evidence", []],
       ["goal", ""],
+      ["owner", ""],
       ["updated_at", "2026-02-30"],
       ["unknown", "value"],
       ["owner", "Albert"],
@@ -180,13 +182,19 @@ describe("heartbeat-state", () => {
       ["bun", SCRIPT, "can-ask", asked.url, asked.who, "--file", path],
       { stdout: "pipe", stderr: "pipe" },
     );
-    expect(blocked.exitCode).toBe(1);
+    expect(blocked.exitCode).toBe(2);
     expect(JSON.parse(blocked.stdout.toString()).question).toBe(asked.question);
     const allowed = Bun.spawnSync(
       ["bun", SCRIPT, "can-ask", asked.url, "@utay", "--file", path],
       { stdout: "pipe", stderr: "pipe" },
     );
     expect(allowed.exitCode).toBe(0);
+    const errored = Bun.spawnSync(["bun", SCRIPT, "can-ask", "--file", path], {
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    expect(errored.exitCode).toBe(1);
+    expect(errored.stderr.toString()).toContain("Maintenance state error");
   });
 });
 

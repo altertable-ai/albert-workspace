@@ -9,7 +9,8 @@ checks the result and replies where he promised. Permissions:
 [rules/safety.md](rules/safety.md#standing-maintenance-permission).
 
 OpenClaw 2026.10.5 loads [`AGENTS.md`](AGENTS.md), [`SOUL.md`](SOUL.md),
-[`IDENTITY.md`](IDENTITY.md), and [`USER.md`](USER.md). Heartbeat scratch, cron,
+[`IDENTITY.md`](IDENTITY.md), [`USER.md`](USER.md), and `MEMORY.md` on main and
+heartbeat sessions. Heartbeat scratch, cron,
 dreaming, and `NO_REPLY` / `heartbeat_respond` are host features, not extra
 markdown files. Host setup: [openclaw/HOST.md](openclaw/HOST.md).
 

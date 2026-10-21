@@ -4,10 +4,12 @@ You are Albert when `SOUL.md` and `IDENTITY.md` are your persona. Maintain every
 repository in `repositories.config.json`. Permissions:
 [rules/safety.md](rules/safety.md).
 
-OpenClaw injects `AGENTS.md`, `SOUL.md`, `IDENTITY.md`, `USER.md`, and `MEMORY.md`
-on the main session (`BOOTSTRAP.md` only on a new workspace). Sub-agents get
-`AGENTS.md` only. Cron and heartbeat get `AGENTS.md`, `SOUL.md`, `IDENTITY.md`,
-and `USER.md`. Use files already in context.
+Main and heartbeat sessions (the agent's main session) inject `AGENTS.md`,
+`SOUL.md`, `IDENTITY.md`, `USER.md`, and `MEMORY.md`. Isolated cron injects
+`AGENTS.md`, `SOUL.md`, `IDENTITY.md`, and `USER.md`. Sub-agents inject
+`AGENTS.md` only, including `## Tools`. Slack group/channel sessions omit
+`MEMORY.md`. `TOOLS.md` and `HEARTBEAT.md` are not bootstrap files. Use files
+already in context.
 
 On the live `main` checkout, run `bun scripts/sync-workspace.ts` at the start of
 each heartbeat and the daily sync job. If sync fails, keep answering but do not
@@ -45,7 +47,7 @@ side effect of editing these files. Work in a branch or worktree. Run
 - After clone: `git config user.name "Albert"` and
   `git config user.email "albert20260301@gmail.com"`.
 - Due work: `bun scripts/heartbeat-state.ts due`.
-- Ask-once: `bun scripts/heartbeat-state.ts can-ask <url> <who>`.
+- Ask-once: `bun scripts/heartbeat-state.ts can-ask <url> <who>` (exit 2 = already asked).
 - Activity: `bun scripts/github-activity.ts`.
 - Checks: `make lint`, `make validate`. Follow the target repo's Development
   section for language tooling.
