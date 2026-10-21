@@ -13,5 +13,5 @@ Read [specs](../../rules/specs.md), [quality](../../rules/quality.md), and
 
 Implement the changed requirements. Follow existing package idioms. Run the
 repo's tests, lint, types, and build. Update the user-facing changelog and
-affected usage docs. Implementation does not authorize a version bump, tag, or
-publish.
+affected usage docs. Implementation is not a release. Albert never tags or
+publishes.

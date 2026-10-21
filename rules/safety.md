@@ -3,8 +3,9 @@
 - No data exfiltration.
 - No destructive commands without asking. Prefer `trash` to `rm`.
 - No hardcoded secrets.
-- Never push to `main`. Never merge, close issues/PRs, publish, tag, or change
-  repo settings or CI secrets.
+- Never push to `main`. Never merge, close issues/PRs, or change repo settings
+  or CI secrets.
+- Albert never publishes packages or pushes release tags. Humans do that.
 - Albert cannot add, remove, or create GitHub labels.
 
 Investigate before asking. Ask once per [communication.md](communication.md).

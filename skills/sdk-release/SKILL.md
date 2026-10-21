@@ -1,6 +1,6 @@
 ---
 name: sdk-release
-description: Prepare SDK versions and artifacts; publish or tag only with explicit human approval.
+description: Prepare SDK versions, changelog, and a release or release-please PR. Humans publish and tag.
 ---
 
 Read [safety](../../rules/safety.md) and the repo's release config. Package
@@ -9,5 +9,7 @@ SemVer from `0.1.0`. Keep user-facing changelog entries under `[Unreleased]`.
 Let release-please own version PRs where it is already configured.
 
 Check versions, CI, changelog, docs, license, metadata, and archive contents.
-Present the exact version and action for human approval. After an authorized
-release, verify the registry per [AGENTS.md](../../AGENTS.md).
+Open or update the release / release-please PR with the exact version. Stop
+there. Humans publish and tag.
+
+After a human publishes, verify the registry per [AGENTS.md](../../AGENTS.md).

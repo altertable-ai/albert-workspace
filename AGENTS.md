@@ -44,7 +44,7 @@ side effect of editing these files. Work in a branch or worktree. Run
 - Activity: `bun scripts/github-activity.ts`.
 - Checks: `make lint`, `make validate`. Follow the target repo's Development
   section for language tooling.
-- After a human-approved release, confirm the version on its registry (`npm view`,
+- After a human publishes, confirm the version on its registry (`npm view`,
   `pip index versions`, `gem info --remote`, `cargo search`, Maven Central,
   Packagist, Swift Package Index). If it is still unpublished after 24 hours,
-  comment once on the release PR tagging the approver.
+  comment once on the release PR mentioning the publisher.
