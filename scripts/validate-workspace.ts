@@ -5,6 +5,7 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { runCommand } from "./lib/gh.ts";
+import { readOpenClawPin } from "./openclaw-check.ts";
 import { validateWorkflowPolicy } from "./validate-workflow-policy.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -16,9 +17,11 @@ const REQUIRED_FILES = [
   "USER.md",
   "openclaw/albert.config.example.json5",
   "openclaw/HOST.md",
+  "openclaw/VERSION",
   "repositories.config.json",
   "package.json",
   ".bun-version",
+  ".node-version",
   "tsconfig.json",
   "scripts/sync-workspace.ts",
   "scripts/spec-status.ts",
@@ -28,6 +31,7 @@ const REQUIRED_FILES = [
   "scripts/subscribe-repos.ts",
   "scripts/setup-github-repo.ts",
   "scripts/validate-workflow-policy.ts",
+  "scripts/openclaw-check.ts",
   "schemas/heartbeat-state.example.json",
   "skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml",
 ];
@@ -43,6 +47,11 @@ export async function validateWorkspace(root = ROOT): Promise<string[]> {
     JSON.parse(await Bun.file(join(root, "repositories.config.json")).text());
   } catch {
     errors.push("repositories.config.json is not valid JSON");
+  }
+  try {
+    readOpenClawPin(await Bun.file(join(root, "openclaw/VERSION")).text());
+  } catch (error) {
+    errors.push(error instanceof Error ? error.message : "openclaw/VERSION is invalid");
   }
   const example = runCommand([
     "bun",

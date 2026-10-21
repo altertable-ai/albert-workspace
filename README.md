@@ -18,5 +18,6 @@ Editors keep their own identity and do not run Albert's heartbeat. Skills are
 procedures; `rules/` is shared policy; `scripts/` are Bun lookups. SDK skills
 apply only to SDK repos.
 
-`make lint` and `make validate` before a PR. Conventional Commits.
+`make lint`, `make validate`, and `make openclaw-check` before a PR.
+Conventional Commits.
 `MEMORY.md`, `DREAMS.md`, and `memory/` are local and untracked.

@@ -1,4 +1,5 @@
-// Copy the needed keys into ~/.openclaw/openclaw.json (OpenClaw 2026.10.5).
+// Pin: openclaw/VERSION (OpenClaw 2026.10.5, CLI 1b58cb9).
+// Copy the needed keys into ~/.openclaw/openclaw.json.
 // Cron job rows live in SQLite; create them with `openclaw cron` in HOST.md.
 // Never set heartbeat.lightContext or cron --light-context for Albert.
 {

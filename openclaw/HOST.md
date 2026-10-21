@@ -1,9 +1,11 @@
 # François host checklist
 
-OpenClaw **2026.10.5**. Merge `albert.config.example.json5` into
-`~/.openclaw/openclaw.json`. Set `agents.entries.main.workspace` to this
-checkout. Heartbeat settings live only under `agents.defaults.heartbeat`.
-`skipBootstrap: true`. `heartbeat.lightContext: false`.
+OpenClaw **2026.10.5** (CLI `1b58cb9`). The pin is [`openclaw/VERSION`](VERSION):
+npm version, then the CLI revision `openclaw --version` must print. Merge
+`albert.config.example.json5` into `~/.openclaw/openclaw.json`. Set
+`agents.entries.main.workspace` to this checkout. Heartbeat settings live only
+under `agents.defaults.heartbeat`. `skipBootstrap: true`.
+`heartbeat.lightContext: false`.
 
 `openclaw cron` and `openclaw automations` are the same CLI. Use `cron` below.
 

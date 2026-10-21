@@ -6,6 +6,9 @@ validate:
 	bun scripts/validate-workspace.ts
 	bun test
 
+openclaw-check:
+	bun scripts/openclaw-check.ts
+
 validate-workflows:
 	bun scripts/validate-workflow-policy.ts .
 
@@ -18,6 +21,6 @@ format:
 check-links:
 	lychee --verbose --exclude-loopback '**/*.md'
 
-ci: lint validate check-links
+ci: lint validate openclaw-check check-links
 
-.PHONY: lint validate validate-workflows lint-fix format check-links ci
+.PHONY: lint validate openclaw-check validate-workflows lint-fix format check-links ci
