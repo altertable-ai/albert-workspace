@@ -19,6 +19,9 @@ jobs:
         with:
           bun-version-file: .bun-version
 
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
       - name: Lint
         run: make lint
 

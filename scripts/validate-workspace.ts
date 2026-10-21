@@ -19,6 +19,7 @@ const REQUIRED_FILES = [
   "openclaw/VERSION",
   "repositories.config.json",
   "package.json",
+  "bun.lock",
   ".bun-version",
   ".node-version",
   "tsconfig.json",
