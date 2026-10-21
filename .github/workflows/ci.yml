@@ -42,7 +42,7 @@ jobs:
         with:
           node-version-file: .node-version
 
-      - name: Check OpenClaw pin and HOST.md cron
+      - name: Check OpenClaw pin and cron jobs
         run: make openclaw-check
 
   link-check:

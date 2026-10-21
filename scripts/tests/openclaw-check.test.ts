@@ -2,13 +2,18 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
-  extractCronCreateCommands,
   mergeDummyGatewayConfig,
   nodeSatisfiesOpenClaw,
   parseExampleConfig,
   readOpenClawPin,
-  splitCommand,
 } from "../openclaw-check.ts";
+import {
+  albertCronJobs,
+  cronJobArgv,
+  findListedJob,
+  parseCronList,
+  reportSlackChannel,
+} from "../openclaw-jobs.ts";
 
 describe("openclaw-check helpers", () => {
   test("reads the npm version and CLI revision pin", () => {
@@ -17,57 +22,10 @@ describe("openclaw-check helpers", () => {
   });
 
   test("parses the example JSON5 object", () => {
-    const parsed = parseExampleConfig(`
-// comment
-{
-  agents: {
-    defaults: { skipBootstrap: true },
-    entries: { main: { identity: { name: "Albert" } } },
-  },
-}
-`);
-    expect((parsed.agents as { defaults: { skipBootstrap: boolean } }).defaults.skipBootstrap).toBe(true);
     const example = parseExampleConfig(
       readFileSync(resolve(import.meta.dir, "../../openclaw/albert.config.example.json5"), "utf8"),
     );
     expect((example.agents as { defaults: { skipBootstrap: boolean } }).defaults.skipBootstrap).toBe(true);
-  });
-
-  test("extracts the two HOST.md cron create commands", () => {
-    const commands = extractCronCreateCommands(`
-# host
-\`\`\`bash
-openclaw cron create "0 8 * * *" \\
-  --name "Albert daily full sync" \\
-  --no-deliver \\
-  --message "sync"
-
-openclaw cron create "0 9 * * 5" \\
-  --name "Albert weekly report" \\
-  --announce \\
-  --channel slack \\
-  --to "<SLACK_CHANNEL_ID>" \\
-  --message "report"
-\`\`\`
-`);
-    expect(commands).toHaveLength(2);
-    expect(commands[0]).toContain("--no-deliver");
-    expect(commands[1]).toContain("--channel slack");
-    expect(splitCommand(commands[0])).toEqual([
-      "openclaw",
-      "cron",
-      "create",
-      "0 8 * * *",
-      "--name",
-      "Albert daily full sync",
-      "--no-deliver",
-      "--message",
-      "sync",
-    ]);
-  });
-
-  test("rejects the wrong number of cron create commands", () => {
-    expect(() => extractCronCreateCommands("```bash\necho hi\n```")).toThrow("exactly two");
   });
 
   test("merges dummy gateway keys without adding entry skipBootstrap", () => {
@@ -86,5 +44,21 @@ openclaw cron create "0 9 * * 5" \\
     expect(nodeSatisfiesOpenClaw("v24.16.0")).toBe(true);
     expect(nodeSatisfiesOpenClaw("v22.14.0")).toBe(false);
     expect(nodeSatisfiesOpenClaw("v26.1.0")).toBe(true);
+  });
+});
+
+describe("openclaw jobs", () => {
+  test("requires the weekly Slack channel env", () => {
+    expect(() => reportSlackChannel({})).toThrow("ALBERT_REPORT_SLACK_CHANNEL");
+    expect(reportSlackChannel({ ALBERT_REPORT_SLACK_CHANNEL: " C123 " })).toBe("C123");
+  });
+
+  test("defines daily no-deliver and weekly Slack announce jobs", () => {
+    const [daily, weekly] = albertCronJobs("C0ALBERTCHECK");
+    expect(daily.noDeliver).toBe(true);
+    expect(cronJobArgv(daily, "create")).toContain("--no-deliver");
+    expect(weekly.announce).toBe(true);
+    expect(cronJobArgv(weekly, "create")).toEqual(expect.arrayContaining(["--announce", "--channel", "slack", "--to", "C0ALBERTCHECK"]));
+    expect(findListedJob(parseCronList('{"jobs":[{"id":"1","name":"Albert daily full sync"}]}'), daily)?.id).toBe("1");
   });
 });

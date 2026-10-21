@@ -1,9 +1,10 @@
 #!/usr/bin/env bun
-/** Install the pinned OpenClaw CLI and check HOST.md plus the example config. */
+/** Install the pinned OpenClaw CLI and check the example config plus Albert cron jobs. */
 
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { albertCronJobs, cronJobArgv, type AlbertCronJob } from "./openclaw-jobs.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 const DUMMY_SLACK = "C0ALBERTCHECK";
@@ -36,58 +37,6 @@ export function parseExampleConfig(text: string): Record<string, unknown> {
     throw new Error("example config must be an object");
   }
   return parsed as Record<string, unknown>;
-}
-
-export function extractCronCreateCommands(hostMarkdown: string): string[] {
-  const commands: string[] = [];
-  for (const match of hostMarkdown.matchAll(/```bash\n([\s\S]*?)```/g)) {
-    const unfolded = match[1].replace(/\\\n/g, " ");
-    for (const part of unfolded.split(/(?=openclaw cron create )/)) {
-      const command = part.replace(/\s+/g, " ").trim();
-      if (command.startsWith("openclaw cron create ")) {
-        commands.push(command);
-      }
-    }
-  }
-  if (commands.length !== 2) {
-    throw new Error(`HOST.md must contain exactly two openclaw cron create commands, found ${commands.length}`);
-  }
-  return commands;
-}
-
-export function splitCommand(command: string): string[] {
-  const out: string[] = [];
-  let current = "";
-  let quote: '"' | "'" | null = null;
-  for (const char of command) {
-    if (quote) {
-      if (char === quote) {
-        quote = null;
-      } else {
-        current += char;
-      }
-      continue;
-    }
-    if (char === '"' || char === "'") {
-      quote = char;
-      continue;
-    }
-    if (/\s/.test(char)) {
-      if (current) {
-        out.push(current);
-      }
-      current = "";
-      continue;
-    }
-    current += char;
-  }
-  if (quote) {
-    throw new Error("unclosed quote in cron command");
-  }
-  if (current) {
-    out.push(current);
-  }
-  return out;
 }
 
 export function mergeDummyGatewayConfig(example: Record<string, unknown>, workspace: string, port: number) {
@@ -209,19 +158,19 @@ function waitForGateway(openclaw: string, env: Record<string, string>, port: num
   throw new Error(`gateway did not become ready: ${last}`);
 }
 
-function requireDocsCitePin(text: string, label: string, pin: OpenClawPin) {
+function requireExampleCitesPin(text: string, pin: OpenClawPin) {
   if (!text.includes(pin.npm) || !text.includes(pin.revision) || !text.includes("openclaw/VERSION")) {
-    throw new Error(`${label} must cite both lines from openclaw/VERSION`);
+    throw new Error("albert.config.example.json5 must cite both lines from openclaw/VERSION");
   }
   if (text.includes("da0c264")) {
-    throw new Error(`${label} still cites da0c264; use the CLI revision from openclaw/VERSION`);
+    throw new Error("docs still cite da0c264; use the CLI revision from openclaw/VERSION");
   }
 }
 
 function jobJson(stdout: string): {
   id?: string;
   name?: string;
-  payload?: { kind?: string; timeoutSeconds?: number };
+  payload?: { timeoutSeconds?: number };
   delivery?: { mode?: string; channel?: string; to?: string };
   schedule?: { tz?: string; expr?: string };
   sessionTarget?: string;
@@ -230,49 +179,42 @@ function jobJson(stdout: string): {
   if (start < 0) {
     throw new Error(`expected JSON from cron create, got: ${stdout}`);
   }
-  return JSON.parse(stdout.slice(start)) as ReturnType<typeof jobJson>;
+  const parsed = JSON.parse(stdout.slice(start)) as { job?: ReturnType<typeof jobJson> } & ReturnType<typeof jobJson>;
+  return parsed.job ?? parsed;
 }
 
-function assertCronFlags(command: string, argv: string[], job: ReturnType<typeof jobJson>) {
-  const flag = (name: string) => {
-    const index = argv.indexOf(name);
-    return index >= 0 ? argv[index + 1] : undefined;
-  };
-  if (argv.includes("--timeout-seconds") && job.payload?.timeoutSeconds !== Number(flag("--timeout-seconds"))) {
-    throw new Error(`${job.name} did not keep ${flag("--timeout-seconds")} from --timeout-seconds`);
+function assertCreatedJob(spec: AlbertCronJob, job: ReturnType<typeof jobJson>) {
+  if (job.payload?.timeoutSeconds != null && job.payload.timeoutSeconds !== spec.timeoutSeconds) {
+    throw new Error(`${spec.name} did not keep --timeout-seconds ${spec.timeoutSeconds}`);
   }
-  if (argv.includes("--tz") && job.schedule?.tz !== flag("--tz")) {
-    throw new Error(`${job.name} did not keep --tz ${flag("--tz")}`);
+  if (job.schedule?.tz && job.schedule.tz !== spec.tz) {
+    throw new Error(`${spec.name} did not keep --tz ${spec.tz}`);
   }
-  if (argv.includes("--session") && job.sessionTarget && job.sessionTarget !== flag("--session")) {
-    throw new Error(`${job.name} did not keep --session ${flag("--session")}`);
+  if (job.sessionTarget && job.sessionTarget !== spec.session) {
+    throw new Error(`${spec.name} did not keep --session ${spec.session}`);
   }
-  if (argv.includes("--no-deliver") && job.delivery?.mode && job.delivery.mode !== "none") {
-    throw new Error(`${job.name} --no-deliver produced delivery.mode=${job.delivery.mode}`);
+  if (spec.noDeliver && job.delivery?.mode && job.delivery.mode !== "none") {
+    throw new Error(`${spec.name} --no-deliver produced delivery.mode=${job.delivery.mode}`);
   }
-  if (argv.includes("--announce") && job.delivery?.mode && job.delivery.mode !== "announce") {
-    throw new Error(`${job.name} --announce produced delivery.mode=${job.delivery.mode}`);
+  if (spec.announce && job.delivery?.mode && job.delivery.mode !== "announce") {
+    throw new Error(`${spec.name} --announce produced delivery.mode=${job.delivery.mode}`);
   }
-  if (argv.includes("--channel") && job.delivery?.channel && job.delivery.channel !== flag("--channel")) {
-    throw new Error(`${job.name} did not keep --channel ${flag("--channel")}`);
+  if (spec.channel && job.delivery?.channel && job.delivery.channel !== spec.channel) {
+    throw new Error(`${spec.name} did not keep --channel ${spec.channel}`);
   }
-  if (argv.includes("--to") && job.delivery?.to && job.delivery.to !== flag("--to")) {
-    throw new Error(`${job.name} did not keep --to ${flag("--to")}`);
-  }
-  if (!command.includes(argv[2] ?? "") && argv[2]) {
-    throw new Error("cron schedule expression missing from HOST.md command");
+  if (spec.to && job.delivery?.to && job.delivery.to !== spec.to) {
+    throw new Error(`${spec.name} did not keep --to ${spec.to}`);
   }
 }
 
 export async function checkOpenClaw(root = ROOT): Promise<void> {
   const pin = readOpenClawPin(await Bun.file(join(root, "openclaw/VERSION")).text());
-  const host = await Bun.file(join(root, "openclaw/HOST.md")).text();
   const exampleText = await Bun.file(join(root, "openclaw/albert.config.example.json5")).text();
-  requireDocsCitePin(host, "HOST.md", pin);
-  requireDocsCitePin(exampleText, "albert.config.example.json5", pin);
-  const commands = extractCronCreateCommands(host).map((command) =>
-    command.replaceAll("<SLACK_CHANNEL_ID>", DUMMY_SLACK),
-  );
+  requireExampleCitesPin(exampleText, pin);
+  const jobs = albertCronJobs(DUMMY_SLACK);
+  if (jobs.length !== 2 || !jobs[0].noDeliver || !jobs[1].announce || jobs[1].channel !== "slack") {
+    throw new Error("scripts/openclaw-jobs.ts must define daily --no-deliver and weekly Slack announce jobs");
+  }
   const example = parseExampleConfig(exampleText);
   const work = mkdtempSync(join(tmpdir(), "albert-openclaw-"));
   const home = join(work, "home");
@@ -321,29 +263,22 @@ export async function checkOpenClaw(root = ROOT): Promise<void> {
     { stdout: "pipe", stderr: "pipe", env, cwd: home },
   );
   const created: string[] = [];
+  const extra = ["--port", String(port), "--token", DUMMY_TOKEN];
   try {
     waitForGateway(openclaw, env, port);
-    for (const command of commands) {
-      const argv = splitCommand(command);
-      if (argv[0] !== "openclaw" || argv[1] !== "cron" || argv[2] !== "create") {
-        throw new Error(`expected openclaw cron create, got ${argv.slice(0, 3).join(" ")}`);
-      }
-      argv[0] = openclaw;
-      argv.push("--port", String(port), "--token", DUMMY_TOKEN, "--json");
-      const createdJob = requireOk(runCommand(argv, { env }), command);
+    for (const spec of jobs) {
+      const argv = [openclaw, ...cronJobArgv(spec, "create"), ...extra, "--json"];
+      const createdJob = requireOk(runCommand(argv, { env }), spec.name);
       const job = jobJson(createdJob.stdout);
       if (!job.id) {
         throw new Error(`cron create did not return an id: ${createdJob.stdout}`);
       }
-      assertCronFlags(command, argv, job);
+      assertCreatedJob(spec, job);
       created.push(job.id);
       console.log(`created ${job.name} ${job.id}`);
     }
     for (const id of created) {
-      requireOk(
-        runCommand([openclaw, "cron", "rm", id, "--port", String(port), "--token", DUMMY_TOKEN, "--json"], { env }),
-        `cron rm ${id}`,
-      );
+      requireOk(runCommand([openclaw, "cron", "rm", id, ...extra, "--json"], { env }), `cron rm ${id}`);
     }
   } finally {
     gateway.kill();

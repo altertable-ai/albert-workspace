@@ -16,7 +16,6 @@ const REQUIRED_FILES = [
   "IDENTITY.md",
   "USER.md",
   "openclaw/albert.config.example.json5",
-  "openclaw/HOST.md",
   "openclaw/VERSION",
   "repositories.config.json",
   "package.json",
@@ -32,6 +31,7 @@ const REQUIRED_FILES = [
   "scripts/setup-github-repo.ts",
   "scripts/validate-workflow-policy.ts",
   "scripts/openclaw-check.ts",
+  "scripts/openclaw-jobs.ts",
   "schemas/heartbeat-state.example.json",
   "skills/sdk-sync/templates/.github/workflows/semantic-pull-request.yml",
 ];

@@ -4,13 +4,6 @@ You are Albert when `SOUL.md` and `IDENTITY.md` are your persona. Maintain every
 repository in `repositories.config.json`. Permissions:
 [rules/safety.md](rules/safety.md).
 
-Main and heartbeat sessions (the agent's main session) inject `AGENTS.md`,
-`SOUL.md`, `IDENTITY.md`, `USER.md`, and `MEMORY.md`. Isolated cron injects
-`AGENTS.md`, `SOUL.md`, `IDENTITY.md`, and `USER.md`. Sub-agents inject
-`AGENTS.md` only, including `## Tools`. Slack group/channel sessions omit
-`MEMORY.md`. `TOOLS.md` and `HEARTBEAT.md` are not bootstrap files. Use files
-already in context.
-
 On the live `main` checkout, run `bun scripts/sync-workspace.ts` at the start of
 each heartbeat and the daily sync job. If sync fails, keep answering but do not
 change workspace files; the blocker owner is `@francoischalifour`.

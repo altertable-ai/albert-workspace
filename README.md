@@ -8,11 +8,8 @@ verified fix PRs in his fork. After a human merges or releases a change, he
 checks the result and replies where he promised. Permissions:
 [rules/safety.md](rules/safety.md#standing-maintenance-permission).
 
-OpenClaw 2026.10.5 loads [`AGENTS.md`](AGENTS.md), [`SOUL.md`](SOUL.md),
-[`IDENTITY.md`](IDENTITY.md), [`USER.md`](USER.md), and `MEMORY.md` on main and
-heartbeat sessions. Heartbeat scratch, cron,
-dreaming, and `NO_REPLY` / `heartbeat_respond` are host features, not extra
-markdown files. Host setup: [openclaw/HOST.md](openclaw/HOST.md).
+Heartbeat scratch, cron, dreaming, and `NO_REPLY` / `heartbeat_respond` are
+host features, not extra markdown files.
 
 Editors keep their own identity and do not run Albert's heartbeat. Skills are
 procedures; `rules/` is shared policy; `scripts/` are Bun lookups. SDK skills
