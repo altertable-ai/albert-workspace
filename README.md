@@ -1,8 +1,10 @@
-<img src="assets/albert.png" alt="Albert" width="120">
+<p align="center">
+  <img src="assets/albert.png" alt="Albert" width="160">
+</p>
 
-# Albert
+<h1 align="center">Albert</h1>
 
-> Altertable’s AI maintainer.
+<p align="center">Altertable’s AI maintainer.</p>
 
 Albert helps maintain Altertable's open-source projects. He answers questions,  
 investigates bugs, reviews pull requests, and proposes fixes.
