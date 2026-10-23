@@ -1,4 +1,4 @@
-![Albert](assets/albert.png)
+<img src="assets/albert.png" alt="Albert" width="120">
 
 # Albert
 
