@@ -1,12 +1,12 @@
-<p align="center">
+<div align="center">
   <img src="assets/albert.png" alt="Albert" width="160">
-  <h3 align="center">Albert</h3>
+  <h3 align="center" aria-level="1">Albert</h3>
   <p align="center">Keeping Altertable's open source moving.</p>
-</p>
+</div>
 
 ---
 
-Albert answers questions, investigates bugs, reviews pull requests, and proposes fixes.
+Albert is an AI agent helping maintain Altertable's open-source projects. He answers questions, investigates bugs, reviews pull requests, and proposes fixes.
 
 This repository defines how he works: his identity, shared rules, task skills, and maintenance tools. See [the projects he maintains](repositories.config.json).
 
