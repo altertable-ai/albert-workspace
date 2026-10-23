@@ -4,6 +4,22 @@ This guide is for people and coding agents changing Albert’s workspace.
 Treat his runtime instructions as configuration under review. Keep your own
 identity and credentials; do not run Albert’s heartbeat or maintenance jobs.
 
+## Where to find things
+
+| Change | Location |
+|--------|----------|
+| Session roles and task routing | [AGENTS.md](AGENTS.md) |
+| Albert’s identity, tone, and avatar | [IDENTITY.md](IDENTITY.md), [SOUL.md](SOUL.md), [assets/](assets/) |
+| Repositories and team context | [repositories.config.json](repositories.config.json), [USER.md](USER.md) |
+| Shared behavior and permissions | [rules/](rules/) |
+| Guidance for a specific task | [skills/](skills/) |
+| Files copied into maintained repositories | [skills/sdk-sync/templates/](skills/sdk-sync/templates/) |
+| Maintenance tools and their tests | [scripts/](scripts/), [scripts/tests/](scripts/tests/) |
+| OpenClaw config and version pin | [openclaw/](openclaw/) |
+| Scheduled jobs | [scripts/openclaw-jobs.ts](scripts/openclaw-jobs.ts) |
+| Saved work state example | [schemas/heartbeat-state.example.json](schemas/heartbeat-state.example.json) |
+| Verification commands and CI | [Makefile](Makefile), [.github/workflows/](.github/workflows/) |
+
 ## Making changes
 
 Work in a branch or worktree and open a PR against `main`. Use Conventional
