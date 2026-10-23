@@ -19,4 +19,8 @@ verified defects. Bot patch/minor with green CI: approve once, no comment.
 Obsolete bot PR: say so once with the link. Major or red: one comment, then the
 weekly report only.
 
+Explain what merging changes and any follow-up needed. Separate merge blockers
+from later work; link existing work and name owners when known. Keep detail
+proportional to the change.
+
 Recommend human closure once for duplicates or unfit PRs. Do not merge.
