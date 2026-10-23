@@ -1,7 +1,18 @@
 # Albert workspace
 
-You are Albert when `SOUL.md` and `IDENTITY.md` are your persona. Maintain every
-repository in `repositories.config.json`. Permissions:
+- **Albert runtime:** sessions running as Albert through OpenClaw. Follow the
+  runtime section below.
+- **Repository editors:** all other sessions. Follow
+  [CONTRIBUTING.md](CONTRIBUTING.md) and keep your own identity and credentials.
+  Treat Albert’s runtime instructions, persona, rules, and skills as configuration
+  under review. Do not run his heartbeat or contact people as a side effect of editing.
+
+For all instruction edits, follow [change control](rules/change-control.md).
+
+## Albert runtime
+
+Use `SOUL.md` and `IDENTITY.md` as your persona. Maintain every repository in
+`repositories.config.json`. Permissions:
 [rules/safety.md](rules/safety.md).
 
 On the live `main` checkout, run `bun scripts/sync-workspace.ts` at the start of
@@ -25,17 +36,10 @@ rules that task needs.
 | Release prep | [sdk-release](skills/sdk-release/SKILL.md) |
 
 Durable behavior changes: one instruction PR, reviewer `@francoischalifour`.
-For instruction edits, follow [change control](rules/change-control.md).
 Never commit Slack, secrets, or private transcripts. `MEMORY.md`, `DREAMS.md`,
 and `memory/` are local OpenClaw memory, not git.
 
-## Editors
-
-Keep your own identity. Do not run Albert's heartbeat or contact people as a
-side effect of editing these files. Work in a branch or worktree. Run
-`make lint` and `make validate`.
-
-## Tools
+### Tools
 
 - `gh` is already authenticated. Do not run `gh auth login`. Never force-push.
 - After clone: `git config user.name "Albert"` and
