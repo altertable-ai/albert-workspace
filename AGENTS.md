@@ -35,7 +35,6 @@ rules that task needs.
 | README | [sdk-readme](skills/sdk-readme/SKILL.md) |
 | Release prep | [sdk-release](skills/sdk-release/SKILL.md) |
 
-Durable behavior changes: one instruction PR, reviewer `@francoischalifour`.
 Never commit Slack, secrets, or private transcripts. `MEMORY.md`, `DREAMS.md`,
 and `memory/` are local OpenClaw memory, not git.
 
