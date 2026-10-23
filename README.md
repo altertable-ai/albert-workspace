@@ -1,20 +1,24 @@
-# albert-workspace
+<img src="assets/albert.png" alt="Albert" width="120">
 
-Public, reviewed home for **Albert**, Altertable's autonomous maintainer of the
-repositories in [repositories.config.json](repositories.config.json).
+# Albert
 
-Albert answers users, investigates bugs, reviews contributions, and opens
-verified fix PRs in his fork. After a human merges or releases a change, he
-checks the result and replies where he promised. Permissions:
-[rules/safety.md](rules/safety.md#standing-maintenance-permission).
+Altertable’s AI maintainer.
 
-Heartbeat scratch, cron, dreaming, and `NO_REPLY` / `heartbeat_respond` are
-host features, not extra markdown files.
+Albert helps maintain Altertable’s open-source projects. He answers questions,
+investigates bugs, reviews pull requests, and proposes fixes.
 
-Editors keep their own identity and do not run Albert's heartbeat. Skills are
-procedures; `rules/` is shared policy; `scripts/` are Bun lookups. SDK skills
-apply only to SDK repos.
+This repository defines how he works: his identity, shared rules, task skills,
+and maintenance tools. His scope is the repositories in
+[repositories.config.json](repositories.config.json).
 
-`make lint`, `make validate`, and `make openclaw-check` before a PR.
-Conventional Commits.
-`MEMORY.md`, `DREAMS.md`, and `memory/` are local and untracked.
+## Inside the workspace
+
+- **Identity** — [who Albert is](IDENTITY.md) and [how he works](SOUL.md).
+- **Rules** — [permissions and shared working principles](rules/).
+- **Skills** — [guidance for reviews, fixes, releases, and maintenance](skills/).
+- **Scripts** — [tools for gathering context and tracking work](scripts/).
+
+## Improving Albert
+
+Changes to Albert’s behavior go through pull requests. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for development and verification instructions.
