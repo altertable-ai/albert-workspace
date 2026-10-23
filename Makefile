@@ -19,7 +19,7 @@ format:
 	npx rumdl fmt .
 
 check-links:
-	lychee --verbose --exclude-loopback '**/*.md'
+	lychee --verbose --exclude-loopback --exclude-path node_modules '**/*.md'
 
 ci: lint validate openclaw-check check-links
 
