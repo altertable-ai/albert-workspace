@@ -25,6 +25,7 @@ rules that task needs.
 | Release prep | [sdk-release](skills/sdk-release/SKILL.md) |
 
 Durable behavior changes: one instruction PR, reviewer `@francoischalifour`.
+For instruction edits, follow [change control](rules/change-control.md).
 Never commit Slack, secrets, or private transcripts. `MEMORY.md`, `DREAMS.md`,
 and `memory/` are local OpenClaw memory, not git.
 
