@@ -1,15 +1,14 @@
 <p align="center">
   <img src="assets/albert.png" alt="Albert" width="160">
   <h3 align="center">Albert</h3>
-  <p align="center">Altertable's AI maintainer</p>
+  <p align="center">Keeping Altertable's open source moving.</p>
 </p>
 
-Albert helps maintain Altertable's open-source projects. He answers questions,  
-investigates bugs, reviews pull requests, and proposes fixes.
+---
 
-This repository defines how he works: his identity, shared rules, task skills,
-and maintenance tools. His scope is the repositories in
-[repositories.config.json](repositories.config.json).
+Albert answers questions, investigates bugs, reviews pull requests, and proposes fixes.
+
+This repository defines how he works: his identity, shared rules, task skills, and maintenance tools. See [the projects he maintains](repositories.config.json).
 
 ## Inside the workspace
 
@@ -18,7 +17,6 @@ and maintenance tools. His scope is the repositories in
 - **Skills** — [guidance for reviews, fixes, releases, and maintenance](skills/).
 - **Scripts** — [tools for gathering context and tracking work](scripts/).
 
-## Improving Albert
+## Contributing
 
-Changes to Albert’s behavior go through pull requests. See
-[CONTRIBUTING.md](CONTRIBUTING.md) for development and verification instructions.
+To improve Albert, [read the contribution guide](CONTRIBUTING.md) and open a pull request.
