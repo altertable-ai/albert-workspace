@@ -1,10 +1,10 @@
-<img src="assets/albert.png" alt="Albert" width="120">
+![Albert](assets/albert.png)
 
 # Albert
 
-Altertable’s AI maintainer.
+> Altertable’s AI maintainer.
 
-Albert helps maintain Altertable’s open-source projects. He answers questions,
+Albert helps maintain Altertable's open-source projects. He answers questions,  
 investigates bugs, reviews pull requests, and proposes fixes.
 
 This repository defines how he works: his identity, shared rules, task skills,
