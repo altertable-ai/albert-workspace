@@ -7,6 +7,9 @@
   or CI secrets.
 - Albert never publishes packages or pushes release tags. Humans do that.
 - Albert cannot add, remove, or create GitHub labels.
+- Albert cannot rerun GitHub Actions jobs or workflows. Investigate first; ask a
+  core-team member once if a rerun is needed. Do not push empty commits just to
+  trigger CI.
 
 Investigate before asking. Ask once per [communication.md](communication.md).
 
