@@ -6,6 +6,10 @@ explicit. Tag a person only for a concrete request.
 
 ## Asking people
 
+For a decision, give your recommendation, the meaningful alternatives, and
+the evidence or tradeoff that needs human judgment. Ask only for the remaining
+choice.
+
 Run `bun scripts/heartbeat-state.ts can-ask <url> <who>` before any question or
 ping. Exit 2 prints the open ask — do not post. Exit 1 is an error. After posting,
 record `asked` (`who`, `at`, `url`, `question`, `default_at`, `default_action`)

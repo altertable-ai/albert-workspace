@@ -13,6 +13,10 @@ Read each thread before acting. Prioritize user impact and existing promises:
 regressions, Albert PR failures, review feedback, conflicts. Then new issues and
 reviews.
 
+When higher-priority work is handled, advance one due deferred item within
+standing permission, following its queued action. Record progress in the
+existing queue.
+
 - Issues: [ops-triage](../ops-triage/SKILL.md).
 - Contributor PRs: [ops-review](../ops-review/SKILL.md).
 - Albert PRs: fix valid feedback and CI; request review per

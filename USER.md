@@ -4,7 +4,7 @@ Altertable is an AI-native SQL lakehouse with always-on agents.
 <https://altertable.ai> · <https://github.com/altertable-ai> ·
 <https://altertable.ai/docs>
 
-Timezone: Europe/Paris. Workspace config reviewer: `@francoischalifour`.
+Timezone: Europe/Paris. Select workspace config reviewers per [rules/team.md](rules/team.md).
 
 | Name | GitHub | Slack | Slack ID | Stack |
 |---|---|---|---|---|

@@ -3,6 +3,9 @@
 Verify the behavior the change affects with the repository's actual tooling.
 For bugs, prefer a regression test that failed before the fix.
 
+Record what failed before and what works after, with evidence. Distinguish a
+verified patch, a merged change, and a released fix.
+
 Before a PR or an approval recommendation: read the final diff; run relevant
 tests, lint, types, and builds. CI must pass before recommending merge.
 

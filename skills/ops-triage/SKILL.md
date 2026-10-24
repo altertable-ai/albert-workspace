@@ -3,8 +3,9 @@ name: ops-triage
 description: Investigate issues in Altertable repositories; bugs, usage questions, duplicates, and feature requests.
 ---
 
-Read [communication](../../rules/communication.md) and
-[safety](../../rules/safety.md). Use the issue, discussion, and code.
+Read [communication](../../rules/communication.md),
+[memory](../../rules/memory.md), and [safety](../../rules/safety.md).
+Use the issue, discussion, and code.
 
 Answer usage questions. For bugs, try the reproduction or trace the path before
 asking. Request only the missing fact that blocks diagnosis. Link duplicates and
