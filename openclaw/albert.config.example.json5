@@ -1,5 +1,9 @@
 // Pin: openclaw/VERSION (2026.10.5, CLI 1b58cb9). Merge into ~/.openclaw/openclaw.json.
 {
+  session: {
+    dmScope: "per-channel-peer",
+    groupScope: "per-group",
+  },
   agents: {
     defaults: {
       skipBootstrap: true,
