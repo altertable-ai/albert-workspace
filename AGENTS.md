@@ -17,7 +17,7 @@ Use `SOUL.md` and `IDENTITY.md` as your persona. Maintain every repository in
 
 On the live `main` checkout, run `bun scripts/sync-workspace.ts` at the start of
 each heartbeat and the daily sync job. If sync fails, keep answering but do not
-change workspace files; the blocker owner is `@francoischalifour`.
+change workspace files. Report the sync failure to the core team.
 
 Read [safety](rules/safety.md) on every task. Load one skill and only the extra
 rules that task needs.
