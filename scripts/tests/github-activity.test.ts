@@ -189,7 +189,7 @@ describe("github-activity", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (Bun as any).spawnSync = (command: string[]) => {
       calls.push(command);
-      return { exitCode: 0, stdout: Buffer.from("[[], []]"), stderr: Buffer.from("") };
+      return { exitCode: 0, stdout: Buffer.from("[]\n[]\n"), stderr: Buffer.from("") };
     };
     try {
       expect(activity.api("search/issues", { q: "repo:acme/sdk author:albert" })).toEqual([[], []]);

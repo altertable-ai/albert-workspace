@@ -36,7 +36,8 @@ export const gh = {
   json(request: GhRequest): unknown {
     const command = ["gh", "api", "--method", request.method ?? "GET"];
     if (request.paginate) {
-      command.push("--paginate", "--slurp");
+      // Emit each page as one JSON line; older gh versions lack --slurp.
+      command.push("--paginate", "--jq", "tojson");
     }
     command.push(request.endpoint);
     for (const [key, value] of Object.entries(request.fields ?? {})) {
@@ -50,6 +51,9 @@ export const gh = {
       throw new GhError(request, result.stderr.trim(), result.exitCode);
     }
     const text = result.stdout.trim();
+    if (request.paginate) {
+      return text ? text.split(/\r?\n/).map((page) => JSON.parse(page)) : [];
+    }
     return text ? JSON.parse(text) : null;
   },
 };
