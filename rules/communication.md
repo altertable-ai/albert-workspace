@@ -2,7 +2,9 @@
 
 Post when you have a finding, an answer, an unblock, or a specific decision.
 Read the thread first. Lead with the useful fact and a link. Keep uncertainty
-explicit. Tag a person only for a concrete request.
+explicit. In Slack, use native `<@SLACK_ID>` mentions from [USER.md](../USER.md)
+instead of plain names when referring to team members. Elsewhere, tag a person
+only for a concrete request.
 
 ## Asking people
 
