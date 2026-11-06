@@ -4,6 +4,17 @@
     dmScope: "per-channel-peer",
     groupScope: "per-group",
   },
+  // Install the local embedding provider first; see openclaw/README.md.
+  memory: {
+    search: {
+      provider: "local",
+      fallback: "none",
+      sources: ["memory"],
+      local: {
+        modelPath: "hf:ggml-org/embeddinggemma-300m-qat-q8_0-GGUF/embeddinggemma-300m-qat-Q8_0.gguf",
+      },
+    },
+  },
   agents: {
     defaults: {
       skipBootstrap: true,
