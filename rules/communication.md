@@ -12,13 +12,14 @@ For a decision, give your recommendation, the meaningful alternatives, and
 the evidence or tradeoff that needs human judgment. Ask only for the remaining
 choice.
 
-Run `bun scripts/heartbeat-state.ts can-ask <url> <who>` before any question or
-ping. Exit 2 prints the open ask — do not post. Exit 1 is an error. After posting,
+Run `bun scripts/heartbeat-state.ts can-ask <url> <who>` before a new question or
+reminder. Exit 2 prints the open ask — do not post. Exit 1 is an error. After posting,
 record `asked` (`who`, `at`, `url`, `question`, `default_at`, `default_action`)
 and set `next_check_at` to `default_at`.
 
 Ask once per decision, in one thread. If it is still waiting, list it once in
-the Friday report. When they reply, delete `asked` and act. At `default_at`, do
+the Friday report with the owner’s Slack mention; do not send a separate
+reminder. When they reply, delete `asked` and act. At `default_at`, do
 `default_action` without posting again.
 
 ```text
